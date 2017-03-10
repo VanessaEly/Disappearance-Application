@@ -1,0 +1,43 @@
+<header ng-controller="HeaderController" ng-init="headerInit()">
+    <nav id="mainNav" class="navbar-custom">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#page-top">DISAPP</a>
+            </div>
+
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                    <!--  ng-mouseleave="hoverOut('#options-dropdown')" -->
+                    <li id="header-profile" ng-mouseover="hoverIn('#options-dropdown')">
+                        <i class="fa fa-user" aria-hidden="true">
+                            <i class="fa fa-sort-desc profile-icon" aria-hidden="true"></i>
+                        </i>
+                    </li>
+                    <button type="button" class="btn btn-success navbar-btn" ng-hide="true">Sign in</button>
+                    <div class="header-dropdown" id="options-dropdown">
+                        <ul>
+                            <li title="Profile">
+                                <p>
+                                    <i class=""></i>
+                                    Profile
+                                </p>
+                            </li>
+                            <li ng-click="" title="Logout">
+                                <p>
+                                    <i class=""></i>
+                                    Logout
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
