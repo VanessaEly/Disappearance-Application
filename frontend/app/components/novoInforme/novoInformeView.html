@@ -1,0 +1,36 @@
+<header-element></header-element>
+<div class="container" ng-controller="NovoInformeController" ng-init="novoInformeInit()">
+    <div class="tab-pane">
+        <div class="col-md-12 col-xs-12">
+            <h3>Endereço</h3>
+            <p>Selecione no mapa o local da ocorrência</p>
+            <input id="pac-input" class="controls" type="text"
+                   placeholder="Enter a location">
+            <div informe-map="" selected-item="coordinates"></div>
+            <p>{{ coordinates.formatted_address }}</p>
+        </div>
+
+        <div class="col-md-12 col-xs-12">
+
+            <ul class="list-inline">
+                <form name="informeform">
+                    <div class="form-group">
+                        <h2>Dados gerais</h2>
+                        <label class="control-label">Título do informe</label>
+                        <input ng-model="informe.titulo" ng-required="true" maxlength="100" type="text" class="form-control" placeholder="Enter First Name"  />
+                        <label class="control-label">Tipo do informe</label>
+                        <select ng-model="informe.tipo" ng-required="true" class="form-control">
+                            <option disabled selected value="">Selecione um tipo</option>
+                            <option value="Aparecimento">Aparecimento</option>
+                            <option value="Desaparecimento">Desaparecimento</option>
+                        </select>
+                    </div>
+                    <li class="">
+                        <button ng-click="informeform.$valid && save()" class="btn btn-primary">Save</button>
+                    </li>
+                </form>
+            </ul>
+        </div>
+    </div>
+</div>
+<footer-element></footer-element>

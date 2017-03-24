@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-
 from informe.models import Informe
 
 
@@ -33,11 +32,11 @@ class InformeSerializer(serializers.Serializer):
     coordenadas = serializers.CharField(required=True, max_length=30, allow_blank=False)
 
     def create(self, validated_data):
-        # Cria e retorna uma instancia de informe, dados os dados validados
+        # Cria e retorna uma instancia de novoInforme, dados os dados validados
         return Informe.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        # Atualiza e retorna uma instancia de informe, dados os dados validados
+        # Atualiza e retorna uma instancia de novoInforme, dados os dados validados
         instance.data_criacao = validated_data.get('data_criacao', instance.data_criacao)
         instance.titulo = validated_data.get('titulo', instance.titulo)
         instance.descricao = validated_data.get('descricao', instance.descricao)

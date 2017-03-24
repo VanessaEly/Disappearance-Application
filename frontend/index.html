@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="disapp">
+
     <head>
-        <title>Disapp</title>
+        <title>Disappearance Application</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
 
 		<!-- NO CACHE -->
 		<meta http-equiv="cache-control" content="max-age=0" />
@@ -15,13 +17,12 @@
 
         <!-- LIBRARIES -->
         <script language="JavaScript" type="text/javascript" src="assets/libraries/jquery/jquery-2.2.1.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="assets/libraries/angular/angular.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="assets/libraries/angular/angular-route.min.js"></script>
         <link   rel="stylesheet" type="text/css" href="assets/libraries/datepicker/datepicker.min.css">
 		<script language="JavaScript" type="text/javascript" src="assets/libraries/datepicker/datepicker.min.js"></script>
-        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">-->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>-->
-
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!-- MODULES -->
 		<script type="text/javascript" src="app/app.js"></script>
@@ -30,14 +31,18 @@
 		<script type="text/javascript" src="app/routes.js"></script>
 
         <!-- CONTROLLERS -->
+        <script type="text/javascript" src="app/components/novoInforme/novoInformeController.js"></script>
         <script type="text/javascript" src="app/components/main/mainController.js"></script>
         <script type="text/javascript" src="app/components/home/homeController.js"></script>
+        <script type="text/javascript" src="app/components/cadastroUsuario/cadastroUsuarioController.js"></script>
         <script type="text/javascript" src="app/shared/header/headerController.js"></script>
         <script type="text/javascript" src="app/shared/footer/footerController.js"></script>
 
         <!-- DIRECTIVES -->
 		<script type="text/javascript" src="app/shared/header/headerDirective.js"></script>
         <script type="text/javascript" src="app/shared/footer/footerDirective.js"></script>
+        <script type="text/javascript" src="app/components/home/homeMapDirective.js"></script>
+        <script type="text/javascript" src="app/components/novoInforme/informeMapDirective.js"></script>
 
         <!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="assets/styles/style.css">
@@ -48,6 +53,7 @@
 
         <!-- SCRIPTS -->
 		<script type="text/javascript" src="assets/scripts/scripts.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1P1PCq9OT7tyIGVM30sccdv1q2b3Gv2Q&libraries=places"></script>
 
     </head>
 
