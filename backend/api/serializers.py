@@ -1,14 +1,14 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from informe.models import Informe
+from ocorrencia.models import Ocorrencia
 
 
 class UserSerializer(serializers.ModelSerializer):
-    informes = serializers.PrimaryKeyRelatedField(many=True, queryset=Informe.objects.all())
+    ocorrencias = serializers.PrimaryKeyRelatedField(many=True, queryset=Ocorrencia.objects.all())
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'informes')
+        fields = ('id', 'username', 'ocorrencias')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -17,13 +17,13 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 
-class InformeSerializer(serializers.ModelSerializer):
+class OcorrenciaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Informe
+        model = Ocorrencia
         fields = ('id', 'data_criacao', 'titulo', 'descricao', 'coordenadas', 'owner')
 
 
-class InformeSerializer(serializers.Serializer):
+class OcorrenciaSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     owner = serializers.ReadOnlyField(source='owner.username')
     data_criacao = serializers.CharField(read_only=True)
@@ -32,11 +32,11 @@ class InformeSerializer(serializers.Serializer):
     coordenadas = serializers.CharField(required=True, max_length=30, allow_blank=False)
 
     def create(self, validated_data):
-        # Cria e retorna uma instancia de novoInforme, dados os dados validados
-        return Informe.objects.create(**validated_data)
+        # Cria e retorna uma instancia de novoocorrencia, dados os dados validados
+        return Ocorrencia.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        # Atualiza e retorna uma instancia de novoInforme, dados os dados validados
+        # Atualiza e retorna uma instancia de novoocorrencia, dados os dados validados
         instance.data_criacao = validated_data.get('data_criacao', instance.data_criacao)
         instance.titulo = validated_data.get('titulo', instance.titulo)
         instance.descricao = validated_data.get('descricao', instance.descricao)

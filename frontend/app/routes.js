@@ -11,15 +11,15 @@ app.config(function($routeProvider, $locationProvider) {
             replace: true,
             reloadOnSearch: false
         })
-        .when('/novo-informe', {
-            templateUrl: 'app/components/novoInforme/novoInformeView.html',
+        .when('/nova-ocorrencia', {
+            templateUrl: 'app/components/novaOcorrencia/novaOcorrenciaView.html',
             replace: true,
             reloadOnSearch: false
         })
 
         // DEFAULT
         .otherwise({
-            redirectTo: '/home'
+            redirectTo: '/'
         });
 
     // //Removing fragment identifier from AngularJS urls (# symbol)

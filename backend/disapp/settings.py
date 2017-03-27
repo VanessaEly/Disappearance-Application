@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # Django Rest Framework
     'disapp',
-    'informe',
+    'ocorrencia',
     'api',
 ]
 

@@ -98,13 +98,15 @@ body {
     margin: 0;
     padding-bottom: 11rem;
     min-height: 90%;
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: rgba(234, 234, 234, 0.32) !important;
 }
 /* END BODY */
 
 
 .home{
-    height: 75vh;
+    height: 77vh;
 }
 /* HOME */
 #home-map{
@@ -113,10 +115,14 @@ body {
 }
 /* END HOME */
 
-/*!* NOVO INFORME *!*/
-#informe-map, #informe-form {
+/*!* NOVO ocorrencia *!*/
+#ocorrencia-map, #ocorrencia-form {
     height: 40vh;
     width: 100%;
+}
+
+.ocorrencia-t1 {
+    font-size: 1.3em;
 }
 
 .controls {
@@ -150,18 +156,58 @@ body {
 }
 
 .tab-pane {
-    margin: 0 auto;
-    margin-bottom: 2rem !important;
-    padding-top: 64px;
-    padding-bottom: 64px;
-    max-width: 900px;
-    width: 94%;
+    padding-top: 10px;
+    width: 100%;
 }
-/* END NOVO INFORME */
+.form-control {
+    height: 30px !important;
+    padding: 1px 10px !important;
+    font-size: 13px !important;
+}
+
+.form-group {
+    margin-top: 10px !important;
+}
+#uploader {
+    margin: 0;
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    height: 40vh;
+    border: 3px dashed #000;
+    cursor:pointer;
+    color:#555;
+    font-weight:bold;
+    background-image: url("../images/upload.png");
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#uploader:hover{  border: 3px dashed #7d7d7d; }
+
+#uploader-text {
+    margin-left: 1vh;
+}
+#filePhoto{
+    display:none;
+}
+
+#uploader img{
+    position:absolute;
+    width:105%;
+    height:362px;
+    top:-1px;
+    left:-1px;
+    z-index:-1;
+    border:none;
+
+}
+/* END NOVA OCORRENCIA */
 
 /* FOOTER */
 footer {
-    position: fixed;
+    position: absolute;
     right: 0;
     bottom: 0;
     left: 0;

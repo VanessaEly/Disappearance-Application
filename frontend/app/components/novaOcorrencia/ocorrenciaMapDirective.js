@@ -1,5 +1,5 @@
-app.directive('informeMap', ['$parse', function($parse) {
-    var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
+app.directive('ocorrenciaMap', ['$parse', function($parse) {
+    var map, pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
         styles: [{"stylers": [{"saturation": -100}, {"gamma": 1}]},
@@ -46,6 +46,8 @@ app.directive('informeMap', ['$parse', function($parse) {
             map: map
         });
 
+
+
         //Call function to get formatted address based os pos lat/lng
         //return it as coordinates scope variable
         address_to_coordinates(pos, function (pos) {
@@ -58,26 +60,6 @@ app.directive('informeMap', ['$parse', function($parse) {
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-            searchBox.setBounds(map.getBounds());
-        });
-
-        var markers = [];
-
-        //Dragend Listener
-        google.maps.event.addListener(marker, 'dragend', function() {
-            pos = marker.getPosition();
-
-            //Call function to get formatted address based os pos lat/lng
-            //return it as coordinates scope variable
-            address_to_coordinates(pos, function (pos) {
-                scope.coordinates = pos;
-                scope.$apply();
-            });
-
-        });
-
         //Get Formatted address based os pos lat/lng
         function address_to_coordinates(address_text, callback) {
             var address = address_text;
@@ -85,11 +67,24 @@ app.directive('informeMap', ['$parse', function($parse) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     callback(results[0]);
 
-                } else {
-                    alert("Geocode was not successful for the following reason: " + status);
                 }
             });
         }
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        //Get market position and set scope coordinates with its value
+        google.maps.event.addListener(marker, 'dragend', function() {
+            pos = marker.getPosition();
+            address_to_coordinates(pos, function (pos) {
+                scope.coordinates = pos;
+                scope.$apply();
+            });
+
+        });
 
         // [START region_getplaces]
         // Listen for the event fired when the user selects a prediction and retrieve
@@ -101,26 +96,24 @@ app.directive('informeMap', ['$parse', function($parse) {
                 return;
             }
 
-            // Clear out the old markers.
-            markers.forEach(function(marker) {
-                marker.setMap(null);
-            });
-            markers = [];
+            // Clear out the old marker.
+            marker.setMap(null);
 
             // For each place, get the name and location.
             var bounds = new google.maps.LatLngBounds();
             places.forEach(function(place) {
 
                 // Create a marker for each place.
-                markers.push(new google.maps.Marker({
+                marker = new google.maps.Marker({
                     map: map,
                     draggable: true,
-                    animation: google.maps.Animation.DROP,
+                    animation: google.maps.Animation.BOUNCE,
                     title: place.name,
                     position: place.geometry.location
-                }));
+                });
                 map.setCenter(place.geometry.location);
                 pos = place.geometry.location;
+
 
                 //Call function to get formatted address based os pos lat/lng
                 //return it as coordinates scope variable
@@ -137,14 +130,20 @@ app.directive('informeMap', ['$parse', function($parse) {
                 }
             });
             map.fitBounds(bounds);
+            google.maps.event.addListener(marker, 'dragend', function() {
+                pos = marker.getPosition();
+                address_to_coordinates(pos, function (pos) {
+                    scope.coordinates = pos;
+                    scope.$apply();
+                });
+
+            });
         });
-
-
     };
 
     return {
         restrict: 'AC',
-        template: '<div id="informe-map"></div>',
+        template: '<div id="ocorrencia-map"></div>',
         replace: true,
         link: link
     };
