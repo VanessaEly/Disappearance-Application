@@ -33,29 +33,27 @@ app.directive('homeMap', function() {
                 };
 
                 map.setCenter(pos);
+                setMarker(map, pos, "You're here", "This is the place you're currently at", infoWindow, markers);
             })
         }
+        else {
+            setMarker(map, pos, "You're here", "This is the place you're currently at", infoWindow, markers);
+        }
 
-        var marker = new google.maps.Marker({
-            position: pos,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            map: map
-        });
-
-        setMarker(map, new google.maps.LatLng(-22.906225, -43.191886), 'London', 'Just some content', infoWindow, markers);
-        setMarker(map, new google.maps.LatLng(-22.907325, -43.192986), 'Amsterdam', 'More content', infoWindow, markers);
-        setMarker(map, new google.maps.LatLng(-22.908425, -43.193586), 'Paris', 'Text here', infoWindow, markers);
+        setMarker(map, new google.maps.LatLng(-22.906225, -43.191886), 'London', 'Just some content', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        setMarker(map, new google.maps.LatLng(-22.907325, -43.192986), 'Amsterdam', 'More content', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        setMarker(map, new google.maps.LatLng(-22.908425, -43.193586), 'Paris', 'Text here', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
     };
 
     // place a marker
-    function setMarker(map, position, title, content, infoWindow, markers) {
+    function setMarker(map, position, title, content, infoWindow, markers, icon) {
         var marker;
         var markerOptions = {
             position: position,
             map: map,
             title: title,
-            icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            animation: google.maps.Animation.DROP,
+            icon: icon
         };
 
         marker = new google.maps.Marker(markerOptions);

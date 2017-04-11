@@ -1,5 +1,5 @@
 app.directive('ocorrenciaMap', ['$parse', function($parse) {
-    var map, pos = {lat: -22.905125, lng: -43.190786};
+    var map,marker, pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
         styles: [{"stylers": [{"saturation": -100}, {"gamma": 1}]},
@@ -15,6 +15,7 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
             {"featureType": "transit.station", "elementType": "labels.icon", "stylers": [{"gamma": 1}, {"saturation": 50}]}
         ],
         zoom: 13,
+        minZoom: 1,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scrollwheel: true
     };
@@ -32,21 +33,35 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-                map.setCenter(pos);
-
-
+                setMarker(map, pos, "You're here");
             })
         }
+        else {
+            setMarker(map, pos, "You're here");
+        }
 
-        var marker = new google.maps.Marker({
-            position: pos,
-            draggable: true,
-            animation: google.maps.Animation.BOUNCE,
-            map: map
-        });
+        // place a marker
+        function setMarker(map, position, title) {
+            map.setCenter(pos);
+            var markerOptions = {
+                position: position,
+                map: map,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                draggable: true,
+            };
 
+            marker = new google.maps.Marker(markerOptions);
+            //Get market position and set scope coordinates with its value
+            google.maps.event.addListener(marker, 'dragend', function() {
+                pos = marker.getPosition();
+                address_to_coordinates(pos, function (pos) {
+                    scope.coordinates = pos;
+                    scope.$apply();
+                });
 
+            });
+        }
 
         //Call function to get formatted address based os pos lat/lng
         //return it as coordinates scope variable
@@ -76,15 +91,7 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
             searchBox.setBounds(map.getBounds());
         });
 
-        //Get market position and set scope coordinates with its value
-        google.maps.event.addListener(marker, 'dragend', function() {
-            pos = marker.getPosition();
-            address_to_coordinates(pos, function (pos) {
-                scope.coordinates = pos;
-                scope.$apply();
-            });
 
-        });
 
         // [START region_getplaces]
         // Listen for the event fired when the user selects a prediction and retrieve

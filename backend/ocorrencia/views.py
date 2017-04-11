@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 
 from api.permissions import IsOwnerOrReadOnly
-from api.serializers import UserSerializer, GroupSerializer, OcorrenciaSerializer
+from api.serializers import UserSerializer, OcorrenciaSerializer
 from models import Ocorrencia
 
 
@@ -10,12 +10,6 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     # Viewset que detalha e lista usuarios
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-class GroupViewSet(viewsets.ReadOnlyModelViewSet):
-    # Viewset que detalha e lista grupos
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
