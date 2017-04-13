@@ -9,9 +9,14 @@ app.controller('CadastroUsuarioController', function($scope, $http) {
         var data = { "username": $scope.usuario.username,
             "password": $scope.usuario.password,
             "email": $scope.usuario.email};
-        return $http.post('http://localhost:8000/api/users/', data).success(function (data) {
-               console.log("login success", data)
+        return $http.post('http://localhost:8000/api/users/', data).then(
+               function(response){
+               console.log("login response", response.data);
            })
+        //   return $http.get('http://localhost:8000/api/users/').then(
+        //        function(response){
+        //       console.log("get success", response)
+        //   })
       }
 
       // $scope.getUsers  = function() {

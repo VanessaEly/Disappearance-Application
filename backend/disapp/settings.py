@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',  # Django Rest Framework
+    'rest_framework.authtoken',
     'disapp',
     'ocorrencia',
     'api',
@@ -100,11 +101,11 @@ DATABASES = {
 
 # Rest Framework config
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+         'disapp.permissions.IsPostOrIsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
     ),
     'PAGE_SIZE': 10
 }
