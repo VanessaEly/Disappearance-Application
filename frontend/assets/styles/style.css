@@ -7,6 +7,9 @@
     float: right;
 }
 
+p {
+    margin: 0px !important;
+}
 /* END GENERAL */
 
 /* HTML */
@@ -89,6 +92,10 @@ header {
         background-color: inherit;
         border-top:0 none;
     }
+}
+
+#signupalert {
+    color: #b71010;
 }
 /* END NAV */
 
@@ -258,3 +265,50 @@ padding: 5px;
 }
 /* END FOOTER */
 
+/* TOASTS */
+
+.toasts {
+	position: fixed;
+  top: 85px;
+  right: 15px
+}
+
+.toast {
+	min-width: 100px;
+	max-width: 550px;
+	margin-top: 10px;
+	padding: 10px 25px;
+	box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+.toast p {
+	margin: 0;
+	font-size: 1.2rem;
+	color: #fff;
+	vertical-align: middle;
+}
+
+.toast p i {
+	padding-right: 10px;
+	font-size: 2.5rem;
+	color: #fff;
+	vertical-align: sub;
+}
+
+.ok-priority-toast {
+	background-color: #5fa71e;
+}
+
+.low-priority-toast {
+	background-color: #323232;
+}
+
+.medium-priority-toast {
+	background-color: #b5a10f;
+}
+
+.high-priority-toast {
+	background-color: #b71010;
+}
+
+/* END TOASTS */

@@ -37,15 +37,18 @@
         <script type="text/javascript" src="app/components/cadastroUsuario/cadastroUsuarioController.js"></script>
         <script type="text/javascript" src="app/shared/header/headerController.js"></script>
         <script type="text/javascript" src="app/shared/footer/footerController.js"></script>
+        <script type="text/javascript" src="app/shared/toasts/toastsController.js"></script>
 
         <!-- DIRECTIVES -->
 		<script type="text/javascript" src="app/shared/header/headerDirective.js"></script>
         <script type="text/javascript" src="app/shared/footer/footerDirective.js"></script>
+        <script type="text/javascript" src="app/shared/toasts/toastsDirective.js"></script>
         <script type="text/javascript" src="app/components/home/homeMapDirective.js"></script>
         <script type="text/javascript" src="app/components/novaOcorrencia/ocorrenciaMapDirective.js"></script>
 
         <!-- SERVICES -->
         <script type="text/javascript" src="app/components/services/dbService.js"></script>
+        <script type="text/javascript" src="app/shared/toasts/toastsService.js"></script>
 
         <!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="assets/styles/style.css">
@@ -63,5 +66,6 @@
 
     <body ng-controller="MainController" ng-init="mainInit()" class="pageContentWrapper">
         <div id="view-element" ng-view></div>
+        <toasts-element></toasts-element>
     </body>
 </html>

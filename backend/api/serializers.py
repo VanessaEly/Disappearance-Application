@@ -1,23 +1,16 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from ocorrencia.models import Ocorrencia
-from rest_framework.validators import UniqueTogetherValidator
 
 
 class UserSerializer(serializers.ModelSerializer):
     # ocorrencias = serializers.PrimaryKeyRelatedField(many=True, queryset=Ocorrencia.objects.all())
-    email = serializers.CharField(required=True, allow_blank=False, max_length=100)
+    User._meta.get_field('email')._unique = True
 
     class Meta:
         model = User
         fields = ('username', 'password', 'email')  # 'ocorrencias'
         extra_kwargs = {'password': {'write_only': True}}
-        validators = [
-            UniqueTogetherValidator(
-                queryset=User.objects.all(),
-                fields=('username', 'email')
-            )
-        ]
 
     # validacao de dados e encriptacao de password
     def create(self, validated_data):

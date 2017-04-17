@@ -53,31 +53,39 @@
             </div>
             <div class="panel-body" >
                 <form name="signupform" class="form-horizontal">
-                    <div id="signupalert" style="display:none" class="alert alert-danger">
-                        <p>Error:</p>
-                        <span></span>
+
+                    <div id="signupalert" class="alert alert-danger" ng-show="errors">
+                        <span class="glyphicon glyphicon-warning-sign"></span>
+                        <strong>Ops! Algo deu errado.</strong>
+                        <ul>
+                            <li ng-repeat=" error in errors" ng-bind-html-unsafe="error" >
+                                <p>{{ error }}</p>
+                            </li>
+                        </ul>
                     </div>
+
                     <div class="form-group">
                         <label class="col-md-3 control-label">Nome</label>
                         <div class="col-md-9">
-                            <input ng-model="usuario.username" ng-required="true" type="text" class="form-control" name="username" placeholder="Nome">
+                            <input ng-model="usuario.username" ng-required="true" type="text" class="form-control" name="username" placeholder="Nome" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Email</label>
                         <div class="col-md-9">
-                            <input ng-model="usuario.email" ng-required="true" type="email" class="form-control" name="email" placeholder="Email">
+                            <input ng-model="usuario.email" ng-required="true" type="email" class="form-control" name="email" placeholder="Email" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Senha</label>
                         <div class="col-md-9">
-                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password" placeholder="Senha">
+                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password" placeholder="Senha" />
                         </div>
                     </div>
+
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-9">
-                            <button id="btn-signup" ng-click="signupform.$valid && cadastrar()" type="button" class="btn btn-success"><i class="icon-hand-right"></i> &nbsp Cadastrar</button>
+                            <button id="btn-signup" ng-click="signupform.$valid && cadastrar()" type="submit" class="btn btn-success"><i class="icon-hand-right"></i> &nbsp Cadastrar</button>
                             <button id="btn-fbsignup" ng-click="getUsers()" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Cadastrar com o Facebook</button>
                         </div>
                     </div>

@@ -143,7 +143,7 @@
                             <input ng-model="pa.idade" ng-required="false"
                                    type="number" class="form-control" placeholder="10 anos" min="0" max="150"/>
                         </div>
-                        <div class="col-md-2" ng-show="ocorrencia.tipo">
+                        <div class="col-md-2">
                             <label class="control-label">*Sexo</label>
                             <select ng-model="pa.sexo" ng-required="ocorrencia.categoria === 'Animal' || ocorrencia.categoria === 'Pessoa'" class="form-control">
                                 <option disabled selected value="">Sexo</option>
@@ -156,8 +156,33 @@
 
                     <!-- OBJETO -->
                     <div class="form-group col-md-12" ng-show="ocorrencia.categoria === 'Objeto'">
+                        <div class="col-md-4">
+                            <label class="control-label">*Tipo</label>
+                            <select ng-model="animal.raca" ng-required="ocorrencia.categoria === 'Animal'" class="form-control">
+                                <option disabled selected value="">Selecione uma raça</option>
+                                <option value="Pitbull">Pitbull</option>
+                                <option value="Poodle">Poodle</option>
+                                <option value="Pug">Pug</option>
+                                <option value="Akita">Akita</option>
+                                <option value="Outras">Outras</option>
+                            </select>
+                        </div>
 
+                        <div class="col-md-4">
+                            <label class="control-label">*Cor predominante</label>
+                            <select ng-model="animal.cor_primaria" ng-required="ocorrencia.categoria === 'Animal'" class="form-control">
+                                <option disabled selected value="">Selecione a cor do animal</option>
+                                <option value="Preto">Preto</option>
+                                <option value="Branco">Branco</option>
+                                <option value="Cinza">Cinza</option>
+                                <option value="Marrom">Marrom</option>
+                                <option value="Amarelo">Amarelo</option>
+                                <option value="Creme">Creme</option>
+                                <option value="Prata">Prata</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="form-group col-md-12">
                         <div class="col-md-12">
                             <label class="control-label">Detalhes da ocorrência</label>
