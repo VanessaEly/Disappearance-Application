@@ -1,8 +1,15 @@
-app.controller('NovaOcorrenciaController', function($scope, DBService) {
+app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope) {
 
     $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {};
     var imageLoader = document.getElementById('filePhoto');
     imageLoader.addEventListener('change', handleImage, false);
+
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker({
+            defaultDate: Date.now(),
+             format: 'YYYY-MM-DD MM:ss'
+        });
+    });
 
     function handleImage(e) {
         var reader = new FileReader();
@@ -13,53 +20,59 @@ app.controller('NovaOcorrenciaController', function($scope, DBService) {
         document.getElementById('uploader').style.backgroundImage = "none";
         document.getElementById('uploader-text').style.display = "none";
     }
-    $scope.save = function() {
-        if($scope.ocorrencia.categoria === "Pessoa") {
-            $scope.pessoa.nome = $scope.pa.nome;
-            $scope.pessoa.idade = $scope.pa.idade;
-            $scope.pessoa.sexo = $scope.pa.sexo;
-            $scope.ocorrencia.item = $scope.pessoa;
-        } else if ($scope.ocorrencia.categoria === "Animal") {
-            $scope.animal.nome = $scope.pa.nome;
-            $scope.animal.idade = $scope.pa.idade;
-            $scope.animal.sexo = $scope.pa.sexo;
-            $scope.ocorrencia.item = $scope.animal;
-        } else {
-            $scope.ocorrencia.item = $scope.objeto;
-        }
-        console.log($scope.ocorrencia);
 
-        DBService.addInforme($scope.ocorrencia)
-  		.success(function(data, status) {
-            console.log("sucesso", data);
-  		})
-  		.error(function (response, status) {
-            console.log("erro", response, status);
-  		});
-
-        //service
-        // this.addInforme = function(project) {
-		// console.log(project);
-		// return $http({
-		// 	method: 'PUT',
-		// 	url: "http://localhost:8000/api/novaocorrencia/",
-		// 	headers: {'Authorization': "Bearer " + $cookies.get("token")},
-		// 	data: {
-		// 		data: project
-		// 	}
-		// });
-
-        //app
-        //var routes = require('./routes/routes');
-        //app.put('/api/addproject', routes.addProject);
-    }
-
-    $scope.$watch($scope.coordinates, function() {
-   });
+    $scope.$watch($scope.coordinates, function() {});
 
     $scope.novaOcorrenciaInit = function() {
         $('#datetimepicker1').datetimepicker();
         console.log("nova ocorrencia init");
+    }
+
+    $scope.clearData = function () {
+        $scope.pa = {};
+        $scope.pessoa = {};
+        $scope.animal = {};
+        $scope.objeto = {};
+    }
+
+    $scope.save = function() {
+        $scope.ocorrencia.dataehora = $('#datetimepicker').data('date');
+        $scope.item.ocorrencia = $scope.ocorrencia;
+
+        if ($scope.item.categoria == "1") {
+            $scope.pessoa.nome = $scope.pa.nome;
+            $scope.pessoa.idade = $scope.pa.idade;
+            $scope.pessoa.sexo = $scope.pa.sexo;
+        }
+        if ($scope.item.categoria == "2"){
+            $scope.animal.nome = $scope.pa.nome;
+            $scope.animal.idade  = $scope.pa.idade;
+            $scope.animal.sexo = $scope.pa.sexo;
+        }
+        $scope.item.pessoa = $scope.pessoa;
+        $scope.item.animal = $scope.animal;
+        $scope.item.objeto = $scope.objeto;
+
+        console.log("item", $scope.item);
+        $http.post('http://localhost:8000/api/novoitem/', $scope.item).then(
+            function successCallback(response) {
+                console.log(response);
+                $rootScope.$broadcast("toast", {
+                    priority: "low",
+                    text: "Ocorrencia cadastrada com sucesso!"
+                });
+                $scope.goTo("/");
+            }, function errorCallback(response) {
+                console.log(response);
+                if(response.status == 400) {
+                    $rootScope.$broadcast("toast", {
+                        priority: "high",
+                        text: "Não foi possível cadastrar o item"
+                    });
+                }
+            }
+        );
+
     }
 });
 

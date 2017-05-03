@@ -78,10 +78,12 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
         //Get Formatted address based os pos lat/lng
         function address_to_coordinates(address_text, callback) {
             var address = address_text;
+
             geocoder.geocode( { 'latLng': pos }, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
+                    scope.ocorrencia.latitude = results[0].geometry.location.lat();
+                    scope.ocorrencia.longitude = results[0].geometry.location.lng();
                     callback(results[0]);
-
                 }
             });
         }

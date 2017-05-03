@@ -1,4 +1,4 @@
-app.directive('homeMap', function() {
+app.directive('homeMap', function($http) {
     var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
@@ -19,8 +19,7 @@ app.directive('homeMap', function() {
     };
 
     // directive link function
-    var link = function(scope, element, attrs) {
-
+    var link = function(scope, element, attrs, http) {
 
         map = new google.maps.Map(element[0], mapOptions);
 
@@ -33,16 +32,27 @@ app.directive('homeMap', function() {
                 };
 
                 map.setCenter(pos);
-                setMarker(map, pos, "You're here", "This is the place you're currently at", infoWindow, markers);
+                setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
             })
         }
         else {
-            setMarker(map, pos, "You're here", "This is the place you're currently at", infoWindow, markers);
+            setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
         }
+        //fazendo requisicao das ocorrencias cadastradas
+        $http.get('http://localhost:8000/api/novaocorrencia/', {
+            headers: {"Authorization": "Token 5f7a57e87ebb87798a1cc28b808b9a694970cc99"}
+        }).success(function(response){
+            scope.ocorrencias = response.results;
+            //criando marcadores para todas as ocorrecias encontradas
+            for (var i = 0; i < scope.ocorrencias.length; i++) {
+                setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, scope.ocorrencias[i].tipo, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            }
+        }).error(function(response){
+            console.log("get error", response);
+        });
 
-        setMarker(map, new google.maps.LatLng(-22.906225, -43.191886), 'London', 'Just some content', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
-        setMarker(map, new google.maps.LatLng(-22.907325, -43.192986), 'Amsterdam', 'More content', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
-        setMarker(map, new google.maps.LatLng(-22.908425, -43.193586), 'Paris', 'Text here', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        // setMarker(map, new google.maps.LatLng(-22.907325, -43.192986), 'Amsterdam', 'More content', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+        // setMarker(map, new google.maps.LatLng(-22.908425, -43.193586), 'Paris', 'Text here', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
     };
 
     // place a marker
@@ -52,7 +62,7 @@ app.directive('homeMap', function() {
             position: position,
             map: map,
             title: title,
-            animation: google.maps.Animation.DROP,
+            //animation: google.maps.Animation.DROP,
             icon: icon
         };
 

@@ -7,6 +7,10 @@ from api.views.user import views as userviews
 # Cria um router e registra os viewsets com ele
 router = DefaultRouter()
 router.register(r'novaocorrencia', ocorrenciaviews.OcorrenciaViewSet)
+router.register(r'novoitem', ocorrenciaviews.ItemViewSet)
+router.register(r'novoobjeto', ocorrenciaviews.ObjetoViewSet)
+router.register(r'novoanimal', ocorrenciaviews.AnimalViewSet)
+router.register(r'novapessoa', ocorrenciaviews.PessoaViewSet)
 router.register(r'users', userviews.UserViewSet)
 
 # Os URLs da API sao determinados automaticamente pelo router
