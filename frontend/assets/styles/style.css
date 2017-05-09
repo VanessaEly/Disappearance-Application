@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Caviar Dreams';
+    src: url('../fonts/Caviar_Dreams_Bold.ttf');
+}
+
 /* GENERAL */
 .pointer {
     cursor: pointer;
@@ -28,8 +33,9 @@ html {
 /* HEADER */
 
 header {
-    height: 7vh;
+    min-height: 5vh;
 }
+
 #header_logo {
     width: 165px;
     margin-top: 5px;
@@ -39,21 +45,40 @@ header {
 /* NAV */
 .navbar {
     margin-bottom: 0px !important;
+    border-bottom: 2px solid #000000 !important;
+}
+
+.navbar h3 {
+    margin-top: 5px;
+    font-family: 'Caviar Dreams';
+    color: rgb(30, 139, 172);
+    font-size: 35px;
+    text-shadow: 2.5px 1px rgb(0, 0, 0);
 }
 
 .navbar-nav {
     margin-left: 5% !important;
 }
+
+.navbar-prop {
+    background-color: rgba(247, 247, 247, 0.8) !important;
+    color: #0070BF !important;
+}
+
+.navbar a {
+    color: #000000 !important;
+}
+
 #login-dp{
     min-width: 250px;
     padding: 14px 14px 0;
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(255,255,255,1);
 }
 #login-dp .help-block{
     font-size:12px
 }
 #login-dp .bottom{
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(255,255,255,1);
     border-top:1px solid #ddd;
     clear:both;
     padding:14px;
@@ -68,7 +93,7 @@ header {
     margin-bottom: 10px;
 }
 .btn-fb{
-    color: #fff;
+    color: #fff !important;
     background-color:#3b5998;
 }
 .btn-fb:hover{
@@ -76,23 +101,14 @@ header {
     background-color:#496ebc
 }
 .btn-tw{
-    color: #fff;
+    color: #fff !important;
     background-color:#55acee;
 }
 .btn-tw:hover{
     color: #fff;
     background-color:#59b5fa;
 }
-@media(max-width:768px){
-    #login-dp{
-        background-color: inherit;
-        color: #fff;
-    }
-    #login-dp .bottom{
-        background-color: inherit;
-        border-top:0 none;
-    }
-}
+
 
 #signupalert {
     color: #b71010;
@@ -103,8 +119,7 @@ header {
 body {
     position: relative;
     margin: 0;
-    padding-bottom: 11rem;
-    min-height: 90%;
+    min-height: 80%;
     font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
     background: rgba(234, 234, 234, 0.32) !important;
@@ -113,12 +128,12 @@ body {
 
 
 .home{
-    height: 77vh;
 }
 /* HOME */
 #home-map{
-    height: 85vh;
+    height: 80vh;
     width: 100%;
+    margin-top: 5px !important;
 }
 /* END HOME */
 
@@ -214,14 +229,16 @@ body {
 
 /* FOOTER */
 footer {
-    position: absolute;
+
+    position: relative;
     right: 0;
     bottom: 0;
     left: 0;
     padding-top: 1rem;
-    background-color: #3c3d41;
+    background-color: #fff;
     color: white;
     text-align: center;
+    border-top: 2px solid rgba(51, 51, 51, 0.23) !important;
 }
 
 #myFooter .footer-copyright {
@@ -234,20 +251,20 @@ footer {
 #myFooter ul {  list-style-type: none;  }
 
 #myFooter a {
-    color: #d2d1d1;
+    color: #000000;
     text-decoration: none;
 }
 
 #myFooter a:hover,
-#myFooter a:focus {  color: white;  }
+#myFooter a:focus {  color: #0077e2;  }
 
 #myFooter .social-networks {
     padding-left: 25px;
 }
 #myFooter .social-networks a {
     font-size: 25px;
-    color: #f9f9f9;
-padding: 5px;
+    color: #000000;
+    padding: 5px;
     transition: 0.2s;
 }
 
@@ -312,3 +329,67 @@ padding: 5px;
 }
 
 /* END TOASTS */
+/*BUTTON*/
+.btn-circle
+{
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.btn-circle.btn-lg
+{
+    width: 40px;
+    height: 40px;
+    padding: 10px 5px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+.btn-circle.btn-xl
+{
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+
+.btn-danger {
+    color: #fff !important;
+    background-color: #aa4949 !important;
+    border-color: #852525 !important;
+}
+
+.btn-primary {
+    margin-bottom: 20px !important;
+}
+/*END BUTTON*/
+
+/*BUTTON BOUNCE */
+@keyframes bounce {
+	0%,10%,20%,50%,80%,100%{transform:translateY(0)}
+	40%{transform:translateY(-15px)}
+	60%{transform:translateY(-15px)}
+}
+.faa-bounce.animated,
+.faa-bounce.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-bounce {
+	animation: bounce 2s ease infinite;
+}
+.faa-bounce.animated.faa-fast,
+.faa-bounce.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-bounce.faa-fast {
+	animation: bounce 1s ease infinite;
+}
+.faa-bounce.animated.faa-slow,
+.faa-bounce.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-bounce.faa-slow {
+	animation: bounce 3s ease infinite;
+}
+/*END BUTTON BOUNCE */

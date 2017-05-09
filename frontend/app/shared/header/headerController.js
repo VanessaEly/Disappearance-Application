@@ -1,10 +1,6 @@
 app.controller('HeaderController', function($scope, $rootScope, $window) {
 
-    $scope.headerInit = function() {
-        console.log("header init");
-        $scope.currentPage = $rootScope.currentPage;
-    }
-
+    $scope.headerInit = function() {}
 
     $window.fbAsyncInit = function() {
         FB.init({

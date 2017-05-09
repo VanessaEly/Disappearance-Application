@@ -1,8 +1,6 @@
 app.controller("MainController", function($q, $scope, $location, $rootScope) {
 
-	$scope.mainInit = function() {
-        console.log("main init");
-	}
+	$scope.mainInit = function() {}
 
 	$scope.goTo = function(aRoute, aRouteParams) {
 		if (aRouteParams) {

@@ -1,0 +1,88 @@
+<header-element></header-element>
+<div class="home" ng-controller="ListaOcorrenciasController" ng-init="listaOcorrenciasInit()">
+
+    <div class="container">
+
+
+        <h1> <i class="fa fa-shopping-cart"></i> Ocorrência <small> - clique em uma ocorrência para obter detalhes</small> <a href="http://bootsnipp.com/alisonpedro/snippets/Q60Oj" class="btn btn-danger pull-right hide" id="back-to-bootsnipp">Back to Bootsnipp</a></h1>
+
+        <hr>
+
+        <table class="table table-hover">
+            <thead>
+            <tr >
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Título</th>
+                <th>Data Criação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ocorrencia in ocorrencias" ng-click="detalhesOcorrencia(ocorrencia)">
+                <td>{{ ocorrencia.id }}</td>
+                <td>{{ ocorrencia.tipo }}</td>
+                <td>{{ ocorrencia.titulo }}</td>
+                <td>{{ ocorrencia.data_criacao }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="detalhesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <i class="text-muted fa fa-shopping-cart"></i>
+                        <strong>{{ ocorrencia.tipo }}</strong> - {{ ocorrencia.titulo }} </h4>
+                </div>
+                <div class="modal-body">
+
+                    <table class="pull-left col-md-8 ">
+                        <tbody>
+                        <tr>
+                            <td class="h6"><strong>Id</strong></td>
+                            <td> </td>
+                            <td class="h5">{{ ocorrencia.id }}</td>
+                        </tr>
+
+                        <tr>
+                            <td class="btn-mais-info text-primary">
+                                <i class="open_info fa fa-plus-square-o"></i>
+                                <i class="open_info hide fa fa-minus-square-o"></i> informações
+                            </td>
+                            <td> </td>
+                            <td class="h5"></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <div class="col-md-4">
+                        <img src="http://lorempixel.com/150/150/technics/" alt="teste" class="img-thumbnail">
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <p class="open_info hide">{{ ocorrencia.detalhes }}</p>
+                </div>
+
+                <div class="modal-footer">
+
+                    <div class="text-right pull-right col-md-3">
+                        <button type="button" class="btn btn-info btn-circle btn-lg" title="Contato">
+                            <i class="fa fa-envelope animated"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fim Modal-->
+
+</div>
+<footer-element></footer-element>

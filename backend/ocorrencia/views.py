@@ -4,12 +4,17 @@ from rest_framework import viewsets
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
-    # Viewset que lista, cria, retorna, atualiza e deleta ocorrencias
-    queryset = Ocorrencia.objects.all()
     serializer_class = OcorrenciaSerializer
     # permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
 
-    def perform_create(self, serializer):
+    def get_queryset(self):
+        queryset = Ocorrencia.objects.all()
+        ocorrencia = self.request.query_params.get('id', None)
+        if ocorrencia is not None:
+            queryset = queryset.filter(id=ocorrencia)
+        return queryset
+
+    def create(self, serializer):
         # serializer.save(owner=self.request.user)
         serializer.save()
 

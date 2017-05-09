@@ -39,20 +39,21 @@ app.directive('homeMap', function($http) {
             setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
         }
         //fazendo requisicao das ocorrencias cadastradas
-        $http.get('http://localhost:8000/api/novaocorrencia/', {
+        $http.get('http://localhost:8000/api/ocorrencia/', {
             headers: {"Authorization": "Token 5f7a57e87ebb87798a1cc28b808b9a694970cc99"}
         }).success(function(response){
             scope.ocorrencias = response.results;
             //criando marcadores para todas as ocorrecias encontradas
             for (var i = 0; i < scope.ocorrencias.length; i++) {
-                setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, scope.ocorrencias[i].tipo, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                var content  = '<div id="content">'+
+                    '<p>'+ scope.ocorrencias[i].titulo+ '</p><p><a href="http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'">'+
+                    'http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'</a> </p>'+
+                    '</div>';
+                setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
             }
         }).error(function(response){
             console.log("get error", response);
         });
-
-        // setMarker(map, new google.maps.LatLng(-22.907325, -43.192986), 'Amsterdam', 'More content', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
-        // setMarker(map, new google.maps.LatLng(-22.908425, -43.193586), 'Paris', 'Text here', infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
     };
 
     // place a marker

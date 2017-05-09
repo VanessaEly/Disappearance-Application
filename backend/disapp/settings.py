@@ -101,11 +101,15 @@ DATABASES = {
 
 # Rest Framework config
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-         'disapp.permissions.IsPostOrIsAuthenticated',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #      'disapp.permissions.IsPostOrIsAuthenticated',
+    # ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'PAGE_SIZE': 10
 }
