@@ -1,4 +1,6 @@
-app.controller('ToastsController', function($scope, $rootScope, ToastsService) {
+app.controller('ToastsController', function($scope,
+																						$rootScope,
+																						ToastsService) {
 
 	$scope.toasts = {};
 

@@ -1,4 +1,4 @@
-app.controller('CadastroUsuarioController', function($scope, $http, $rootScope) {
+app.controller('CadastroUsuarioController', function($scope, $http, ToastsService) {
     $scope.usuario = {};
 
     $scope.cadastroUsuarioInit = function() {
@@ -6,26 +6,25 @@ app.controller('CadastroUsuarioController', function($scope, $http, $rootScope) 
     }
 
     $scope.cadastrar = function() {
-        var data = { "username": $scope.usuario.username,
-            "password": $scope.usuario.password,
-            "email": $scope.usuario.email};
-        $scope.errors = [];
-        return $http.post('http://localhost:8000/api/users/', data).then(function successCallback(response) {
+
+        console.log($scope.usuario);
+        return $http.post('http://localhost:8000/api/users/', $scope.usuario).then(function successCallback(response) {
                 console.log(response);
+                ToastsService.makeToast("ok", "Cadastrado com sucesso!", 2000);
                 $scope.goTo("/");
         }, function errorCallback(response) {
             console.log(response);
             if(response.status == 400) {
+                $scope.errors = [];
                 for(var prop in response.data){
                     if (response.data.hasOwnProperty(prop)) {
                         $scope.errors.push(response.data[prop][0].toString());
 
                     }
                 }
-                $rootScope.$broadcast("toast", {
-                    priority: "high",
-                    text: "Não foi possível finalizar o cadastro"
-                });
+                for (var i = 0; i < $scope.errors.length; i++) {
+                    ToastsService.makeToast("high", $scope.errors[i], 2000);
+                }
             }
         });
     }

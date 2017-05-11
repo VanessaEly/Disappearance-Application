@@ -39,9 +39,7 @@ app.directive('homeMap', function($http) {
             setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
         }
         //fazendo requisicao das ocorrencias cadastradas
-        $http.get('http://localhost:8000/api/ocorrencia/', {
-            headers: {"Authorization": "Token 5f7a57e87ebb87798a1cc28b808b9a694970cc99"}
-        }).success(function(response){
+        $http.get('http://localhost:8000/api/ocorrencia/').success(function(response){
             scope.ocorrencias = response.results;
             //criando marcadores para todas as ocorrecias encontradas
             for (var i = 0; i < scope.ocorrencias.length; i++) {

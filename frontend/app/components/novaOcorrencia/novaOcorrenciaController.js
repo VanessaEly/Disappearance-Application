@@ -37,6 +37,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope) {
 
     $scope.save = function() {
         $scope.ocorrencia.dataehora = $('#datetimepicker').data('date');
+        $scope.ocorrencia.endereco = $scope.coordinates.formatted_address;
         $scope.item.ocorrencia = $scope.ocorrencia;
 
         if ($scope.item.categoria == "1") {
@@ -54,7 +55,8 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope) {
         $scope.item.objeto = $scope.objeto;
 
         console.log("item", $scope.item);
-        $http.post('http://localhost:8000/api/novoitem/', $scope.item).then(
+        $http.post('http://localhost:8000/api/novoitem/', $scope.item, {
+            headers: {"Authorization": "Token 5f7a57e87ebb87798a1cc28b808b9a694970cc99"}}).then(
             function successCallback(response) {
                 console.log(response);
                 $rootScope.$broadcast("toast", {

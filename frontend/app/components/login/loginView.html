@@ -1,0 +1,55 @@
+<div class="container" ng-controller="LoginController" ng-init="loginInit()">
+    <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info" >
+            <div class="panel-heading">
+                <div class="panel-title">Login</div>
+                <div class="header-right"><a>Esqueceu sua senha?</a></div>
+            </div>
+            <form id="login-panel" name="loginform" class="panel-body" >
+                <form id="loginform" class="form-horizontal" role="form">
+                    <div id="signupalert" class="alert alert-danger" ng-show="errors">
+                        <span class="glyphicon glyphicon-warning-sign"></span>
+                        <strong>Ops! Algo deu errado.</strong>
+                        <ul>
+                            <li ng-repeat=" error in errors" ng-bind-html-unsafe="error" >
+                                <p>{{ error }}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="input-group login-input">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input ng-model="usuario.username" type="email" class="form-control" name="username"
+                               placeholder="Email" ng-required="true">
+                    </div>
+                    <div class="input-group login-input">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input ng-model="usuario.password" type="password" class="form-control" name="password"
+                               placeholder="Senha" ng-required="true">
+                    </div>
+                    <div class="input-group">
+                        <div class="checkbox">
+                            <label>
+                                <input id="login-remember" type="checkbox" name="remember" value="1"> Lembrar senha
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- Button -->
+                        <div class="col-sm-12 controls">
+                            <button id="btn-login" ng-click="loginform.$valid && login()" class="btn btn-success">Login  </button>
+                            <a id="btn-fblogin" href="#" class="btn btn-primary">Login com o Facebook</a>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 control">
+                            <div> Não tem uma conta?
+                                <a id="teste" ng-click="goTo('/cadastro-usuario')">Cadastre-se aqui!</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </form>
+        </div>
+    </div>
+</div>

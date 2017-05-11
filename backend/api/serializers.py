@@ -5,17 +5,20 @@ from ocorrencia.models import *
 
 class UserSerializer(serializers.ModelSerializer):
     # ocorrencias = serializers.PrimaryKeyRelatedField(many=True, queryset=Ocorrencia.objects.all())
-    User._meta.get_field('email')._unique = True
+    User._meta.get_field('username')._unique = True
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'email')  # 'ocorrencias'
+        fields = ('username', 'password', 'first_name', 'last_name')  # 'ocorrencias'
         extra_kwargs = {'password': {'write_only': True}}
 
     # validacao de dados e encriptacao de password
     def create(self, validated_data):
         user = User(
-            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             username=validated_data['username']
         )
         user.set_password(validated_data['password'])
@@ -28,7 +31,7 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ocorrencia
         fields = ('id', 'data_criacao', 'dataehora', 'titulo', 'tipo',
-                  'detalhes', 'recompensa', 'latitude', 'longitude')
+                  'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco')
 
     # def create(self, validated_data):
     #     return Ocorrencia.objects.create(**validated_data)
@@ -66,7 +69,7 @@ class ObjetoSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    ocorrencia = OcorrenciaSerializer(required=False)
+    ocorrencia = OcorrenciaSerializer(required=True)
     pessoa = PessoaSerializer(required=False)
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)

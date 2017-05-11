@@ -3,6 +3,7 @@ app.service("ToastsService", function($timeout) {
 	var self = this;
 
 	this.toasts = [];
+	this.timeouts = [];
 	this.newToast = {};
 
 	this.makeToast = function(priority, aText, aDuration) {

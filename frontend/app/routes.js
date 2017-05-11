@@ -6,8 +6,13 @@ app.config(function($routeProvider, $locationProvider) {
             replace: true,
             reloadOnSearch: false
         })
+        .when('/login', {
+            templateUrl: 'app/components/login/loginView.html',
+            replace: true,
+            reloadOnSearch: false
+        })
         .when('/cadastro-usuario', {
-            templateUrl: 'app/components/cadastroUsuario/cadastroUsuarioView.html',
+            templateUrl: 'app/components/cadastro-usuario/cadastroUsuarioView.html',
             replace: true,
             reloadOnSearch: false
         })
