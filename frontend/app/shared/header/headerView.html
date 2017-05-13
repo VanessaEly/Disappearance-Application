@@ -17,61 +17,20 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="col-md-2"></div>
                 <div class="col-md-2">
-                     <ul class="nav navbar-nav navbar-left">
-                         <a ng-click="goTo('/nova-ocorrencia')" class="pointer">
-                             <button type="button btn-primary btn-lg" class="btn btn-danger btn-circle btn-lg" title="Nova Ocorrência">
-                                 <i class="fa fa-fw fa-map-marker faa-bounce animated"></i>
-                             </button>
-                         </a>
-                     </ul>
+                    <ul class="nav navbar-nav navbar-left">
+                        <a ng-click="goTo('/nova-ocorrencia')" class="pointer">
+                            <button type="button btn-primary btn-lg" class="btn btn-danger btn-circle btn-lg" title="Nova Ocorrência">
+                                <i class="fa fa-fw fa-map-marker faa-bounce animated"></i>
+                            </button>
+                        </a>
+                    </ul>
                 </div>
                 <div class="col-md-2">
-                     <ul class="nav navbar-nav navbar-left">
+                    <ul class="nav navbar-nav navbar-left">
                         <li><a ng-click="goTo('/listaOcorrencias')" class="pointer">Lista de Ocorrências</a></li>
-                     </ul>
+                    </ul>
                 </div>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle pointer" ng-click="toggleId('login-dp')"><b>Login</b> <span class="caret"></span></a>
-                        <ul id="login-dp" class="dropdown-menu">
-                            <li>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Login utilizando:
-                                        <div class="social-buttons">
-                                            <div class="btn btn-fb" ng-click="fbLogin()"><i class="fa fa-facebook"></i> Facebook</div>
-                                            <div class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</div>
-                                        </div>
-                                        Possui cadastro?
-                                        <form class="form" name="loginnav">
-                                            <div class="form-group">
-                                                <input ng-model="usuario.username" type="email" class="form-control" name="email" placeholder="Email"  ng-required="true">
-                                            </div>
-                                            <div class="form-group">
-                                                <input ng-model="usuario.password" type="password" class="form-control" name="senha" placeholder="Senha"  ng-required="true">
-                                                <div class="help-block text-right"><a>Esqueceu sua senha?</a></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <button ng-click="loginnav.$valid && login()" type="submit" class="btn btn-primary btn-block">Login</button>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> Lembrar senha
-                                                </label>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="bottom text-center">
-                                        Novo aqui? <a ng-click="goTo('/cadastro-usuario')"><b>Junte-se a nós!</b></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
             </div><!-- /.navbar-collapse -->
-
         </div><!-- /.container-fluid -->
     </nav>
 </header>

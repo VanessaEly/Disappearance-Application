@@ -1,7 +1,10 @@
-<header-element></header-element>
+<header-element></header-element><login-element> </login-element>
 <div class="container" ng-controller="NovaOcorrenciaController" ng-init="novaOcorrenciaInit()">
+
     <div class="tab-pane">
         <div class="col-md-12 col-xs-12">
+
+
             <h2>Nova Ocorrência</h2>
             <div class="col-md-8 col-sm-7 col-xs-7">
                 <input id="pac-input" class="controls" type="text"
@@ -190,7 +193,7 @@
                     <div class="form-group col-md-12">
                         <div class="col-md-8">
                             <label class="control-label">Detalhes da ocorrência</label>
-                            <input ng-model="ocorrencia.detalhes" ng-required="false" maxlength="5" maxlength="100"
+                            <input ng-model="ocorrencia.detalhes" ng-required="false" minlength="5" maxlength="100"
                                    type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
                         </div>
                         <div class="col-md-4" ng-show="ocorrencia.tipo === 'Desaparecimento'">

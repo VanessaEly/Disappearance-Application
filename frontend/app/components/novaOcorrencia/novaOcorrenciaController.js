@@ -1,4 +1,4 @@
-app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope) {
+app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies) {
 
     $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {};
     var imageLoader = document.getElementById('filePhoto');
@@ -56,7 +56,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope) {
 
         console.log("item", $scope.item);
         $http.post('http://localhost:8000/api/novoitem/', $scope.item, {
-            headers: {"Authorization": "Token 5f7a57e87ebb87798a1cc28b808b9a694970cc99"}}).then(
+            headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
             function successCallback(response) {
                 console.log(response);
                 $rootScope.$broadcast("toast", {
@@ -72,6 +72,13 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope) {
                         text: "Não foi possível cadastrar o item"
                     });
                 }
+                if(response.status == 401) {
+                    $rootScope.$broadcast("toast", {
+                        priority: "high",
+                        text: "Necessário efetuar login"
+                    });
+                }
+                $scope.toggleId('login-modal');
             }
         );
 

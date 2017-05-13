@@ -69,7 +69,7 @@ class ObjetoSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    ocorrencia = OcorrenciaSerializer(required=True)
+    ocorrencia = OcorrenciaSerializer(required=False)
     pessoa = PessoaSerializer(required=False)
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)

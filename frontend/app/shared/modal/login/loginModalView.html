@@ -1,0 +1,34 @@
+<div id="login-modal" ng-controller="LoginController">
+    <div id="login-dp" class="">
+            <div class="row">
+                <div class="col-md-12">
+                    Login utilizando:
+                    <div class="social-buttons">
+                        <div class="btn btn-fb" ng-click="fbLogin()"><i class="fa fa-facebook"></i> Facebook</div>
+                        <div class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</div>
+                    </div>
+                    Possui cadastro?
+                    <form class="form" name="loginnav">
+                        <div class="form-group">
+                            <input ng-model="usuario.username" type="email" class="form-control" name="email" placeholder="Email"  ng-required="true">
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="usuario.password" type="password" class="form-control" name="senha" placeholder="Senha"  ng-required="true">
+                            <div class="help-block text-right"><a>Esqueceu sua senha?</a></div>
+                        </div>
+                        <div class="form-group">
+                            <button ng-click="loginnav.$valid && login()" type="submit" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Lembrar senha
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="bottom text-center">
+                    Novo aqui? <a ng-click="goTo('/cadastro-usuario')"><b>Junte-se a nós!</b></a>
+                </div>
+            </div>
+    </div>
+</div>

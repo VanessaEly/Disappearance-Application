@@ -67,10 +67,29 @@ header {
 
 .navbar a {  color: #000000 !important;  }
 
+#login-modal {
+    display: none;
+    position: absolute;
+    z-index: 10000;
+    background: rgba(120, 120, 120, 0.69);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
 #login-dp{
+    left: 50%;
+    transform: translate(-50%, -10%);
+    position: absolute;
+    margin-top: 15%;
+    max-width: 500px;
+	border-radius: 2%;
+    overflow: hidden;
     min-width: 250px;
     padding: 14px 14px 0;
     background-color:rgba(255,255,255,1);
+    text-decoration: none;
+
 }
 
 #login-dp .help-block{  font-size:12px;  }

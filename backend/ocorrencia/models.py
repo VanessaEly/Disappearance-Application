@@ -19,7 +19,7 @@ class Ocorrencia (models.Model):
     recompensa = models.FloatField(blank=True, default=0)
     latitude = models.CharField(max_length=50, default='')
     longitude = models.CharField(max_length=50, default='')
-    endereco = models.CharField(max_length=100, default='')
+    endereco = models.CharField(max_length=300, default='')
     item = models.ForeignKey(Item)
 
     class Meta:
