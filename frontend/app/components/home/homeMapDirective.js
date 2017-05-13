@@ -1,4 +1,4 @@
-app.directive('homeMap', function() {
+app.directive('homeMap', function($http) {
     var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
@@ -19,8 +19,7 @@ app.directive('homeMap', function() {
     };
 
     // directive link function
-    var link = function(scope, element, attrs) {
-
+    var link = function(scope, element, attrs, http) {
 
         map = new google.maps.Map(element[0], mapOptions);
 
@@ -33,29 +32,37 @@ app.directive('homeMap', function() {
                 };
 
                 map.setCenter(pos);
+                setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
             })
         }
-
-        var marker = new google.maps.Marker({
-            position: pos,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            map: map
+        else {
+            setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
+        }
+        //fazendo requisicao das ocorrencias cadastradas
+        $http.get('http://localhost:8000/api/ocorrencia/').success(function(response){
+            scope.ocorrencias = response.results;
+            //criando marcadores para todas as ocorrecias encontradas
+            for (var i = 0; i < scope.ocorrencias.length; i++) {
+                var content  = '<div id="content">'+
+                    '<p>'+ scope.ocorrencias[i].titulo+ '</p><p><a href="http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'">'+
+                    'http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'</a> </p>'+
+                    '</div>';
+                setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            }
+        }).error(function(response){
+            console.log("get error", response);
         });
-
-        setMarker(map, new google.maps.LatLng(-22.906225, -43.191886), 'London', 'Just some content', infoWindow, markers);
-        setMarker(map, new google.maps.LatLng(-22.907325, -43.192986), 'Amsterdam', 'More content', infoWindow, markers);
-        setMarker(map, new google.maps.LatLng(-22.908425, -43.193586), 'Paris', 'Text here', infoWindow, markers);
     };
 
     // place a marker
-    function setMarker(map, position, title, content, infoWindow, markers) {
+    function setMarker(map, position, title, content, infoWindow, markers, icon) {
         var marker;
         var markerOptions = {
             position: position,
             map: map,
             title: title,
-            icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            //animation: google.maps.Animation.DROP,
+            icon: icon
         };
 
         marker = new google.maps.Marker(markerOptions);

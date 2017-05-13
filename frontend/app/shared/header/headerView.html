@@ -1,72 +1,36 @@
 <header ng-controller="HeaderController" ng-init="headerInit()">
 
-    <nav class="navbar navbar-default navbar-inverse">
+    <nav class="navbar navbar-prop">
 
         <div class="container-fluid">
 
 
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="col-md-2"></div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" ng-click="toggleId('bs-example-navbar-collapse-1')">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <div class="col-md-1"></div>
+            <div class="navbar-header col-md-2" ng-click="goTo('/')">
+                <button type="button  btn-default" class="navbar-toggle collapsed" ng-click="toggleId('bs-example-navbar-collapse-1')">
+                    <span class="glyphicon glyphicon-th-list"></span>
                 </button>
-                <img id="header_logo" class="pointer" title="Disappearance Application" src="../../../assets/images/disapp.png" ng-click="goTo('/')">
+                <h3 class="pointer" title="Disappearance Application" src="assets/images/disapp.png">Disapp</h3>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="col-md-2"></div>
                 <div class="col-md-2">
-                     <ul class="nav navbar-nav navbar-left">
-                        <li><a ng-click="goTo('/nova-ocorrencia')" class="pointer">Nova ocorrência</a></li>
+                    <ul class="nav navbar-nav navbar-left">
+                        <a ng-click="goTo('/nova-ocorrencia')" class="pointer">
+                            <button type="button btn-primary btn-lg" class="btn btn-danger btn-circle btn-lg" title="Nova Ocorrência">
+                                <i class="fa fa-fw fa-map-marker faa-bounce animated"></i>
+                            </button>
+                        </a>
                     </ul>
                 </div>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle pointer" ng-click="toggleId('login-dp')"><b>Login</b> <span class="caret"></span></a>
-                        <ul id="login-dp" class="dropdown-menu">
-                            <li>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Login via
-                                        <div class="social-buttons">
-                                            <a class="btn btn-fb" ng-click="login()"><i class="fa fa-facebook"></i> Facebook</a>
-                                            <a class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-                                        </div>
-                                        or
-                                        <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-                                            <div class="form-group">
-                                                <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="sr-only" for="exampleInputPassword2">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                                <div class="help-block text-right"><a>Forgot password?</a></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                                            </div>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> Remember Password
-                                                </label>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="bottom text-center">
-                                        New here ? <a ng-click="goTo('/cadastro-usuario')"><b>Join Us</b></a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="col-md-2">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a ng-click="goTo('/listaOcorrencias')" class="pointer">Lista de Ocorrências</a></li>
+                    </ul>
+                </div>
             </div><!-- /.navbar-collapse -->
-
         </div><!-- /.container-fluid -->
     </nav>
 </header>

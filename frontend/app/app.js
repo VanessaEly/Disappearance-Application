@@ -1,1 +1,1 @@
-var app = angular.module("disapp",['ngRoute']);
+var app = angular.module("disapp",['ngRoute', 'ngCookies']);

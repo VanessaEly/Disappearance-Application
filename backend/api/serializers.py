@@ -1,46 +1,98 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from rest_framework import serializers
-from ocorrencia.models import Ocorrencia
+from ocorrencia.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-    ocorrencias = serializers.PrimaryKeyRelatedField(many=True, queryset=Ocorrencia.objects.all())
+    # ocorrencias = serializers.PrimaryKeyRelatedField(many=True, queryset=Ocorrencia.objects.all())
+    User._meta.get_field('username')._unique = True
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'ocorrencias')
+        fields = ('username', 'password', 'first_name', 'last_name')  # 'ocorrencias'
+        extra_kwargs = {'password': {'write_only': True}}
 
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('url', 'name')
+    # validacao de dados e encriptacao de password
+    def create(self, validated_data):
+        user = User(
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class OcorrenciaSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Ocorrencia
-        fields = ('id', 'data_criacao', 'titulo', 'descricao', 'coordenadas', 'owner')
+        fields = ('id', 'data_criacao', 'dataehora', 'titulo', 'tipo',
+                  'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco')
+
+    # def create(self, validated_data):
+    #     return Ocorrencia.objects.create(**validated_data)
 
 
-class OcorrenciaSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    owner = serializers.ReadOnlyField(source='owner.username')
-    data_criacao = serializers.CharField(read_only=True)
-    titulo = serializers.CharField(required=True, allow_blank=False, max_length=100)
-    descricao = serializers.CharField(required=True, max_length=400, allow_blank=False)
-    coordenadas = serializers.CharField(required=True, max_length=30, allow_blank=False)
+class PessoaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Pessoa
+        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades')
+
+    # def create(self, validated_data):
+    #     return Pessoa.objects.create(**validated_data)
+
+
+class AnimalSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Animal
+        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria')
+
+    # def create(self, validated_data):
+    #     return Animal.objects.create(**validated_data)
+
+
+class ObjetoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Objeto
+        fields = ('id', 'tipo', 'cor_primaria')
+
+    # def create(self, validated_data):
+    #     print validated_data
+    #     return Objeto.objects.create(**validated_data)
+
+
+class ItemSerializer(serializers.ModelSerializer):
+    ocorrencia = OcorrenciaSerializer(required=False)
+    pessoa = PessoaSerializer(required=False)
+    animal = AnimalSerializer(required=False)
+    objeto = ObjetoSerializer(required=False)
+
+    class Meta:
+        model = Item
+        fields = ('data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto')
 
     def create(self, validated_data):
-        # Cria e retorna uma instancia de novoocorrencia, dados os dados validados
-        return Ocorrencia.objects.create(**validated_data)
+        ocorrencia_data = validated_data.pop('ocorrencia')
+        pessoa_data = validated_data.pop('pessoa')
+        animal_data = validated_data.pop('animal')
+        objeto_data = validated_data.pop('objeto')
 
-    def update(self, instance, validated_data):
-        # Atualiza e retorna uma instancia de novoocorrencia, dados os dados validados
-        instance.data_criacao = validated_data.get('data_criacao', instance.data_criacao)
-        instance.titulo = validated_data.get('titulo', instance.titulo)
-        instance.descricao = validated_data.get('descricao', instance.descricao)
-        instance.coordenadas = validated_data.get('coordenadas', instance.coordenadas)
-        instance.owner = validated_data.get('owner', instance.owner)
-        instance.save()
-        return instance
+        item = Item.objects.create(**validated_data)
+
+        Ocorrencia.objects.create(item=item, **ocorrencia_data)
+        if validated_data['categoria'] == '1':
+            Pessoa.objects.create(item=item, **pessoa_data)
+        if validated_data['categoria'] == '2':
+            Animal.objects.create(item=item, **animal_data)
+        if validated_data['categoria'] == '3':
+            Objeto.objects.create(item=item, **objeto_data)
+        return item
+
+

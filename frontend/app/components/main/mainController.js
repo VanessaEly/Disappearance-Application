@@ -1,23 +1,24 @@
-app.controller("MainController", function($q, $scope, $location, $rootScope) {
+app.controller("MainController", function($q, $scope, $location, $rootScope, LoginService) {
 
-	$scope.mainInit = function() {
-        console.log("main init");
-	}
 
-	$scope.goTo = function(aRoute, aRouteParams) {
+	$scope.mainInit = function() {}
+
+	$scope.$watch(function() {
+		return LoginService.loginInfo.isLogged;
+	}, function() {
+		if (LoginService.loginInfo.isLogged == false) {
+			LoginService.revokeLogin();
+		}
+	});
+
+	$scope.goTo = function(aRouteParams) {
 		if (aRouteParams) {
-			$location.path(aRoute).search(aRouteParams);
-			console.log("Go to", aRoute, aRouteParams);
-		} else if ($location.path() == '/cadastroUsuario'){
-			$rootScope.$apply(function() {
-	        	$location.path("/");
-	        });
+            $location.path(aRouteParams);
+        }
+		else{
 			console.log("Go to /");
 		}
-		else {
-			$location.path(aRoute);
-			console.log("Go to", aRoute);
-		}
+
 	}
 
 	$scope.toggleId = function(id){

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Caviar Dreams';
+    src: url('../fonts/Caviar_Dreams_Bold.ttf');
+}
+
 /* GENERAL */
 .pointer {
     cursor: pointer;
@@ -7,6 +12,9 @@
     float: right;
 }
 
+p {
+    margin: 0px !important;
+}
 /* END GENERAL */
 
 /* HTML */
@@ -25,8 +33,9 @@ html {
 /* HEADER */
 
 header {
-    height: 7vh;
+    min-height: 5vh;
 }
+
 #header_logo {
     width: 165px;
     margin-top: 5px;
@@ -36,36 +45,69 @@ header {
 /* NAV */
 .navbar {
     margin-bottom: 0px !important;
+    border-bottom: 2px solid #000000 !important;
+}
+
+.navbar h3 {
+    margin-top: 5px;
+    font-family: 'Caviar Dreams';
+    color: rgb(30, 139, 172);
+    font-size: 35px;
+    text-shadow: 2.5px 1px rgb(0, 0, 0);
 }
 
 .navbar-nav {
     margin-left: 5% !important;
 }
+
+.navbar-prop {
+    background-color: rgba(247, 247, 247, 0.8) !important;
+    color: #0070BF !important;
+}
+
+.navbar a {  color: #000000 !important;  }
+
+#login-modal {
+    display: none;
+    position: absolute;
+    z-index: 10000;
+    background: rgba(120, 120, 120, 0.69);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
 #login-dp{
+    left: 50%;
+    transform: translate(-50%, -10%);
+    position: absolute;
+    margin-top: 15%;
+    max-width: 500px;
+	border-radius: 2%;
+    overflow: hidden;
     min-width: 250px;
     padding: 14px 14px 0;
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(255,255,255,1);
+    text-decoration: none;
+
 }
-#login-dp .help-block{
-    font-size:12px
-}
+
+#login-dp .help-block{  font-size:12px;  }
+
 #login-dp .bottom{
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(255,255,255,1);
     border-top:1px solid #ddd;
     clear:both;
     padding:14px;
 }
-#login-dp .social-buttons{
-    margin:12px 0
-}
-#login-dp .social-buttons a{
-    width: 49%;
-}
-#login-dp .form-group {
-    margin-bottom: 10px;
-}
+#login-dp .social-buttons{  margin:12px 0  }
+
+#login-dp .social-buttons a{  width: 49%;  }
+
+#login-dp .form-group {  margin-bottom: 10px;  }
+
 .btn-fb{
-    color: #fff;
+    color: #fff !important;
     background-color:#3b5998;
 }
 .btn-fb:hover{
@@ -73,22 +115,17 @@ header {
     background-color:#496ebc
 }
 .btn-tw{
-    color: #fff;
+    color: #fff !important;
     background-color:#55acee;
 }
 .btn-tw:hover{
     color: #fff;
     background-color:#59b5fa;
 }
-@media(max-width:768px){
-    #login-dp{
-        background-color: inherit;
-        color: #fff;
-    }
-    #login-dp .bottom{
-        background-color: inherit;
-        border-top:0 none;
-    }
+
+
+#signupalert {
+    color: #b71010;
 }
 /* END NAV */
 
@@ -96,8 +133,7 @@ header {
 body {
     position: relative;
     margin: 0;
-    padding-bottom: 11rem;
-    min-height: 90%;
+    min-height: 80%;
     font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
     background: rgba(234, 234, 234, 0.32) !important;
@@ -106,12 +142,12 @@ body {
 
 
 .home{
-    height: 77vh;
 }
 /* HOME */
 #home-map{
-    height: 85vh;
+    height: 80vh;
     width: 100%;
+    margin-top: 5px !important;
 }
 /* END HOME */
 
@@ -207,14 +243,16 @@ body {
 
 /* FOOTER */
 footer {
-    position: absolute;
+
+    position: relative;
     right: 0;
     bottom: 0;
     left: 0;
     padding-top: 1rem;
-    background-color: #3c3d41;
+    background-color: #fff;
     color: white;
     text-align: center;
+    border-top: 2px solid rgba(51, 51, 51, 0.23) !important;
 }
 
 #myFooter .footer-copyright {
@@ -227,20 +265,20 @@ footer {
 #myFooter ul {  list-style-type: none;  }
 
 #myFooter a {
-    color: #d2d1d1;
+    color: #000000;
     text-decoration: none;
 }
 
 #myFooter a:hover,
-#myFooter a:focus {  color: white;  }
+#myFooter a:focus {  color: #0077e2;  }
 
 #myFooter .social-networks {
     padding-left: 25px;
 }
 #myFooter .social-networks a {
     font-size: 25px;
-    color: #f9f9f9;
-padding: 5px;
+    color: #000000;
+    padding: 5px;
     transition: 0.2s;
 }
 
@@ -258,3 +296,130 @@ padding: 5px;
 }
 /* END FOOTER */
 
+/* TOASTS */
+
+.toasts {
+	position: fixed;
+    top: 85px;
+    right: 15px;
+    z-index: 99999999999999999;
+}
+
+.toast {
+	min-width: 100px;
+	max-width: 550px;
+	margin-top: 10px;
+	padding: 10px 25px;
+	box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
+}
+
+.toast p {
+	margin: 0;
+	font-size: 1.2rem;
+	color: #fff;
+	vertical-align: middle;
+}
+
+.toast p i {
+	padding-right: 10px;
+	font-size: 2.5rem;
+	color: #fff;
+	vertical-align: sub;
+}
+
+.ok-priority-toast {
+	background-color: #5fa71e;
+}
+
+.low-priority-toast {
+	background-color: #323232;
+}
+
+.medium-priority-toast {
+	background-color: #b5a10f;
+}
+
+.high-priority-toast {
+	background-color: #b71010;
+}
+
+/* END TOASTS */
+/*BUTTON*/
+.btn-circle
+{
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.btn-circle.btn-lg
+{
+    width: 40px;
+    height: 40px;
+    padding: 10px 5px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+.btn-circle.btn-xl
+{
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+
+.btn-danger {
+    color: #fff !important;
+    background-color: #aa4949 !important;
+    border-color: #852525 !important;
+}
+
+.btn-primary, .btn-success {
+    margin-bottom: 20px !important;
+}
+/*END BUTTON*/
+
+/*BUTTON BOUNCE */
+@keyframes bounce {
+	0%,10%,20%,50%,80%,100%{transform:translateY(0)}
+	40%{transform:translateY(-15px)}
+	60%{transform:translateY(-15px)}
+}
+.faa-bounce.animated,
+.faa-bounce.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-bounce {
+	animation: bounce 2s ease infinite;
+}
+.faa-bounce.animated.faa-fast,
+.faa-bounce.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-bounce.faa-fast {
+	animation: bounce 1s ease infinite;
+}
+.faa-bounce.animated.faa-slow,
+.faa-bounce.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-bounce.faa-slow {
+	animation: bounce 3s ease infinite;
+}
+/*END BUTTON BOUNCE */
+
+/* LOGIN */
+.mainbox {  margin-top:50px;  }
+
+.header-right {
+    float:right; font-size: 80%; position: relative; top:-10px
+}
+
+#login-panel { padding-top:30px;  }
+
+.login-input { margin-bottom: 25px; }
+/* END LOGIN */
+
+/* CADASTRO USUARIO */
+/* END CADASTRO USUARIO*/

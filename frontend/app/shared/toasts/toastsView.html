@@ -1,0 +1,8 @@
+<div class="toasts" ng-controller="ToastsController">
+	<div class="toast {{toast.priority}}-priority-toast" ng-repeat="toast in toasts">
+		<p>
+			<i class="icon ibm-info-moreinfo hidden-xs"></i>
+			{{toast.text}}
+		</p>
+	</div>
+</div>
