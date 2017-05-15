@@ -1,6 +1,7 @@
 from api.serializers import *
 from models import *
 from rest_framework import viewsets
+from rest_framework.parsers import FormParser,MultiPartParser
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
@@ -24,7 +25,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(owner=self.request.user)
 
 
 class ObjetoViewSet(viewsets.ModelViewSet):

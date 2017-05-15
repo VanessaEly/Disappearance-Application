@@ -1,6 +1,6 @@
 app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies) {
 
-    $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {};
+    $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {}, $scope.item = {};
     var imageLoader = document.getElementById('filePhoto');
     imageLoader.addEventListener('change', handleImage, false);
 
@@ -16,6 +16,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
         reader.onload = function (event) {
             $('#uploader img').attr('src',event.target.result);
         }
+        $scope.item.image = e.target.files[0];
         reader.readAsDataURL(e.target.files[0]);
         document.getElementById('uploader').style.backgroundImage = "none";
         document.getElementById('uploader-text').style.display = "none";
@@ -77,8 +78,9 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                         priority: "high",
                         text: "Necessário efetuar login"
                     });
+                    $scope.toggleId('login-modal');
                 }
-                $scope.toggleId('login-modal');
+
             }
         );
 

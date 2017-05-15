@@ -11,21 +11,22 @@
                    placeholder="Busque um endereço">
                 <div ocorrencia-map="" selected-item="coordinates"></div>
             </div>
-            <div class="col-md-4 col-sm-5 col-xs-5">
 
-                <div id="uploader" onclick="$('#filePhoto').click()">
-                    <h5 id="uploader-text">Selecione uma imagem para a ocorrência</h5>
-                    <img src=""/>
-                </div>
-                <input type="file" name="userprofile_picture"  id="filePhoto" />
-            </div>
 
         </div>
 
         <div class="col-md-12 col-xs-12">
 
             <ul class="list-inline">
-                <form name="ocorrenciaform">
+                <form name="ocorrenciaform" enctype="multipart/form-data">
+                    <div class="col-md-4 col-sm-5 col-xs-5">
+
+                        <div id="uploader" onclick="$('#filePhoto').click()">
+                            <h5 id="uploader-text">Selecione uma imagem para a ocorrência</h5>
+                            <img src=""/>
+                        </div>
+                        <input type="file" name="userprofile_picture"  class="form-control" id="filePhoto" />
+                    </div>
                     <div class="form-group col-md-12">
                         <div class="col-md-8">
                             <label class="control-label"> Onde? Utilize o mapa para identificar um local próximo da Ocorrência</label>

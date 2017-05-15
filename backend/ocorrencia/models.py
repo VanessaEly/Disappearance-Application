@@ -4,13 +4,12 @@ from django.db import models
 
 
 class Item (models.Model):
-    # owner = models.ForeignKey('auth.User', related_name='pessoas', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='itens', on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
     categoria = models.IntegerField(default='')
 
 
 class Ocorrencia (models.Model):
-    # owner = models.ForeignKey('auth.User', related_name='ocorrencias', on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
     dataehora = models.DateTimeField(blank=True)
     titulo = models.CharField(max_length=100, default='')
