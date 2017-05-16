@@ -1,7 +1,9 @@
-app.controller("MainController", function($q, $scope, $location, $rootScope, LoginService) {
+app.controller("MainController", function($q, $scope, $location, $rootScope, LoginService, StorageService) {
 
 
-	$scope.mainInit = function() {}
+	$scope.mainInit = function() {
+		StorageService.set("host", 'http://localhost:8000/');
+	}
 
 	$scope.$watch(function() {
 		return LoginService.loginInfo.isLogged;

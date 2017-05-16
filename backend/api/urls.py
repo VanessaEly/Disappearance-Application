@@ -9,10 +9,10 @@ from rest_framework.authtoken import views
 # Cria um router e registra os viewsets com ele
 router = DefaultRouter()
 router.register(r'ocorrencia', ocorrenciaviews.OcorrenciaViewSet, 'ocorrencia')
-router.register(r'novoitem', ocorrenciaviews.ItemViewSet)
-router.register(r'novoobjeto', ocorrenciaviews.ObjetoViewSet)
-router.register(r'novoanimal', ocorrenciaviews.AnimalViewSet)
-router.register(r'novapessoa', ocorrenciaviews.PessoaViewSet)
+router.register(r'item', ocorrenciaviews.ItemViewSet, 'item')
+router.register(r'objeto', ocorrenciaviews.ObjetoViewSet, 'objeto')
+router.register(r'animal', ocorrenciaviews.AnimalViewSet, 'animal')
+router.register(r'pessoa', ocorrenciaviews.PessoaViewSet, 'pessoa')
 router.register(r'users', userviews.UserViewSet)
 
 # Os URLs da API sao determinados automaticamente pelo router

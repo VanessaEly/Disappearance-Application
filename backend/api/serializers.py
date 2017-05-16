@@ -27,41 +27,46 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class OcorrenciaSerializer(serializers.ModelSerializer):
+    item = serializers.CharField(source='item.id', required=False)
 
     class Meta:
         model = Ocorrencia
         fields = ('id', 'data_criacao', 'dataehora', 'titulo', 'tipo',
-                  'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco')
+                  'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco', 'item')
+        read_only_fields = ('item',)
 
     # def create(self, validated_data):
     #     return Ocorrencia.objects.create(**validated_data)
 
 
 class PessoaSerializer(serializers.ModelSerializer):
+    item = serializers.CharField(source='item.id', required=False)
 
     class Meta:
         model = Pessoa
-        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades')
+        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades', 'item')
 
     # def create(self, validated_data):
     #     return Pessoa.objects.create(**validated_data)
 
 
 class AnimalSerializer(serializers.ModelSerializer):
+    item = serializers.CharField(source='item.id', required=False)
 
     class Meta:
         model = Animal
-        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria')
+        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria', 'item')
 
     # def create(self, validated_data):
     #     return Animal.objects.create(**validated_data)
 
 
 class ObjetoSerializer(serializers.ModelSerializer):
+    item = serializers.CharField(source='item.id', required=False)
 
     class Meta:
         model = Objeto
-        fields = ('id', 'tipo', 'cor_primaria')
+        fields = ('id', 'tipo', 'cor_primaria', 'item')
 
     # def create(self, validated_data):
     #     print validated_data
@@ -76,7 +81,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto')
+        fields = ('id', 'data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto')
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')
@@ -87,12 +92,11 @@ class ItemSerializer(serializers.ModelSerializer):
         item = Item.objects.create(**validated_data)
 
         Ocorrencia.objects.create(item=item, **ocorrencia_data)
-        if validated_data['categoria'] == '1':
+        if validated_data['categoria'] == 1:
             Pessoa.objects.create(item=item, **pessoa_data)
-        if validated_data['categoria'] == '2':
+        if validated_data['categoria'] == 2:
             Animal.objects.create(item=item, **animal_data)
-        if validated_data['categoria'] == '3':
+        if validated_data['categoria'] == 3:
             Objeto.objects.create(item=item, **objeto_data)
         return item
-
 

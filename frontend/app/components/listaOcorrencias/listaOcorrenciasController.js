@@ -1,10 +1,10 @@
-app.controller('ListaOcorrenciasController', function($scope, $http, $routeParams) {
+app.controller('ListaOcorrenciasController', function($scope, $http, StorageService) {
 
     $scope.listaOcorrenciasInit = function() {
         console.log("lista ocorrencia init");
         $scope.currentPage = "";
 
-        $http.get('http://localhost:8000/api/ocorrencia/'
+        $http.get(StorageService.get("host") + 'api/ocorrencia/'
         ).success(function(response){
             $scope.ocorrencias = response.results;
             console.log($scope.ocorrencias);
@@ -20,23 +20,6 @@ app.controller('ListaOcorrenciasController', function($scope, $http, $routeParam
         $('#detalhesModal').modal('show');
     }
 
-//     $(function () {
-//     /* BOOTSNIPP FULLSCREEN FIX */
-//     if (window.location == window.parent.location) {
-//         $('#back-to-bootsnipp').removeClass('hide');
-//         $('.alert').addClass('hide');
-//     }
-//
-//     $('#fullscreen').on('click', function(event) {
-//         event.preventDefault();
-//         window.parent.location = "http://bootsnipp.com/iframe/Q60Oj";
-//     });
-//
-//     $('tbody > tr').on('click', function(event) {
-//         event.preventDefault();
-//         $('#myModal').modal('show');
-//     })
-//
     $('.btn-mais-info').on('click', function(event) {
         $( '.open_info' ).toggleClass( "hide" );
     })

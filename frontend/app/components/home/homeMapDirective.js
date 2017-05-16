@@ -1,4 +1,4 @@
-app.directive('homeMap', function($http) {
+app.directive('homeMap', function($http, StorageService) {
     var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
@@ -39,12 +39,12 @@ app.directive('homeMap', function($http) {
             setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
         }
         //fazendo requisicao das ocorrencias cadastradas
-        $http.get('http://localhost:8000/api/ocorrencia/').success(function(response){
+        $http.get(StorageService.get("host") + 'api/ocorrencia/').success(function(response){
             scope.ocorrencias = response.results;
             //criando marcadores para todas as ocorrecias encontradas
             for (var i = 0; i < scope.ocorrencias.length; i++) {
                 var content  = '<div id="content">'+
-                    '<p>'+ scope.ocorrencias[i].titulo+ '</p><p><a href="http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'">'+
+                    '<p>'+ scope.ocorrencias[i].titulo+ '</p><p><a href="http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].item +'">'+
                     'http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'</a> </p>'+
                     '</div>';
                 setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');

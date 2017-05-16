@@ -1,4 +1,4 @@
-app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies) {
+app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies, StorageService) {
 
     $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {}, $scope.item = {};
     var imageLoader = document.getElementById('filePhoto');
@@ -56,7 +56,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
         $scope.item.objeto = $scope.objeto;
 
         console.log("item", $scope.item);
-        $http.post('http://localhost:8000/api/novoitem/', $scope.item, {
+        $http.post(StorageService.get("host") + 'api/item/', $scope.item, {
             headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
             function successCallback(response) {
                 console.log(response);

@@ -1,5 +1,4 @@
-app.service("LoginService", function($window, $location, $http, $q, $cookies) {
-
+app.service("LoginService", function($window, $location, $http, $q, $cookies, StorageService) {
 	this.loginInfo = {
 		isLogged: true
 	}
@@ -16,7 +15,7 @@ app.service("LoginService", function($window, $location, $http, $q, $cookies) {
 		var deferred = $q.defer();
 		$http({
 			method:'POST',
-			url: 'http://localhost:8000/api-token-auth/',
+			url: StorageService.get("host") + 'api-token-auth/',
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			transformRequest: function(obj) {
 				var str = [];
