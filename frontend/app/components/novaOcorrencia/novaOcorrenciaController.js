@@ -1,13 +1,13 @@
-app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies, StorageService) {
+app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies, StorageService ) {
 
     $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {}, $scope.item = {};
-    var imageLoader = document.getElementById('filePhoto');
+    var imageLoader = document.getElementById('myFileField');
     imageLoader.addEventListener('change', handleImage, false);
 
     $(document).ready(function () {
         $('#datetimepicker').datetimepicker({
             defaultDate: Date.now(),
-             format: 'YYYY-MM-DD MM:ss'
+            format: 'YYYY-MM-DD MM:ss'
         });
     });
 
@@ -16,7 +16,6 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
         reader.onload = function (event) {
             $('#uploader img').attr('src',event.target.result);
         }
-        $scope.item.image = e.target.files[0];
         reader.readAsDataURL(e.target.files[0]);
         document.getElementById('uploader').style.backgroundImage = "none";
         document.getElementById('uploader-text').style.display = "none";
@@ -55,35 +54,54 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
         $scope.item.animal = $scope.animal;
         $scope.item.objeto = $scope.objeto;
 
+        fileFormData = new FormData();
+        fileFormData.append('datafile', document.getElementById('myFileField').files[0]);
+
+        $http.post(StorageService.get("host") + 'api/imagem/', fileFormData, { transformRequest: angular.identity,
+        headers: {"Authorization": "Token " + $cookies.get('token'), "Content-Type":undefined, }}).then(
+            function successCallback(response) {
+                console.log(response.data);
+                $scope.item.fileId = response.data.id;
+                $scope.salvarItem();
+            }, function errorCallback(response) {
+            console.log(response);
+            if(response.status == 401 || response.status == -1) {
+                $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: "Necessário efetuar login"
+                });
+                $scope.toggleId('login-modal');
+            }
+        });
+    }
+
+    $scope.salvarItem = function() {
         console.log("item", $scope.item);
         $http.post(StorageService.get("host") + 'api/item/', $scope.item, {
-            headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
-            function successCallback(response) {
-                console.log(response);
+        headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
+        function successCallback(response) {
+            console.log(response);
+            $rootScope.$broadcast("toast", {
+                priority: "low",
+                text: "Ocorrencia cadastrada com sucesso!"
+            });
+            $scope.goTo("/");
+        }, function errorCallback(response) {
+            console.log(response);
+            if(response.status == 400) {
                 $rootScope.$broadcast("toast", {
-                    priority: "low",
-                    text: "Ocorrencia cadastrada com sucesso!"
+                    priority: "high",
+                    text: "Não foi possível cadastrar o item"
                 });
-                $scope.goTo("/");
-            }, function errorCallback(response) {
-                console.log(response);
-                if(response.status == 400) {
-                    $rootScope.$broadcast("toast", {
-                        priority: "high",
-                        text: "Não foi possível cadastrar o item"
-                    });
-                }
-                if(response.status == 401) {
-                    $rootScope.$broadcast("toast", {
-                        priority: "high",
-                        text: "Necessário efetuar login"
-                    });
-                    $scope.toggleId('login-modal');
-                }
-
             }
-        );
+            if(response.status == 401) {
+                $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: "Necessário efetuar login"
+                });
+                $scope.toggleId('login-modal');
+            }
 
+        });
     }
 });
-

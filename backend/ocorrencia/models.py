@@ -3,10 +3,17 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+class Imagem(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    datafile = models.FileField(upload_to="media/")
+
+
 class Item (models.Model):
     owner = models.ForeignKey('auth.User', related_name='itens', on_delete=models.CASCADE)
     data_criacao = models.DateTimeField(auto_now_add=True)
     categoria = models.IntegerField(default='')
+    fileId = models.IntegerField(default='')
+    # datafile = models.FileField(upload_to="media/", blank=True)
 
 
 class Ocorrencia (models.Model):

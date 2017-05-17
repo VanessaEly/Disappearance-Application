@@ -30,7 +30,23 @@ class ItemViewSet(viewsets.ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(owner=self.request.user)   # datafile=self.request.data.get('datafile'
+
+
+class ImagemViewSet(viewsets.ModelViewSet):
+    queryset = Imagem.objects.all()
+    serializer_class = ImagemSerializer
+    parser_classes = (MultiPartParser, FormParser,)
+
+    def get_queryset(self):
+        queryset = Imagem.objects.all()
+        imagem = self.request.query_params.get('id', None)
+        if imagem is not None:
+            queryset = queryset.filter(id=imagem)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(datafile=self.request.data.get('datafile'))
 
 
 class ObjetoViewSet(viewsets.ModelViewSet):

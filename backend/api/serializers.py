@@ -73,6 +73,13 @@ class ObjetoSerializer(serializers.ModelSerializer):
     #     return Objeto.objects.create(**validated_data)
 
 
+class ImagemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Imagem
+        fields = ('id', 'datafile')
+
+
 class ItemSerializer(serializers.ModelSerializer):
     ocorrencia = OcorrenciaSerializer(required=False)
     pessoa = PessoaSerializer(required=False)
@@ -81,7 +88,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto')
+        fields = ('id', 'data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto', 'fileId')
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')
@@ -99,4 +106,5 @@ class ItemSerializer(serializers.ModelSerializer):
         if validated_data['categoria'] == 3:
             Objeto.objects.create(item=item, **objeto_data)
         return item
+
 
