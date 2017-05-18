@@ -153,3 +153,5 @@ CORS_ALLOW_CREDENTIALS = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
+MEDIA_URL = '/'

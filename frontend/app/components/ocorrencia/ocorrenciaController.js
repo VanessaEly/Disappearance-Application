@@ -14,6 +14,11 @@ app.controller('OcorrenciaController', function($scope, $http, $routeParams, Sto
                     $scope.detalhes = response.results[0];
                     console.log("Item= ", $scope.item, "Ocor= ", $scope.ocorrencia, "Det= ", $scope.detalhes,
                     "Img = ", $scope.imagem);
+                    var data = new Date($scope.ocorrencia.dataehora);
+                    console.log(data)
+                    // $scope.date = data.getUTCDay() + "/" + data.getUTCMonth() + "/" + data.getUTCFullYear() +
+                    //         " - " + data.getUTCHours() + ":" + data.getUTCMinutes();
+                    $scope.date = data.toLocaleString('pt-BR')
                 }).error(function(response){console.log(response);});
             }).error(function(response){console.log(response);});
         }).error(function(response){console.log(response);});

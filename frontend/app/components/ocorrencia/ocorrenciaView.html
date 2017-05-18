@@ -1,7 +1,83 @@
 <header-element></header-element>
-<div class="home" ng-controller="OcorrenciaController" ng-init="ocorrenciaInit()">
-    <span>{{ocorrencia.tipo}}</span>
-    <span>{{ocorrencia.titulo}}</span>
-    <span>{{ocorrencia.detalhes}}</span>
+<div class="container page-content" ng-controller="OcorrenciaController" ng-init="ocorrenciaInit()">
+    <div class="tab-pane">
+        <div class="col-md-12 col-sm-12 col-xs-12 ocorrencia-info">
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                <h1>{{ocorrencia.titulo}}</h1>
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td>Tipo</td>
+                            <td>{{ocorrencia.tipo}}</td>
+                        </tr>
+                        <tr>
+                            <td>Data</td>
+                            <td>{{date}}</td>
+                        </tr>
+                        <tr>
+                            <td>Endereço</td>
+                            <td>{{ocorrencia.endereco}}</td>
+                        </tr>
+                        <!-- objeto -->
+                        <tr ng-show="detalhes.tipo">
+                            <td>Objeto</td>
+                            <td>{{detalhes.tipo}}</td>
+                        </tr>
+                        <!-- pessoa -->
+                        <tr ng-show="detalhes.nome">
+                            <td>Nome</td>
+                            <td>{{detalhes.nome}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.sexo">
+                            <td>Sexo</td>
+                            <td>{{detalhes.sexo}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.etnia">
+                            <td>Etnia</td>
+                            <td>{{detalhes.etnia}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.altura">
+                            <td>Altura</td>
+                            <td>{{detalhes.altura}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.idade">
+                            <td>Idade</td>
+                            <td>{{detalhes.idade}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.peculiaridades">
+                            <td>Peculiaridades</td>
+                            <td>{{detalhes.peculiaridades}}</td>
+                        </tr>
+                        <!-- animal -->
+                        <tr ng-show="detalhes.especie">
+                            <td>Animal</td>
+                            <td>{{detalhes.especie}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.raca">
+                            <td>Raça</td>
+                            <td>{{detalhes.raca}}</td>
+                        </tr>
+                        <tr ng-show="detalhes.cor_primaria">
+                            <td>Cor</td>
+                            <td>{{detalhes.cor_primaria}}</td>
+                        </tr>
+                        <tr ng-show="ocorrencia.recompensa">
+                            <td>Recompensa</td>
+                            <td>R${{ocorrencia.recompensa}},00</td>
+                        </tr>
+                        <tr ng-show="ocorrencia.detalhes">
+                            <td>Detalhes</td>
+                            <td>{{ocorrencia.detalhes}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                    <img class="inline-block ocorrencia-image" src="{{ imagem.datafile }}"/>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 <footer-element></footer-element>
