@@ -1,4 +1,4 @@
-app.directive('homeMap', function($http, StorageService) {
+app.directive('homeMap', function($http, StorageService, $window) {
     var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
@@ -20,8 +20,11 @@ app.directive('homeMap', function($http, StorageService) {
 
     // directive link function
     var link = function(scope, element, attrs, http) {
+        scope.data = { item:[], categoria: [], ocorrencia:[], detalhes:[], imagem:[], date:[]}
 
         map = new google.maps.Map(element[0], mapOptions);
+
+        var host = StorageService.get("host");
 
          // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -39,15 +42,33 @@ app.directive('homeMap', function($http, StorageService) {
             setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
         }
         //fazendo requisicao das ocorrencias cadastradas
-        $http.get(StorageService.get("host") + 'api/ocorrencia/').success(function(response){
-            scope.ocorrencias = response.results;
+        $http.get(host + 'api/item/').success(function(response){
+            var count = response.count/4;
+            for (var i = 0; i < count; i ++) {
+                var categoria = response.results[i].categoria == 1? "Pessoa": response.results[i].categoria == 2? "Animal":"Objeto"
+                scope.data.item.push(response.results[i]);
+                scope.data.categoria.push(categoria);
+                scope.data.ocorrencia.push(response.results[i + count]);
+                scope.data.detalhes.push(response.results[i + count*2]);
+                scope.data.imagem.push(response.results[i + count*3]);
+                scope.data.date.push(new Date(response.results[i + count].dataehora).toLocaleString('pt-BR'));
+            }
+            console.log(scope.data)
             //criando marcadores para todas as ocorrecias encontradas
-            for (var i = 0; i < scope.ocorrencias.length; i++) {
-                var content  = '<div id="content">'+
-                    '<p>'+ scope.ocorrencias[i].titulo+ '</p><p><a href="http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].item +'">'+
-                    'http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'</a> </p>'+
+            for (var i = 0; i < scope.data.ocorrencia.length; i++) {
+
+                var content  =
+                    '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
+                        '<p>'+ scope.data.ocorrencia[i].titulo + '</p>' +
+                        '<p>'+ scope.data.ocorrencia[i].tipo + ' - ' + scope.data.categoria[i] + '</p>' +
+                        '<p>'+ scope.data.date[i] + '</p>' +
+                        '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data.item[i].id +'>'+
+                        'Consultar detalhes</a> </p>'+
                     '</div>';
-                setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+
+                setMarker(map, new google.maps.LatLng(scope.data.ocorrencia[i].latitude,
+                    scope.data.ocorrencia[i].longitude), scope.data.ocorrencia[i].titulo,
+                    content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
             }
         }).error(function(response){
             console.log("get error", response);
@@ -70,7 +91,7 @@ app.directive('homeMap', function($http, StorageService) {
 
         google.maps.event.addListener(marker, 'click', function () {
             // close window if not undefined
-            if (infoWindow !== void 0) {
+            if (infoWindow) {
                 infoWindow.close();
             }
             // create new window

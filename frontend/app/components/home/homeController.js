@@ -1,9 +1,5 @@
-app.controller('HomeController', function($scope, $http) {
+app.controller('HomeController', function($scope) {
 
-    $scope.homeInit = function() {
-        console.log("home init");
-        $scope.currentPage = "";
-
-    }
+    $scope.homeInit = function() { }
 });
 

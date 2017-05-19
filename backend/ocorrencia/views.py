@@ -2,6 +2,7 @@ from api.serializers import *
 from models import *
 from rest_framework import viewsets
 from rest_framework.parsers import FormParser,MultiPartParser
+from itertools import chain
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
@@ -26,8 +27,35 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
-        queryset = Item.objects.all()
-        return queryset
+        item = self.request.query_params.get('id', None)
+
+        # se recebe item_id como parametro, filtra por id, como default retorna objects.all
+        if item is not None:
+            queryset = Item.objects.filter(id=item)
+            ocorrencia = Ocorrencia.objects.filter(item=queryset)
+            imagem = Imagem.objects.filter(id=queryset[0].id)
+            if queryset[0].categoria == 1:
+                details = Pessoa.objects.filter(item=queryset)
+            elif queryset[0].categoria == 2:
+                details = Animal.objects.filter(item=queryset)
+            else:
+                details = Objeto.objects.filter(item=queryset)
+            return list(chain(queryset, ocorrencia, details, imagem))
+        else:
+            queryset = Item.objects.all()
+            ocorrencia = Ocorrencia.objects.all()
+            imagem = Imagem.objects.all()
+            pessoa = Pessoa.objects.all()
+            animal = Animal.objects.all()
+            objeto = Objeto.objects.all()
+            return list(chain(queryset, ocorrencia, pessoa, animal, objeto, imagem))
+
+    # def get_queryset(self):
+    #     queryset = Item.objects.all()
+    #     print queryset
+    #     ocorrencia = Ocorrencia.objects.filter(item=queryset)
+    #     print ocorrencia
+    #     return queryset
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)   # datafile=self.request.data.get('datafile'

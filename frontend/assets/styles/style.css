@@ -46,7 +46,46 @@ header {
 /* END HEADER*/
 
 /* NAV */
+
+.nav-dropdown {
+    margin-top: 1vh;
+}
+
+#dropdown { display: none;  }
+
+.header-dropdown {
+	position: absolute;
+    margin-top: -1vh;
+    right: 0;
+    text-align: center;
+    z-index: 999;
+    max-width: 200px;
+    background-color: #f8f8f8;
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.5);
+}
+
+.header-dropdown ul {
+	width: 100%;
+}
+.header-dropdown a {
+	width: 100%;
+}
+
+
+.header-dropdown ul li {
+	width: 100%;
+	border-bottom: 1px solid #545454;
+	margin: 0;
+    padding: 5px;
+	color: #fff;
+}
+
+.header-dropdown ul li:hover {
+	cursor: pointer;
+}
+
 .navbar {
+    margin-top:4px;
     margin-bottom: 0px !important;
     border-bottom: 2px solid #000000 !important;
 }
@@ -61,11 +100,6 @@ header {
 
 .navbar-nav {
     margin-left: 5% !important;
-}
-
-.navbar-prop {
-    background-color: rgba(247, 247, 247, 0.8) !important;
-    color: #0070BF !important;
 }
 
 .navbar a {  color: #000000 !important;  }
@@ -150,7 +184,6 @@ body {
 #home-map{
     height: 80vh;
     width: 100%;
-    margin-top: 5px !important;
 }
 /* END HOME */
 
@@ -158,6 +191,10 @@ body {
 #ocorrencia-map, #ocorrencia-form {
     height: 40vh;
     width: 100%;
+}
+
+#pin-content {
+    font-size: 1rem;
 }
 
 .ocorrencia-t1 {
@@ -373,7 +410,6 @@ footer {
 /*BUTTON*/
 .btn-circle
 {
-    margin-top: 5px;
     width: 30px;
     height: 30px;
     text-align: center;

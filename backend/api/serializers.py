@@ -85,10 +85,24 @@ class ItemSerializer(serializers.ModelSerializer):
     pessoa = PessoaSerializer(required=False)
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)
+    nome, sexo, idade, especie, raca, cor_primaria, etnia, altura, peculiaridades, tipo, dataehora, \
+        titulo, detalhes, recompensa, latitude, longitude, endereco, datafile = \
+        serializers.CharField(required=False), serializers.CharField(required=False), \
+        serializers.FloatField(required=False), serializers.CharField(required=False), \
+        serializers.CharField(required=False), serializers.CharField(required=False), \
+        serializers.CharField(required=False), serializers.FloatField(required=False), \
+        serializers.CharField(required=False), serializers.CharField(required=False), \
+        serializers.DateTimeField(required=False), serializers.CharField(required=False), \
+        serializers.CharField(required=False), serializers.FloatField(required=False), \
+        serializers.CharField(required=False), serializers.CharField(required=False), \
+        serializers.CharField(required=False), serializers.CharField(required=False),
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto', 'fileId')
+        fields = ('id', 'data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto', 'fileId',
+                  'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria', 'etnia', 'altura', 'peculiaridades',
+                  'tipo', 'dataehora', 'titulo', 'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco',
+                  'datafile')
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')
