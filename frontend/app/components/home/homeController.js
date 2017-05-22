@@ -1,5 +1,6 @@
-app.controller('HomeController', function($scope) {
+app.controller('HomeController', function($scope, $http, StorageService) {
 
-    $scope.homeInit = function() { }
+    $scope.homeInit = function() {
+    }
 });
 

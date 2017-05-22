@@ -59,7 +59,7 @@ app.directive('homeMap', function($http, StorageService, $window) {
 
                 var content  =
                     '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
-                        '<p>'+ scope.data.ocorrencia[i].titulo + '</p>' +
+                        '<p><strong>'+ scope.data.ocorrencia[i].titulo + scope.data.item[i].id + '</strong></p>' +
                         '<p>'+ scope.data.ocorrencia[i].tipo + ' - ' + scope.data.categoria[i] + '</p>' +
                         '<p>'+ scope.data.date[i] + '</p>' +
                         '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data.item[i].id +'>'+

@@ -1,8 +1,11 @@
 from api.serializers import *
 from models import *
-from rest_framework import viewsets
-from rest_framework.parsers import FormParser,MultiPartParser
+from rest_framework import viewsets, status
+from rest_framework.parsers import FormParser, MultiPartParser
 from itertools import chain
+from rest_framework.response import Response
+from django.core.exceptions import ObjectDoesNotExist
+import os
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
@@ -31,7 +34,11 @@ class ItemViewSet(viewsets.ModelViewSet):
 
         # se recebe item_id como parametro, filtra por id, como default retorna objects.all
         if item is not None:
+            print item
             queryset = Item.objects.filter(id=item)
+            print queryset
+            if not queryset:
+                return []
             ocorrencia = Ocorrencia.objects.filter(item=queryset)
             imagem = Imagem.objects.filter(id=queryset[0].id)
             if queryset[0].categoria == 1:
@@ -50,15 +57,60 @@ class ItemViewSet(viewsets.ModelViewSet):
             objeto = Objeto.objects.all()
             return list(chain(queryset, ocorrencia, pessoa, animal, objeto, imagem))
 
-    # def get_queryset(self):
-    #     queryset = Item.objects.all()
-    #     print queryset
-    #     ocorrencia = Ocorrencia.objects.filter(item=queryset)
-    #     print ocorrencia
-    #     return queryset
-
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)   # datafile=self.request.data.get('datafile'
+
+    def delete(self, id):
+        item_id = self.request.query_params.get('id', None)
+        item = Item.objects.get(id=item_id)
+
+        # deleta imagem
+        try:
+            imagem = Imagem.objects.get(id=item.fileId)
+            try:
+                os.remove(imagem.datafile.path)
+            except OSError:
+                pass
+                # return Response("Arquivo" + imagem.datafile.path + " nao encontrado")
+            Imagem.delete(imagem)
+
+        except ObjectDoesNotExist:
+            return Response("Imagem nao existe")
+
+        # deleta ocorrencia
+        try:
+            ocorrencia = Ocorrencia.objects.get(item_id=item.id)
+            Ocorrencia.delete(ocorrencia)
+        except ObjectDoesNotExist:
+            return Response("Ocorrencia nao existe")
+
+        # deleta detalhes
+        if item.categoria == 1:
+            try:
+                pessoa = Pessoa.objects.get(item_id=item.id)
+                Pessoa.delete(pessoa)
+            except ObjectDoesNotExist:
+                return Response("Pessoa nao existe")
+        elif item.categoria == 2:
+            try:
+                animal = Animal.objects.get(item_id=item.id)
+                Animal.delete(animal)
+            except ObjectDoesNotExist:
+                return Response("Animal nao existe")
+        else:
+            try:
+                objeto = Objeto.objects.get(item_id=item.id)
+                Objeto.delete(objeto)
+            except ObjectDoesNotExist:
+                return Response("Objeto nao existe")
+
+        # deleta item
+        try:
+            Item.delete(item)
+        except ObjectDoesNotExist:
+            return Response("Item nao existe")
+
+        return Response("Deletado com sucesso!", status=status.HTTP_200_OK)
 
 
 class ImagemViewSet(viewsets.ModelViewSet):

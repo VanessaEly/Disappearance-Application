@@ -1,4 +1,4 @@
-app.controller('ListaOcorrenciasController', function($scope, $http, StorageService) {
+app.controller('ListaOcorrenciasController', function($scope, $http, StorageService, $window) {
 
     $scope.data = { item:[], ocorrencia:[], detalhes:[], imagem:[], date:[]}
 
@@ -27,9 +27,14 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
     $scope.detalhesOcorrencia = function(index) {
         event.preventDefault();
         $scope.index = index
-        $scope.image = $scope.data.imagem[index].datafile;
         $('#detalhesModal').modal('show');
 
+    }
+
+    $scope.getUrl = function() {
+        $('#detalhesModal').modal('hide');
+        var url = 'ocorrencia/'+ $scope.data.item[$scope.index].id;
+        $scope.goTo(url);
     }
 
 });

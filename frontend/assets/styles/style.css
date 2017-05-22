@@ -304,6 +304,12 @@ body {
 }
 /* END OCORRENCIA*/
 
+/* LISTA OCORRENCIAS */
+.modal-body {
+    margin-top: 15px;
+}
+/* END LISTA OCORRENCIAS */
+
 /* FOOTER */
 footer {
 
