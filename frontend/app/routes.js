@@ -31,6 +31,10 @@ app.config(function($routeProvider, $httpProvider) {
 			templateUrl: 'app/components/listaOcorrencias/listaOcorrenciasView.html',
 			replace: true,
 			reloadOnSearch: false
+		}).when('/minhasocorrencias/', {
+			templateUrl: 'app/components/minhasOcorrencias/minhasOcorrenciasView.html',
+			replace: true,
+			reloadOnSearch: false
 		})
 
         // DEFAULT

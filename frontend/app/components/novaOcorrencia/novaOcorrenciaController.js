@@ -87,7 +87,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
             function successCallback(response) {
                 console.log(response);
                 $rootScope.$broadcast("toast", {
-                    priority: "low",
+                    priority: "ok",
                     text: "Ocorrencia cadastrada com sucesso!"
                 });
                 $scope.goTo("/");

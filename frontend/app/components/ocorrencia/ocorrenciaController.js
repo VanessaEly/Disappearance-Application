@@ -23,16 +23,4 @@ app.controller('OcorrenciaController', function($scope, $http, $routeParams, Sto
             console.log(response);
         });
     }
-
-    $scope.deletarOcorrencia = function() {
-        console.log($cookies.get('csrftoken'))
-        $http.delete($scope.host + 'api/item/?id=' + $routeParams.id, {
-            headers: {"Authorization": "Token " + $cookies.get('token')}}).success(function(response){
-            console.log(response)
-            $scope.goTo("/");
-        }).error(function(response){
-            console.log(response);
-
-        });
-    }
 });
