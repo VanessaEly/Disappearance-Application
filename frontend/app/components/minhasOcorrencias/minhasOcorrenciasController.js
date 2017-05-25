@@ -16,7 +16,7 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
                 $scope.data.imagem.push(response.results[i + count*3]);
                 $scope.data.date.push(new Date(response.results[i + count].dataehora).toLocaleString('pt-BR'));
             }
-            console.log($scope.data);
+            console.log($scope.data.length);
 
         }).error(function(response){
             console.log("get error", response);
@@ -30,13 +30,13 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
                 priority: "ok",
                 text: response
             });
-            $scope.goTo("/");
+            $rootScope.goTo("/");
         }).error(function(response){
             $rootScope.$broadcast("toast", {
                 priority: "high",
                 text: response
             });
-            $scope.toggleId('login-modal');
+            $rootScope.toggleId('login-modal');
 
         });
     }
@@ -51,7 +51,7 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
     $scope.getUrl = function() {
         $('#detalhesModal').modal('hide');
         var url = 'ocorrencia/'+ $scope.data.item[$scope.index].id;
-        $scope.goTo(url);
+        $rootScope.goTo(url);
     }
 
 });

@@ -5,13 +5,13 @@ from ocorrencia.models import *
 
 class UserSerializer(serializers.ModelSerializer):
     # ocorrencias = serializers.PrimaryKeyRelatedField(many=True, queryset=Ocorrencia.objects.all())
-    User._meta.get_field('username')._unique = True
+    User._meta.get_field('email')._unique = True
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'first_name', 'last_name')  # 'ocorrencias'
+        fields = ('email', 'password', 'first_name', 'last_name')  # 'ocorrencias'
         extra_kwargs = {'password': {'write_only': True}}
 
     # validacao de dados e encriptacao de password
@@ -19,7 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            username=validated_data['username']
+            username=validated_data['email'],
+            email=validated_data['first_name'] + ' ' + validated_data['last_name']
         )
         user.set_password(validated_data['password'])
         user.save()

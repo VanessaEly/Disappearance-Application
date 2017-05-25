@@ -24,6 +24,7 @@
                 <td>{{ ocorrencia.titulo }}</td>
                 <td>{{ data.date[$index]}}</td>
             </tr>
+            <td ng-show="data.ocorrencia.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>
         </table>
         <hr>

@@ -1,5 +1,5 @@
 app.directive('homeMap', function($http, StorageService, $window) {
-    var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
+    var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786}, pin;
     var mapOptions = {
         center: pos,
         styles: [{"stylers": [{"saturation": -100}, {"gamma": 1}]},
@@ -65,10 +65,13 @@ app.directive('homeMap', function($http, StorageService, $window) {
                         '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data.item[i].id +'>'+
                         'Consultar detalhes</a> </p>'+
                     '</div>';
+                scope.data.ocorrencia[i].tipo == "Aparecimento"?
+                    pin = "assets/images/aparecimento.png" : pin = "assets/images/dasaparecimento.png"
 
+                console.log(scope.data.ocorrencia[i].tipo, pin)
                 setMarker(map, new google.maps.LatLng(scope.data.ocorrencia[i].latitude,
                     scope.data.ocorrencia[i].longitude), scope.data.ocorrencia[i].titulo,
-                    content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                    content, infoWindow, markers, pin);
             }
         }).error(function(response){
             console.log("get error", response);

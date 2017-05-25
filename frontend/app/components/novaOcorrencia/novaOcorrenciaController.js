@@ -75,7 +75,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                         priority: "high",
                         text: "Necessário efetuar login"
                     });
-                    $scope.toggleId('login-modal');
+                    $rootScope.toggleId('login-modal');
                 }
             });
     }
@@ -90,7 +90,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                     priority: "ok",
                     text: "Ocorrencia cadastrada com sucesso!"
                 });
-                $scope.goTo("/");
+                $rootScope.goTo("/");
             }, function errorCallback(response) {
                 console.log(response);
                 if(response.status == 400) {
@@ -104,7 +104,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                         priority: "high",
                         text: "Necessário efetuar login"
                     });
-                    $scope.toggleId('login-modal');
+                    $rootScope.toggleId('login-modal');
                 }
 
             });

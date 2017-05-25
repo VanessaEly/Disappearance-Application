@@ -13,7 +13,7 @@ app.controller("MainController", function($q, $scope, $location, $rootScope, Log
 		}
 	});
 
-	$scope.goTo = function(aRouteParams) {
+	$rootScope.goTo = function(aRouteParams) {
 		if (aRouteParams) {
             $location.path(aRouteParams);
         }
@@ -23,7 +23,7 @@ app.controller("MainController", function($q, $scope, $location, $rootScope, Log
 
 	}
 
-	$scope.toggleId = function(id){
+	$rootScope.toggleId = function(id){
         var e = document.getElementById(id);
         if(e.style.display == 'block')
            e.style.display = 'none';

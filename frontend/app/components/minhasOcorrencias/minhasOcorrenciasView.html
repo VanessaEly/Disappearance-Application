@@ -28,7 +28,7 @@
                            title="Deletar Ocorrência" ng-click="deletarOcorrencia(ocorrencia.id)"></i>
                     </td>
                 </tr>
-                <td ng-show="!data.ocorrencia"><h4>Ooops! Você não possui nenhuma ocorrência :(</h4></td>
+                <td ng-show="data.ocorrencia.length == 0"><h4>Ooops! Você não possui nenhuma ocorrência :(</h4></td>
             </tbody>
         </table>
         <hr>

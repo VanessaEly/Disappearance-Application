@@ -17,7 +17,7 @@ app.controller('OcorrenciaController', function($scope, $http, $routeParams, Sto
                     priority: "high",
                     text: "Ocorrência não encontrada!"
                 });
-                $scope.goTo("/");
+                $rootScope.goTo("/");
             }
         }).error(function(response){
             console.log(response);

@@ -1,4 +1,5 @@
-app.controller('LoginController', function($scope, $rootScope, $window, $http, ToastsService, $cookies, StorageService, $location) {
+app.controller('LoginController', function($scope, $rootScope, $window, $http,
+                                           ToastsService, $cookies, StorageService, $location, LoginService) {
     $window.fbAsyncInit = function () {
         FB.init({
             appId: '1802079610118314', // Set YOUR APP ID
@@ -22,22 +23,8 @@ app.controller('LoginController', function($scope, $rootScope, $window, $http, T
     };
 
     $scope.login = function () {
-        console.log("a");
-        $http.post(StorageService.get("host") + 'api-token-auth/', $scope.usuario).then(function successCallback(success) {
-            console.log(success);
-            ToastsService.makeToast("ok", "Logado com sucesso!", 2000);
-            $cookies.put("token", success.data.token);
-            if ($location.path() == "/login") {
-                $scope.goTo("/");
-            } else {
-                $scope.toggleId('login-modal');
-            }
-        }, function errorCallback(response) {
-            console.log(response);
-            if (response.status == 400) {
-                ToastsService.makeToast("high", "Usuário e senha inválidos", 2000);
-            }
-        });
+        console.log($scope.usuario)
+        LoginService.authenticate($scope.usuario);
     }
 
     $scope.fbLogin = function () {

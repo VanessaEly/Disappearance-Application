@@ -1,0 +1,38 @@
+<div id="cadastro-modal" ng-controller="CadastroUsuarioController">
+    <div id="login-dp" class="">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form" name="cadastronav">
+                        <div id="signupalert" class="alert alert-danger" ng-show="errors">
+                            <span class="glyphicon glyphicon-warning-sign"></span>
+                            <strong>Ops! Algo deu errado.</strong>
+                            <ul>
+                                <li ng-repeat=" error in errors" ng-bind-html-unsafe="error" >
+                                    <p>{{ error }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <p>Efetue seu cadastro:</p>
+                        <div class="form-group">
+                            <input ng-model="usuario.first_name" ng-required="true" type="text" class="form-control" name="first_name" placeholder="Nome" />
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="usuario.last_name" ng-required="true" type="text" class="form-control" name="last_name" placeholder="Sobrenome" />
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="usuario.email" ng-required="true" type="email" class="form-control" name="email" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password" placeholder="Senha" />
+                        </div>
+                        <div class="form-group">
+                            <button ng-click="cadastronav.$valid && cadastrar()" type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="bottom text-center">
+                    Efetuar login? <a ng-click="toggleId('cadastro-modal'); toggleId('login-modal')"><b>Junte-se a nós!</b></a>
+                </div>
+            </div>
+    </div>
+</div>
