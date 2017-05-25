@@ -60,7 +60,10 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
         $scope.item.objeto = $scope.objeto;
 
         fileFormData = new FormData();
-        fileFormData.append('datafile', document.getElementById('filePhoto').files[0]);
+        if (document.getElementById('filePhoto').files.length > 0)
+            fileFormData.append('datafile', document.getElementById('filePhoto').files[0]);
+        else
+            fileFormData = undefined
 
         $http.post(StorageService.get("host") + 'api/imagem/', fileFormData, { transformRequest: angular.identity,
             headers: {"Authorization": "Token " + $cookies.get('token'), "Content-Type":undefined, }}).then(

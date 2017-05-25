@@ -5,7 +5,7 @@ from django.db import models
 
 class Imagem(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    datafile = models.FileField(upload_to="media/")
+    datafile = models.FileField(upload_to="media/", blank=True, null=True, default='../media/default.jpg')
 
 
 class Item (models.Model):

@@ -75,6 +75,7 @@ class ObjetoSerializer(serializers.ModelSerializer):
 
 
 class ImagemSerializer(serializers.ModelSerializer):
+    datafile = serializers.FileField(required=False, default='media/default.jpg')
 
     class Meta:
         model = Imagem

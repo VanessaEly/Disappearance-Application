@@ -44,7 +44,10 @@ app.directive('homeMap', function($http, StorageService, $window) {
         //fazendo requisicao das ocorrencias cadastradas
         $http.get(host + 'api/item/').success(function(response){
             var count = response.count/4;
+            console.log(response.results)
             for (var i = 0; i < count; i ++) {
+                console.log(count)
+                console.log(response.results[i + count])
                 var categoria = response.results[i].categoria == 1? "Pessoa": response.results[i].categoria == 2? "Animal":"Objeto"
                 scope.data.item.push(response.results[i]);
                 scope.data.categoria.push(categoria);
@@ -65,8 +68,7 @@ app.directive('homeMap', function($http, StorageService, $window) {
                         '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data.item[i].id +'>'+
                         'Consultar detalhes</a> </p>'+
                     '</div>';
-                scope.data.ocorrencia[i].tipo == "Aparecimento"?
-                    pin = "assets/images/aparecimento.png" : pin = "assets/images/dasaparecimento.png"
+                pin = "assets/images/" + scope.data.ocorrencia[i].tipo + scope.data.item[i].categoria + ".png"
 
                 console.log(scope.data.ocorrencia[i].tipo, pin)
                 setMarker(map, new google.maps.LatLng(scope.data.ocorrencia[i].latitude,
