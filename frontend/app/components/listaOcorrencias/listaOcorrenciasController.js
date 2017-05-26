@@ -4,20 +4,13 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
 
     $scope.listaOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
-
-        console.log("lista ocorrencia init");
-        $scope.currentPage = "";
         $http.get(StorageService.get("host") + 'api/item/'
         ).success(function(response){
-            var count = response.count/4;
-            for (var i = 0; i < count; i ++) {
-                $scope.data.item.push(response.results[i]);
-                $scope.data.ocorrencia.push(response.results[i + count]);
-                $scope.data.detalhes.push(response.results[i + count*2]);
-                $scope.data.imagem.push(response.results[i + count*3]);
-                $scope.data.date.push(new Date(response.results[i + count].dataehora).toLocaleString('pt-BR'));
-            }
-            console.log($scope.data);
+            $scope.data = response.results;
+            for (var i = 0; i < $scope.data.length; i++)
+               $scope.data[i].ocorrencia.dataehoraToShow =
+                   new Date($scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR')
+            console.log($scope.data)
 
         }).error(function(response){
             console.log("get error", response);
@@ -27,15 +20,15 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
     $scope.detalhesOcorrencia = function(index) {
         event.preventDefault();
         $scope.index = index
+        console.log($scope.data[index])
         $('#detalhesModal').modal('show');
 
     }
 
     $scope.getUrl = function() {
         $('#detalhesModal').modal('hide');
-        var url = 'ocorrencia/'+ $scope.data.item[$scope.index].id;
+        var url = 'ocorrencia/'+ $scope.data[$scope.index].id;
         $rootScope.goTo(url);
     }
-
 });
 

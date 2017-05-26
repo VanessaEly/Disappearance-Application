@@ -43,23 +43,20 @@ class ItemViewSet(viewsets.ModelViewSet):
             # busca todas as requests
             else:
                 queryset = Item.objects.all()
-                ocorrencia = Ocorrencia.objects.all()
-                imagem = Imagem.objects.all()
-                pessoa = Pessoa.objects.all()
-                animal = Animal.objects.all()
-                objeto = Objeto.objects.all()
-                return list(chain(queryset, ocorrencia, pessoa, animal, objeto, imagem))
+
         if not queryset:
             return []
-        ocorrencia = Ocorrencia.objects.filter(item=queryset)
-        imagem = Imagem.objects.filter(id=queryset[0].id)
-        if queryset[0].categoria == 1:
-            details = Pessoa.objects.filter(item=queryset)
-        elif queryset[0].categoria == 2:
-            details = Animal.objects.filter(item=queryset)
-        else:
-            details = Objeto.objects.filter(item=queryset)
-        return list(chain(queryset, ocorrencia, details, imagem))
+        for item in queryset:
+            item.ocorrencia = Ocorrencia.objects.get(item_id=item.id)
+            item.datafile = settings.MEDIA_URL + Imagem.objects.get(id=item.fileId).datafile.__str__()
+            if item.categoria == 1:
+                item.pessoa = Pessoa.objects.get(item_id=item.id)
+            else:
+                if item.categoria == 2:
+                    item.animal = Animal.objects.get(item_id=item.id)
+                else:
+                    item.objeto = Objeto.objects.get(item_id=item.id)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)   # datafile=self.request.data.get('datafile'
@@ -137,7 +134,7 @@ class ImagemViewSet(viewsets.ModelViewSet):
         if file is not None:
             serializer.save(datafile=file)
         else:
-            serializer.save(datafile=settings.MEDIA_URL+'default.jpg')
+            serializer.save(datafile='imagens/default.jpg')
 
 
 class ObjetoViewSet(viewsets.ModelViewSet):

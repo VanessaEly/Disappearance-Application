@@ -1,0 +1,62 @@
+<div class="modal" id="detalhesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <i class="text-muted fa fa-map-marker"></i>
+                    <strong>{{ data[index].ocorrencia.tipo }}</strong> - {{ data[index].ocorrencia.titulo }} </h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="pull-left col-md-8 ">
+                    <tbody>
+                    <tr>
+                        <td class="h6"><strong>Tipo</strong></td>
+                        <td class="h5">{{ data[index].ocorrencia.tipo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="h6"><strong>Título</strong></td>
+                        <td class="h5">{{ data[index].ocorrencia.titulo }}</td>
+                    </tr>
+                    <tr>
+                        <td class="h6"><strong>Endereço</strong></td>
+                        <td class="h5">{{ data[index].ocorrencia.endereco }}</td>
+                    </tr>
+                    <tr>
+                        <td class="h6"><strong>Data</strong></td>
+                        <td class="h5">{{ data[index].ocorrencia.dataehoraToShow }}</td>
+                    </tr>
+
+                    <tr class="btn-mais-info text-primary">
+                        <td> </td>
+                        <td class="btn-mais-info text-primary pointer" ng-click="getUrl()">
+                            <i class="open_info fa fa-plus-square-o"></i>  informações
+                        </td>
+
+                        <td class="h5"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+
+                <div class="col-md-4">
+                    <img src="{{ host }}{{ data[index].datafile }}" class="inline-block ocorrencia-image">
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="modal-footer">
+
+                <div class="text-right pull-right col-md-3">
+                    <button type="button" class="btn btn-info btn-circle btn-lg" title="Contato">
+                        <i class="fa fa-envelope animated"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

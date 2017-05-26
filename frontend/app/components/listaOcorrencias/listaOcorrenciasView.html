@@ -11,94 +11,26 @@
         <table class="table table-hover">
             <thead>
             <tr >
-                <th>Id</th>
                 <th>Tipo</th>
                 <th>Título</th>
                 <th>Data Criação</th>
+                <th>Local</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="ocorrencia in data.ocorrencia" ng-click="detalhesOcorrencia($index)">
-                <td>{{ ocorrencia.id }}</td>
-                <td>{{ ocorrencia.tipo }}</td>
-                <td>{{ ocorrencia.titulo }}</td>
-                <td>{{ data.date[$index]}}</td>
+            <tr ng-repeat="d in data" ng-click="detalhesOcorrencia($index)">
+                <td>{{ d.ocorrencia.tipo }}</td>
+                <td>{{ d.ocorrencia.titulo }}</td>
+                <td>{{ d.ocorrencia.dataehoraToShow }}</td>
+                <td>{{ d.ocorrencia.cidade }}/{{ d.ocorrencia.estado }}, {{ d.ocorrencia.pais }}</td>
             </tr>
-            <td ng-show="data.ocorrencia.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
+            <td ng-show="d.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>
         </table>
         <hr>
 
     </div>
-
-    <!-- Modal -->
-    <div class="modal" id="detalhesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        <i class="text-muted fa fa-map-marker"></i>
-                        <strong>{{ data.ocorrencia[index].tipo }}</strong> - {{ data.ocorrencia[index].titulo }} </h4>
-                </div>
-                <div class="modal-body">
-
-                    <table class="pull-left col-md-8 ">
-                        <tbody>
-                        <tr>
-                            <td class="h6"><strong>Tipo</strong></td>
-                            <td class="h5">{{ data.ocorrencia[index].tipo }}</td>
-                        </tr>
-                        <tr>
-                            <td class="h6"><strong>Título</strong></td>
-                            <td class="h5">{{ data.ocorrencia[index].titulo }}</td>
-                        </tr>
-                        <tr>
-                            <td class="h6"><strong>Endereço</strong></td>
-                            <td class="h5">{{ data.ocorrencia[index].endereco }}</td>
-                        </tr>
-                        <tr>
-                            <td class="h6"><strong>Data</strong></td>
-                            <td class="h5">{{ data.date[index] }}</td>
-                        </tr>
-                        <tr>
-                            <td class="h6"><strong>Data</strong></td>
-                            <td class="h5">{{ data.date[index] }}</td>
-                        </tr>
-
-                        <tr class="btn-mais-info text-primary">
-                            <td> </td>
-                            <td class="btn-mais-info text-primary pointer" ng-click="getUrl()">
-                                <i class="open_info fa fa-plus-square-o"></i>  informações
-                            </td>
-
-                            <td class="h5"></td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-
-
-                    <div class="col-md-4">
-                        <img src="{{ host }}{{ data.imagem[index].datafile }}" class="inline-block ocorrencia-image">
-                    </div>
-
-                    <div class="clearfix"></div>
-                </div>
-
-                <div class="modal-footer">
-
-                    <div class="text-right pull-right col-md-3">
-                        <button type="button" class="btn btn-info btn-circle btn-lg" title="Contato">
-                            <i class="fa fa-envelope animated"></i>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- fim Modal-->
+    <details-modal></details-modal>
 
 </div>
 <footer-element></footer-element>

@@ -32,8 +32,8 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ocorrencia
-        fields = ('id', 'data_criacao', 'dataehora', 'titulo', 'tipo',
-                  'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco', 'item')
+        fields = ('id', 'data_criacao', 'dataehora', 'titulo', 'tipo', 'detalhes', 'recompensa',
+                  'latitude', 'longitude', 'endereco', 'cidade', 'estado', 'pais', 'item')
         read_only_fields = ('item',)
 
     # def create(self, validated_data):
@@ -87,24 +87,12 @@ class ItemSerializer(serializers.ModelSerializer):
     pessoa = PessoaSerializer(required=False)
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)
-    nome, sexo, idade, especie, raca, cor_primaria, etnia, altura, peculiaridades, tipo, dataehora, \
-        titulo, detalhes, recompensa, latitude, longitude, endereco, datafile = \
-        serializers.CharField(required=False), serializers.CharField(required=False), \
-        serializers.FloatField(required=False), serializers.CharField(required=False), \
-        serializers.CharField(required=False), serializers.CharField(required=False), \
-        serializers.CharField(required=False), serializers.FloatField(required=False), \
-        serializers.CharField(required=False), serializers.CharField(required=False), \
-        serializers.DateTimeField(required=False), serializers.CharField(required=False), \
-        serializers.CharField(required=False), serializers.FloatField(required=False), \
-        serializers.CharField(required=False), serializers.CharField(required=False), \
-        serializers.CharField(required=False), serializers.CharField(required=False),
+    datafile = serializers.CharField(required=False),
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'ocorrencia', 'pessoa', 'animal', 'objeto', 'fileId',
-                  'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria', 'etnia', 'altura', 'peculiaridades',
-                  'tipo', 'dataehora', 'titulo', 'detalhes', 'recompensa', 'latitude', 'longitude', 'endereco',
-                  'datafile')
+        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
+                  'datafile',)
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')

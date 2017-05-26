@@ -13,7 +13,8 @@ class Item (models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)
     categoria = models.IntegerField(default='')
     fileId = models.IntegerField(default='')
-    # datafile = models.FileField(upload_to="media/", blank=True)
+    pin = models.CharField(max_length=100, default='')
+    datafile = models.CharField(max_length=100, blank=True)
 
 
 class Ocorrencia (models.Model):
@@ -26,6 +27,9 @@ class Ocorrencia (models.Model):
     latitude = models.CharField(max_length=50, default='')
     longitude = models.CharField(max_length=50, default='')
     endereco = models.CharField(max_length=300, default='')
+    cidade = models.CharField(max_length=100, blank=True)
+    estado = models.CharField(max_length=20, blank=True)
+    pais = models.CharField(max_length=100, blank=True)
     item = models.ForeignKey(Item)
 
     class Meta:
@@ -41,7 +45,7 @@ class Objeto (models.Model):
 class Animal (models.Model):
     nome = models.CharField(max_length=100, default='')
     sexo = models.CharField(max_length=20, default='')
-    idade = models.FloatField(blank=True)
+    idade = models.FloatField(blank=True, null=True)
     especie = models.CharField(max_length=30, default='')
     raca = models.CharField(max_length=30, default='')
     cor_primaria = models.CharField(max_length=30, default='')
@@ -51,9 +55,9 @@ class Animal (models.Model):
 class Pessoa (models.Model):
     nome = models.CharField(max_length=20, default='')
     sexo = models.CharField(max_length=20, default='')
-    idade = models.FloatField(blank=True)
+    idade = models.FloatField(blank=True, null=True)
     etnia = models.CharField(max_length=30, default='')
-    altura = models.FloatField(blank=True)
+    altura = models.FloatField(blank=True, null=True)
     peculiaridades = models.CharField(max_length=200, blank=True)
     item = models.ForeignKey(Item)
 

@@ -83,6 +83,23 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     scope.ocorrencia.latitude = results[0].geometry.location.lat();
                     scope.ocorrencia.longitude = results[0].geometry.location.lng();
+                        for (j = 0; j < results[0].address_components.length; ++j) {
+                            var super_var2 = results[0].address_components[j].types;
+
+                            for (k = 0; k < super_var2.length; ++k) {
+                                //find city
+                                if (super_var2[k] == "locality")
+                                    scope.ocorrencia.cidade = results[0].address_components[j].long_name;
+
+                                //find State
+                                if (super_var2[k] == "administrative_area_level_1")
+                                    scope.ocorrencia.estado = results[0].address_components[j].short_name;
+
+                                //find county
+                                if (super_var2[k] == "country")
+                                    scope.ocorrencia.pais = results[0].address_components[j].long_name;
+                            }
+                        }
                     callback(results[0]);
                 }
             });

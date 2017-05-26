@@ -11,56 +11,64 @@
                             <td>{{data.ocorrencia.tipo}}</td>
                         </tr>
                         <tr>
+                            <td>Categoria</td>
+                            <td ng-show="data.categoria == 1">Pessoa</td>
+                            <td ng-show="data.categoria == 2">Animal</td>
+                            <td ng-show="data.categoria == 3">Objeto</td>
+                        </tr>
+                        <tr>
                             <td>Data</td>
-                            <td>{{data.date}}</td>
+                            <td>{{data.ocorrencia.dataehoraToShow}}</td>
                         </tr>
                         <tr>
                             <td>Endereço</td>
                             <td>{{data.ocorrencia.endereco}}</td>
                         </tr>
                         <!-- objeto -->
-                        <tr ng-show="data.detalhes.tipo">
+                        <tr ng-show="data.objeto.tipo">
                             <td>Objeto</td>
-                            <td>{{data.detalhes.tipo}}</td>
+                            <td>{{data.objeto.tipo}}</td>
                         </tr>
+
                         <!-- pessoa -->
-                        <tr ng-show="data.detalhes.nome">
+                        <tr ng-show="data.pessoa.nome || data.animal.nome">
                             <td>Nome</td>
-                            <td>{{data.detalhes.nome}}</td>
+                            <td>{{data.pessoa.nome}}{{data.animal.nome}}</td>
                         </tr>
-                        <tr ng-show="data.detalhes.sexo">
+                        <tr ng-show="data.pessoa.sexo || data.animal.sexo">
                             <td>Sexo</td>
-                            <td>{{data.detalhes.sexo}}</td>
+                            <td>{{data.pessoa.sexo}}{{data.animal.sexo}}</td>
                         </tr>
-                        <tr ng-show="data.detalhes.etnia">
-                            <td>Etnia</td>
-                            <td>{{data.detalhes.etnia}}</td>
-                        </tr>
-                        <tr ng-show="data.detalhes.altura">
-                            <td>Altura</td>
-                            <td>{{data.detalhes.altura}}</td>
-                        </tr>
-                        <tr ng-show="data.detalhes.idade">
+                        <tr ng-show="data.pessoa.idade || data.animal.idade">
                             <td>Idade</td>
-                            <td>{{data.detalhes.idade}}</td>
+                            <td>{{data.pessoa.idade}}{{data.animal.idade}} ano(s)</td>
                         </tr>
-                        <tr ng-show="data.detalhes.peculiaridades">
+                        <tr ng-show="data.pessoa.etnia">
+                            <td>Etnia</td>
+                            <td>{{data.pessoa.etnia}}</td>
+                        </tr>
+                        <tr ng-show="data.pessoa.altura">
+                            <td>Altura</td>
+                            <td>{{data.pessoa.altura}} m</td>
+                        </tr>
+                        <tr ng-show="data.pessoa.peculiaridades">
                             <td>Peculiaridades</td>
-                            <td>{{data.detalhes.peculiaridades}}</td>
+                            <td>{{data.pessoa.peculiaridades}}</td>
                         </tr>
                         <!-- animal -->
-                        <tr ng-show="data.detalhes.especie">
+                        <tr ng-show="data.animal.especie">
                             <td>Animal</td>
-                            <td>{{data.detalhes.especie}}</td>
+                            <td>{{data.animal.especie}}</td>
                         </tr>
-                        <tr ng-show="data.detalhes.raca">
+                        <tr ng-show="data.animal.raca">
                             <td>Raça</td>
-                            <td>{{data.detalhes.raca}}</td>
+                            <td>{{data.animal.raca}}</td>
                         </tr>
-                        <tr ng-show="data.detalhes.cor_primaria">
+                        <tr ng-show="data.objeto.cor_primaria || data.animal.cor_primaria">
                             <td>Cor</td>
-                            <td>{{data.detalhes.cor_primaria}}</td>
+                            <td>{{data.objeto.cor_primaria}}{{data.animal.cor_primaria}}</td>
                         </tr>
+
                         <tr ng-show="data.ocorrencia.recompensa">
                             <td>Recompensa</td>
                             <td>R${{data.ocorrencia.recompensa}},00</td>
@@ -69,11 +77,12 @@
                             <td>Detalhes</td>
                             <td>{{data.ocorrencia.detalhes}}</td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4">
-                    <img class="inline-block ocorrencia-image" src="{{ host }}{{ data.imagem.datafile }}"/>
+                    <img class="inline-block ocorrencia-image" src="{{ host }}{{ data.datafile }}"/>
             </div>
         </div>
 

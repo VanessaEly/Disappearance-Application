@@ -43,37 +43,27 @@ app.directive('homeMap', function($http, StorageService, $window) {
         }
         //fazendo requisicao das ocorrencias cadastradas
         $http.get(host + 'api/item/').success(function(response){
-            var count = response.count/4;
-            console.log(response.results)
-            for (var i = 0; i < count; i ++) {
-                console.log(count)
-                console.log(response.results[i + count])
-                var categoria = response.results[i].categoria == 1? "Pessoa": response.results[i].categoria == 2? "Animal":"Objeto"
-                scope.data.item.push(response.results[i]);
-                scope.data.categoria.push(categoria);
-                scope.data.ocorrencia.push(response.results[i + count]);
-                scope.data.detalhes.push(response.results[i + count*2]);
-                scope.data.imagem.push(response.results[i + count*3]);
-                scope.data.date.push(new Date(response.results[i + count].dataehora).toLocaleString('pt-BR'));
-            }
+            scope.data = response.results;
             console.log(scope.data)
-            //criando marcadores para todas as ocorrecias encontradas
-            for (var i = 0; i < scope.data.ocorrencia.length; i++) {
+            //scope.data.dataehoraToShow = scope.data.dataehora.toLocaleString('pt-BR');
 
+            //criando marcadores para todas as ocorrecias encontradas
+            for (var i = 0; i < scope.data.length; i++) {
+
+                //conteúdo do marker
                 var content  =
                     '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
-                        '<p><strong>'+ scope.data.ocorrencia[i].titulo + scope.data.item[i].id + '</strong></p>' +
-                        '<p>'+ scope.data.ocorrencia[i].tipo + ' - ' + scope.data.categoria[i] + '</p>' +
-                        '<p>'+ scope.data.date[i] + '</p>' +
-                        '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data.item[i].id +'>'+
+                        '<p><strong>'+ scope.data[i].ocorrencia.titulo + '</strong></p>' +
+                        '<p>'+ scope.data[i].ocorrencia.tipo + '</p>' +
+                        '<p>'+ new Date(scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR') + '</p>' +
+                        '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
                         'Consultar detalhes</a> </p>'+
                     '</div>';
-                pin = "assets/images/" + scope.data.ocorrencia[i].tipo + scope.data.item[i].categoria + ".png"
 
-                console.log(scope.data.ocorrencia[i].tipo, pin)
-                setMarker(map, new google.maps.LatLng(scope.data.ocorrencia[i].latitude,
-                    scope.data.ocorrencia[i].longitude), scope.data.ocorrencia[i].titulo,
-                    content, infoWindow, markers, pin);
+                //adicionando marker
+                setMarker(map, new google.maps.LatLng(scope.data[i].ocorrencia.latitude,
+                    scope.data[i].ocorrencia.longitude), scope.data[i].ocorrencia.titulo,
+                    content, infoWindow, markers, scope.data[i].pin);
             }
         }).error(function(response){
             console.log("get error", response);

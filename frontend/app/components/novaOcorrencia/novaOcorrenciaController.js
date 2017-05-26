@@ -85,6 +85,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
 
     $scope.salvarItem = function() {
         console.log("item", $scope.item);
+        $scope.item.pin = "assets/images/" + $scope.ocorrencia.tipo + $scope.item.categoria + ".png"
         $http.post(StorageService.get("host") + 'api/item/', $scope.item, {
             headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
             function successCallback(response) {
