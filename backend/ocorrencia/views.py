@@ -5,6 +5,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from itertools import chain
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
+from disapp import settings
 import os
 
 
@@ -132,7 +133,11 @@ class ImagemViewSet(viewsets.ModelViewSet):
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(datafile=self.request.data.get('datafile'))
+        file = self.request.data.get('datafile')
+        if file is not None:
+            serializer.save(datafile=file)
+        else:
+            serializer.save(datafile=settings.MEDIA_URL+'default.jpg')
 
 
 class ObjetoViewSet(viewsets.ModelViewSet):

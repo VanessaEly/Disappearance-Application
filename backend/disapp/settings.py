@@ -162,6 +162,6 @@ CORS_ALLOW_METHODS = (
 )
 CSRF_COOKIE_NAME = 'csrftoken'
 CSRF_COOKIE_DOMAIN = None
-STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '')
-MEDIA_URL = '/'
+STATIC_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
