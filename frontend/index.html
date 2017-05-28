@@ -43,6 +43,7 @@
         <script type="text/javascript" src="app/shared/header/headerController.js"></script>
         <script type="text/javascript" src="app/shared/footer/footerController.js"></script>
         <script type="text/javascript" src="app/shared/toasts/toastsController.js"></script>
+        <script type="text/javascript" src="app/components/editarOcorrencia/editOcorrenciaController.js"></script>
 
         <!-- DIRECTIVES -->
 		<script type="text/javascript" src="app/shared/header/headerDirective.js"></script>
@@ -53,6 +54,7 @@
         <script type="text/javascript" src="app/shared/modal/details/detailsModalDirective.js"></script>
         <script type="text/javascript" src="app/components/home/homeMapDirective.js"></script>
         <script type="text/javascript" src="app/components/novaOcorrencia/ocorrenciaMapDirective.js"></script>
+        <script type="text/javascript" src="app/components/editarOcorrencia/editOcorrenciaMapDirective.js"></script>
 
         <!-- SERVICES -->
         <script type="text/javascript" src="app/shared/toasts/toastsService.js"></script>
@@ -75,7 +77,9 @@
     </head>
 
     <body ng-controller="MainController" ng-init="mainInit()" class="pageContentWrapper">
+        <header-element></header-element>
         <div id="view-element" ng-view></div>
+        <footer-element></footer-element>
         <toasts-element></toasts-element>
     </body>
 </html>

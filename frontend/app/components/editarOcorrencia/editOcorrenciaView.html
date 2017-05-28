@@ -1,19 +1,19 @@
 <login-element> </login-element>
 <cadastro-element> </cadastro-element>
-<div class="container page-content" ng-controller="NovaOcorrenciaController" ng-init="novaOcorrenciaInit()">
+<div class="container page-content" ng-controller="EditOcorrenciaController" ng-init="editOcorrenciaInit()">
     <div class="col-md-12 col-xs-12 ocorrencia-info">
-        <h2>Nova Ocorrência</h2>
+        <h2>Editar Ocorrência</h2>
         <div class="col-md-8 col-sm-8 col-xs-8">
             <input id="pac-input" class="controls" type="text"
                    placeholder="Busque um endereço">
-            <div ocorrencia-map="" selected-item="coordinates"></div>
+            <div edit-map="" selected-item="coordinates"></div>
         </div>
         <div class="col-md-4 col-sm-4 col-xs-4">
             <div id="uploader" class="image"onclick="$('#filePhoto').click()">
                 <h5 id="uploader-text">Selecione uma imagem para a ocorrência</h5>
                 <img src=""/>
             </div>
-            <input type="file"   class="form-control" id ="filePhoto" ng-required="true" accept="image/jpeg, image/png"/>
+            <input type="file"   class="form-control" id ="filePhoto" ng-required="true"/>
         </div>
         <ul class="list-inline">
             <form name="ocorrenciaform" enctype="multipart/form-data">
@@ -189,9 +189,9 @@
                                type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
                     </div>
                     <div class="col-md-4" ng-show="ocorrencia.tipo === 'Desaparecimento'">
-                        <label class="control-label">Recompensa</label><div></div>
+                        <label class="control-label">Recompensa</label>
                         <input ng-model="ocorrencia.recompensa" ng-required="false"
-                               type="number" class="form-control" placeholder="R$1000,00" step="0.01" min="0">
+                               type="number" class="form-control" placeholder="1000,00 reais" step="0.01" min="0"/>
                     </div>
                 </div>
                 <li class="">

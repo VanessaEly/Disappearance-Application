@@ -1,7 +1,7 @@
-@font-face {
-    font-family: 'Caviar Dreams';
-    src: url('../fonts/Caviar_Dreams_Bold.ttf');
-}
+/*@font-face {*/
+    /*font-family: 'Caviar Dreams';*/
+    /*src: url('../fonts/Caviar_Dreams_Bold.ttf')  format('embedded-opentype';*/
+/*}*/
 
 /* GENERAL */
 .pointer {
@@ -201,14 +201,13 @@ body {
 }
 
 .controls {
-    margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 2px 0 0 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     height: 32px;
     outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #pac-input {
@@ -485,7 +484,13 @@ footer {
 
 #login-panel { padding-top:30px;  }
 
+.panel-info {
+    margin: 10% 0 30% 0 !important;
+}
 .login-input { margin-bottom: 25px; }
+.control {
+    margin-bottom: 5%;
+}
 /* END LOGIN */
 
 /* CADASTRO USUARIO */

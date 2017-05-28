@@ -1,4 +1,4 @@
-app.directive('ocorrenciaMap', ['$parse', function($parse) {
+app.directive('editMap', ['$parse', function($parse) {
     var map,marker, pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,

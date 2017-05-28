@@ -1,5 +1,6 @@
 app.directive('homeMap', function($http, StorageService, $window) {
     var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786}, pin;
+
     var mapOptions = {
         center: pos,
         styles: [{"stylers": [{"saturation": -100}, {"gamma": 1}]},
@@ -26,21 +27,26 @@ app.directive('homeMap', function($http, StorageService, $window) {
 
         var host = StorageService.get("host");
 
-         // Try HTML5 geolocation.
+        // Try HTML5 geolocation.
         if (navigator.geolocation) {
+            var location_timeout = setTimeout("geolocFail()", 10000);
             navigator.geolocation.getCurrentPosition(function (position) {
+            clearTimeout(location_timeout);
                 pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-                map.setCenter(pos);
                 setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
-            })
+            }, function(error) {
+                clearTimeout(location_timeout);
+                setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
+                console.log("error",error);
+            });
         }
         else {
             setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
         }
+
         //fazendo requisicao das ocorrencias cadastradas
         $http.get(host + 'api/item/').success(function(response){
             scope.data = response.results;
@@ -78,7 +84,7 @@ app.directive('homeMap', function($http, StorageService, $window) {
             map: map,
             title: title,
             //animation: google.maps.Animation.DROP,
-            icon: icon
+            icon: icon,optimized: false,
         };
 
         marker = new google.maps.Marker(markerOptions);

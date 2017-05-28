@@ -5,8 +5,8 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
     $scope.minhasOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
         $scope.currentPage = "";
-        $http.get(StorageService.get("host") + 'api/item/', {
-            headers: {"Authorization": "Token " + $cookies.get('token')}}
+        $http.get(StorageService.get("host") + 'api/item/'
+            , {headers: {"Authorization": "Token " + $cookies.get('token')}}
         ).success(function(response){
             $scope.data = response.results;
             for (var i = 0; i < $scope.data.length; i++)
@@ -15,7 +15,13 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
             console.log($scope.data)
 
         }).error(function(response){
-            console.log("get error", response);
+            if (response.detail = "Token inváido") {
+                $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: "Você precisa estar logado para acessar esta página!"
+                });
+                $rootScope.goTo('/');
+            }
         });
     }
 
@@ -48,6 +54,22 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
         $('#detalhesModal').modal('hide');
         var url = 'ocorrencia/'+ $scope.data[$scope.index].id;
         $rootScope.goTo(url);
+    }
+
+    $scope.editarOcorrencia =  function (item) {
+        $rootScope.goTo('/edit/' + item.id);
+        // $http.get(StorageService.get("host") + 'api/isowner/?id=', item, {
+        //     headers: {"Authorization": "Token " + $cookies.get('token')}}
+        // ).success(function(response){
+        //     $scope.data = response.results;
+        //     for (var i = 0; i < $scope.data.length; i++)
+        //        $scope.data[i].ocorrencia.dataehoraToShow =
+        //            new Date($scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR')
+        //     console.log($scope.data)
+        //
+        // }).error(function(response){
+        //     console.log("get error", response);
+        // });
     }
 
 });

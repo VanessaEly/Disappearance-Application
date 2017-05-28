@@ -35,8 +35,11 @@ app.config(function($routeProvider, $httpProvider) {
 			templateUrl: 'app/components/minhasOcorrencias/minhasOcorrenciasView.html',
 			replace: true,
 			reloadOnSearch: false
-		})
-
+		}).when('/edit/:id', {
+			templateUrl: 'app/components/editarOcorrencia/editOcorrenciaView.html',
+			replace: true,
+			reloadOnSearch: false
+        })
         // DEFAULT
         .otherwise({
             redirectTo: '/'
