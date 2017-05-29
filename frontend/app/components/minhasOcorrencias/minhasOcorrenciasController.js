@@ -57,7 +57,7 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
     }
 
     $scope.editarOcorrencia =  function (item) {
-        $rootScope.goTo('/edit/' + item.id);
+        $rootScope.goTo('/edit/' + item.id +'/'+ item.ocorrencia.latitude + '/'+ item.ocorrencia.longitude);
         // $http.get(StorageService.get("host") + 'api/isowner/?id=', item, {
         //     headers: {"Authorization": "Token " + $cookies.get('token')}}
         // ).success(function(response){

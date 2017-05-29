@@ -1,4 +1,4 @@
-app.directive('ocorrenciaMap', ['$parse', function($parse) {
+app.directive('ocorrenciaMap', ['$routeParams', function($routeParams) {
     var map,marker, pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
@@ -25,9 +25,16 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
         geocoder = new google.maps.Geocoder();
 
         map = new google.maps.Map(element[0], mapOptions);
-
+        if($routeParams.lat && $routeParams.lng)
+        {
+            pos = {
+                lat: parseFloat($routeParams.lat),
+                lng: parseFloat($routeParams.lng)
+            }
+            setMarker(map, pos, "Local atual");
+        }
         // Try HTML5 geolocation.
-        if (navigator.geolocation) {
+        else if(navigator.geolocation) {
             var location_timeout = setTimeout("geolocFail()", 10000);
             navigator.geolocation.getCurrentPosition(function (position) {
             clearTimeout(location_timeout);

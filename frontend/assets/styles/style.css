@@ -1,7 +1,7 @@
-/*@font-face {*/
-    /*font-family: 'Caviar Dreams';*/
-    /*src: url('../fonts/Caviar_Dreams_Bold.ttf')  format('embedded-opentype';*/
-/*}*/
+@font-face {
+    font-family: 'HelvNeueMd';
+    src: url('../fonts/HelveticaNeue-Md.ttf');
+}
 
 /* GENERAL */
 .pointer {
@@ -15,6 +15,7 @@
     float: right;
 }
 
+body { font-family: HelvNeueMd !important; }
 p {
     margin: 0px !important;
 }
@@ -47,6 +48,9 @@ header {
 
 /* NAV */
 
+#disapp {
+    font-family: HelvNeueMd !important;
+}
 .nav-dropdown {
     margin-top: 1vh;
 }
@@ -187,7 +191,7 @@ body {
 /* END HOME */
 
 /*!* NOVA OCORRENCIA *!*/
-#ocorrencia-map, #ocorrencia-form {
+#ocorrencia-map, #edit-map, #ocorrencia-form {
     height: 40vh;
     width: 100%;
 }
@@ -310,7 +314,7 @@ body {
 
 /* FOOTER */
 footer {
-
+    font-family: HelvNeueMd !important;
     position: relative;
     right: 0;
     bottom: 0;

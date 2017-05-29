@@ -20,9 +20,19 @@ app.controller('CadastroUsuarioController', function($scope,$rootScope, $http, T
                     }
                 }
                 for (var i = 0; i < $scope.errors.length; i++) {
-                    ToastsService.makeToast("high", $scope.errors[i], 2000);
+                    $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: $scope.errors[i]
+                });
                 }
             }
+            if(response.status == 500) {
+                $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: "Email já cadastrado!"
+                });
+            }
+
         });
     }
 

@@ -50,7 +50,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
             $scope.pessoa.idade = $scope.pa.idade;
             $scope.pessoa.sexo = $scope.pa.sexo;
         }
-        if ($scope.item.categoria == "2"){
+        else{
             $scope.animal.nome = $scope.pa.nome;
             $scope.animal.idade  = $scope.pa.idade;
             $scope.animal.sexo = $scope.pa.sexo;

@@ -29,7 +29,7 @@ app.service("LoginService", function($window, $location, $http, $q, $cookies, St
 				text: "Cadastrado com sucesso!"
 			});
 			loginService.authenticate(usuario);
-			 if ($location.path() == "/login") {
+			 if ($location.path() == "/cadastro-usuario") {
                 $rootScope.goTo("/");
             } else {
                 $rootScope.toggleId('cadastro-modal');

@@ -88,10 +88,11 @@ class ItemSerializer(serializers.ModelSerializer):
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)
     datafile = serializers.CharField(required=False),
+    oldfileId = serializers.IntegerField(required=False),
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
+        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
                   'datafile',)
 
     def create(self, validated_data):
@@ -100,15 +101,66 @@ class ItemSerializer(serializers.ModelSerializer):
         animal_data = validated_data.pop('animal')
         objeto_data = validated_data.pop('objeto')
 
-        item = Item.objects.create(**validated_data)
+        # caso receba id do item (ja criado, tela de edit)
+        if 'item' in self.data['ocorrencia']:
+            print self.data['oldfileId']
+            print self.data['fileId']
+            Imagem.delete(Imagem.objects.get(id=self.data['oldfileId']))
+            item = Item.objects.update_or_create(id=self.data['ocorrencia']['item'], defaults={
+                'categoria': self.data['categoria'],
+                'fileId': self.data['fileId'],
+                'pin': self.data['pin'],
+                'datafile': self.data['datafile'],
+            })
+            Ocorrencia.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                'dataehora': self.data['ocorrencia']['dataehora'],
+                'titulo': self.data['ocorrencia']['titulo'],
+                'tipo': self.data['ocorrencia']['tipo'],
+                'detalhes': self.data['ocorrencia']['detalhes'],
+                'recompensa': self.data['ocorrencia']['recompensa'],
+                'latitude': self.data['ocorrencia']['latitude'],
+                'longitude': self.data['ocorrencia']['longitude'],
+                'endereco': self.data['ocorrencia']['endereco'],
+                'cidade': self.data['ocorrencia']['cidade'],
+                'estado': self.data['ocorrencia']['estado'],
+                'pais': self.data['ocorrencia']['pais']
+            })
+            if validated_data['categoria'] == 1:
+                Pessoa.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                    'nome': self.data['pessoa']['nome'],
+                    'sexo': self.data['pessoa']['sexo'],
+                    'idade': self.data['pessoa']['idade'],
+                    'etnia': self.data['pessoa']['etnia'],
+                    'altura': self.data['pessoa']['altura'],
+                    'peculiaridades': self.data['pessoa']['peculiaridades'],
+                })
+            if validated_data['categoria'] == 2:
+                Animal.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                    'nome': self.data['animal']['nome'],
+                    'sexo': self.data['animal']['sexo'],
+                    'idade': self.data['animal']['idade'],
+                    'especie': self.data['animal']['especie'],
+                    'raca': self.data['animal']['raca'],
+                    'cor_primaria': self.data['animal']['cor_primaria'],
+                })
+            if validated_data['categoria'] == 3:
+                Objeto.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                    'tipo': self.data['objeto']['tipo'],
+                    'cor_primaria': self.data['objeto']['cor_primaria'],
+                })
 
-        Ocorrencia.objects.create(item=item, **ocorrencia_data)
-        if validated_data['categoria'] == 1:
-            Pessoa.objects.create(item=item, **pessoa_data)
-        if validated_data['categoria'] == 2:
-            Animal.objects.create(item=item, **animal_data)
-        if validated_data['categoria'] == 3:
-            Objeto.objects.create(item=item, **objeto_data)
+        # cria novos itens
+        else:
+            item = Item.objects.create(**validated_data)
+            Ocorrencia.objects.create(item=item, **ocorrencia_data)
+            if validated_data['categoria'] == 1:
+                Pessoa.objects.create(item=item, **pessoa_data)
+            if validated_data['categoria'] == 2:
+                Animal.objects.create(item=item, **animal_data)
+            if validated_data['categoria'] == 3:
+                Objeto.objects.create(item=item, **objeto_data)
+
         return item
+
 
 
