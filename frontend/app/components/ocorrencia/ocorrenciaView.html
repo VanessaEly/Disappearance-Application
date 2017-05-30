@@ -1,88 +1,112 @@
 <div class="container page-content" ng-controller="OcorrenciaController" ng-init="ocorrenciaInit()">
     <div class="tab-pane">
         <div class="col-md-12 col-sm-12 col-xs-12 ocorrencia-info">
-            <div class="col-md-8 col-sm-8 col-xs-8">
-                <h1>{{data.ocorrencia.titulo}}</h1>
-                <table class="table table-user-information">
-                    <tbody>
-                        <tr>
-                            <td>Tipo</td>
-                            <td>{{data.ocorrencia.tipo}}</td>
-                        </tr>
-                        <tr>
-                            <td>Categoria</td>
-                            <td ng-show="data.categoria == 1">Pessoa</td>
-                            <td ng-show="data.categoria == 2">Animal</td>
-                            <td ng-show="data.categoria == 3">Objeto</td>
-                        </tr>
-                        <tr>
-                            <td>Data</td>
-                            <td>{{data.ocorrencia.dataehoraToShow}}</td>
-                        </tr>
-                        <tr>
-                            <td>Endereço</td>
-                            <td>{{data.ocorrencia.endereco}}</td>
-                        </tr>
-                        <!-- objeto -->
-                        <tr ng-show="data.objeto.tipo">
-                            <td>Objeto</td>
-                            <td>{{data.objeto.tipo}}</td>
-                        </tr>
+            <div id="detalhesOcorrencia">
+                <div class="col-md-8 col-sm-8 col-xs-8">
+                    <h1>{{data.ocorrencia.titulo}}</h1>
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>Tipo</td>
+                                <td>{{data.ocorrencia.tipo}}</td>
+                            </tr>
+                            <tr>
+                                <td>Categoria</td>
+                                <td ng-show="data.categoria == 1">Pessoa</td>
+                                <td ng-show="data.categoria == 2">Animal</td>
+                                <td ng-show="data.categoria == 3">Objeto</td>
+                            </tr>
+                            <tr>
+                                <td>Data</td>
+                                <td>{{data.ocorrencia.dataehoraToShow}}</td>
+                            </tr>
+                            <tr>
+                                <td>Endereço</td>
+                                <td>{{data.ocorrencia.endereco}}</td>
+                            </tr>
+                            <!-- objeto -->
+                            <tr ng-show="data.objeto.tipo">
+                                <td>Objeto</td>
+                                <td>{{data.objeto.tipo}}</td>
+                            </tr>
 
-                        <!-- pessoa -->
-                        <tr ng-show="data.pessoa.nome || data.animal.nome">
-                            <td>Nome</td>
-                            <td>{{data.pessoa.nome}}{{data.animal.nome}}</td>
-                        </tr>
-                        <tr ng-show="data.pessoa.sexo || data.animal.sexo">
-                            <td>Sexo</td>
-                            <td>{{data.pessoa.sexo}}{{data.animal.sexo}}</td>
-                        </tr>
-                        <tr ng-show="data.pessoa.idade || data.animal.idade">
-                            <td>Idade</td>
-                            <td>{{data.pessoa.idade}}{{data.animal.idade}} ano(s)</td>
-                        </tr>
-                        <tr ng-show="data.pessoa.etnia">
-                            <td>Etnia</td>
-                            <td>{{data.pessoa.etnia}}</td>
-                        </tr>
-                        <tr ng-show="data.pessoa.altura">
-                            <td>Altura</td>
-                            <td>{{data.pessoa.altura}} m</td>
-                        </tr>
-                        <tr ng-show="data.pessoa.peculiaridades">
-                            <td>Peculiaridades</td>
-                            <td>{{data.pessoa.peculiaridades}}</td>
-                        </tr>
-                        <!-- animal -->
-                        <tr ng-show="data.animal.especie">
-                            <td>Animal</td>
-                            <td>{{data.animal.especie}}</td>
-                        </tr>
-                        <tr ng-show="data.animal.raca">
-                            <td>Raça</td>
-                            <td>{{data.animal.raca}}</td>
-                        </tr>
-                        <tr ng-show="data.objeto.cor_primaria || data.animal.cor_primaria">
-                            <td>Cor</td>
-                            <td>{{data.objeto.cor_primaria}}{{data.animal.cor_primaria}}</td>
-                        </tr>
+                            <!-- pessoa -->
+                            <tr ng-show="data.pessoa.nome || data.animal.nome">
+                                <td>Nome</td>
+                                <td>{{data.pessoa.nome}}{{data.animal.nome}}</td>
+                            </tr>
+                            <tr ng-show="data.pessoa.sexo || data.animal.sexo">
+                                <td>Sexo</td>
+                                <td>{{data.pessoa.sexo}}{{data.animal.sexo}}</td>
+                            </tr>
+                            <tr ng-show="data.pessoa.idade || data.animal.idade">
+                                <td>Idade</td>
+                                <td>{{data.pessoa.idade}}{{data.animal.idade}} ano(s)</td>
+                            </tr>
+                            <tr ng-show="data.pessoa.etnia">
+                                <td>Etnia</td>
+                                <td>{{data.pessoa.etnia}}</td>
+                            </tr>
+                            <tr ng-show="data.pessoa.altura">
+                                <td>Altura</td>
+                                <td>{{data.pessoa.altura}} m</td>
+                            </tr>
+                            <tr ng-show="data.pessoa.peculiaridades">
+                                <td>Peculiaridades</td>
+                                <td>{{data.pessoa.peculiaridades}}</td>
+                            </tr>
+                            <!-- animal -->
+                            <tr ng-show="data.animal.especie">
+                                <td>Animal</td>
+                                <td>{{data.animal.especie}}</td>
+                            </tr>
+                            <tr ng-show="data.animal.raca">
+                                <td>Raça</td>
+                                <td>{{data.animal.raca}}</td>
+                            </tr>
+                            <tr ng-show="data.objeto.cor_primaria || data.animal.cor_primaria">
+                                <td>Cor</td>
+                                <td>{{data.objeto.cor_primaria}}{{data.animal.cor_primaria}}</td>
+                            </tr>
 
-                        <tr ng-show="data.ocorrencia.recompensa">
-                            <td>Recompensa</td>
-                            <td>R${{data.ocorrencia.recompensa}}</td>
-                        </tr>
-                        <tr ng-show="data.ocorrencia.detalhes">
-                            <td>Detalhes</td>
-                            <td>{{data.ocorrencia.detalhes}}</td>
-                        </tr>
+                            <tr ng-show="data.ocorrencia.recompensa">
+                                <td>Recompensa</td>
+                                <td>R${{data.ocorrencia.recompensa}}</td>
+                            </tr>
+                            <tr ng-show="data.ocorrencia.detalhes">
+                                <td>Detalhes</td>
+                                <td>{{data.ocorrencia.detalhes}}</td>
+                            </tr>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                        <img class="inline-block ocorrencia-image" src="{{ host }}{{ data.datafile }}"/>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 submit-wrapper">
+                    <a href="#">GET IN TOUCH</a>
+                </div>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                    <img class="inline-block ocorrencia-image" src="{{ host }}{{ data.datafile }}"/>
+            <!-- MODAL -->
+            <div id="contatoCriador" class="col-md-8 col-sm-8 col-xs-8 ocorrencia-info  col-md-offset-2 col-xs-offset-2 col-lg-offset-2">
+                <form class="form-horizontal col-md-8 col-sm-8 col-xs-8  col-md-offset-2 col-xs-offset-2 col-lg-offset-2">
+                    <div class="form-group">
+                        <label for="contatoNome">Nome</label>
+                        <input type="text" class="form-control" id="contatoNome" placeholder="Fulano Sicrano">
+                    </div>
+                    <div class="form-group">
+                        <label for="contatoEmail">Email</label>
+                        <input type="email" class="form-control" id="contatoEmail" placeholder="fulano@exemplo.com">
+                    </div>
+                    <div class="form-group ">
+                        <label for="contatoText">Mensagem</label>
+                        <textarea  class="form-control" placeholder="Escreva aqui a sua mensagem." id="contatoText"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default">Send Message</button>
+                </form>
             </div>
+            <!-- END MODAL -->
         </div>
 
     </div>

@@ -39,6 +39,14 @@ app.config(function($routeProvider, $httpProvider) {
 			templateUrl: 'app/components/editarOcorrencia/editOcorrenciaView.html',
 			replace: true,
 			reloadOnSearch: false
+        }).when('/sobre', {
+			templateUrl: 'app/components/sobre/sobreView.html',
+			replace: true,
+			reloadOnSearch: false
+        }).when('/contato', {
+			templateUrl: 'app/components/contato/contatoView.html',
+			replace: true,
+			reloadOnSearch: false
         })
         // DEFAULT
         .otherwise({

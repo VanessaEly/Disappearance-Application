@@ -2,11 +2,12 @@ from api.serializers import *
 from models import *
 from rest_framework import viewsets, status
 from rest_framework.parsers import FormParser, MultiPartParser
-from itertools import chain
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from disapp import settings
 import os
+from django.core.mail import send_mail
+# import smtplib
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
@@ -178,3 +179,25 @@ class PessoaViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
+
+
+class ContatoViewSet(viewsets.ViewSet):
+
+    def list(self, request):  # , format=None
+        email = self.request.query_params.get('email', None)
+        mensagem = self.request.query_params.get('mensagem', None)
+        assunto = self.request.query_params.get('assunto', None)
+        print email
+        print assunto
+        print mensagem
+        if email and mensagem and assunto is not None:
+            send_mail(
+                assunto,
+                mensagem + '\n\n Enviado por - ' + email,
+                None,
+                ['disapp.contato@gmail.com'],
+                fail_silently=False,
+            )
+            return Response("success")
+        else:
+            return Response("error")

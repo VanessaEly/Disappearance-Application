@@ -5,6 +5,7 @@ app.controller('OcorrenciaController', function($scope, $http, $routeParams, Sto
             if (response.count != 0) {
                 $scope.data = response.results[0]
                 $scope.data.ocorrencia.dataehoraToShow = new Date($scope.data.ocorrencia.dataehora).toLocaleString('pt-BR')
+                console.log($scope.data)
             } else {
                 $rootScope.$broadcast("toast", {
                     priority: "high",

@@ -35,7 +35,7 @@ app.directive('ocorrenciaMap', ['$routeParams', function($routeParams) {
         }
         // Try HTML5 geolocation.
         else if(navigator.geolocation) {
-            var location_timeout = setTimeout("geolocFail()", 10000);
+            var location_timeout = setTimeout("", 10000);
             navigator.geolocation.getCurrentPosition(function (position) {
             clearTimeout(location_timeout);
                 pos = {
@@ -43,6 +43,10 @@ app.directive('ocorrenciaMap', ['$routeParams', function($routeParams) {
                     lng: position.coords.longitude
                 };
                 setMarker(map, pos, "Você está aqui!");
+                address_to_coordinates(pos, function (pos) {
+                    scope.coordinates = pos;
+                    scope.$apply();
+                });
             }, function(error) {
                 clearTimeout(location_timeout);
                 setMarker(map, pos, "Você está aqui!");

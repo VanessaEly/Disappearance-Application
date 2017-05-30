@@ -89,11 +89,12 @@ class ItemSerializer(serializers.ModelSerializer):
     objeto = ObjetoSerializer(required=False)
     datafile = serializers.CharField(required=False),
     oldfileId = serializers.IntegerField(required=False),
+    owner = serializers.CharField(source='owner.id', required=False)
 
     class Meta:
         model = Item
         fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
-                  'datafile',)
+                  'datafile', 'owner')
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')
@@ -163,4 +164,12 @@ class ItemSerializer(serializers.ModelSerializer):
         return item
 
 
+class ContatoSerializer(serializers.Serializer):
 
+    email = serializers.EmailField(required=True)
+    mensagem = serializers.CharField(required=True)
+    assunto = serializers.CharField(required=True)
+
+    class Meta:
+        model = Item
+        fields = ('email', 'mensagem', 'assunto',)

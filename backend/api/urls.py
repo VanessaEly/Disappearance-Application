@@ -1,6 +1,5 @@
 from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
-
 from ocorrencia import views as ocorrenciaviews
 from api.views.user import views as userviews
 from rest_framework.authtoken import views
@@ -15,6 +14,7 @@ router.register(r'objeto', ocorrenciaviews.ObjetoViewSet, 'objeto')
 router.register(r'animal', ocorrenciaviews.AnimalViewSet, 'animal')
 router.register(r'pessoa', ocorrenciaviews.PessoaViewSet, 'pessoa')
 router.register(r'imagem', ocorrenciaviews.ImagemViewSet, 'imagem')
+router.register(r'contato', ocorrenciaviews.ContatoViewSet, 'contato')
 router.register(r'users', userviews.UserViewSet)
 
 # Os URLs da API sao determinados automaticamente pelo router
