@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-md-5">
                         <label class="control-label">Peculiaridades</label>
-                        <input ng-model="data.pessoa.peculiaridades" ng-required="false" minlength="5" maxlength="150"
+                        <textarea ng-model="data.pessoa.peculiaridades" ng-required="false" maxlength="300"
                                type="text" class="form-control" placeholder="Ex: Piercing, tatuagem, etc."  />
                     </div>
                 </div>
@@ -182,10 +182,16 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <label class="control-label">Detalhes da ocorrência</label>
-                        <input ng-model="data.ocorrencia.detalhes" ng-required="false" minlength="5" maxlength="100"
+                        <textarea ng-model="data.ocorrencia.detalhes" ng-required="false" maxlength="500"
                                type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Telefone</label>
+                        <input ng-model="data.telefone" ng-required="false" minlength="8" maxlength="16"
+                               type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
+                               oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
                     </div>
                     <div class="col-md-4" ng-show="data.ocorrencia.tipo === 'Desaparecimento'">
                         <label class="control-label">Recompensa</label>

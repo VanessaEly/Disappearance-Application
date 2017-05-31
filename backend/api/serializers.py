@@ -90,10 +90,11 @@ class ItemSerializer(serializers.ModelSerializer):
     datafile = serializers.CharField(required=False),
     oldfileId = serializers.IntegerField(required=False),
     owner = serializers.CharField(source='owner.id', required=False)
+    telefone = serializers.CharField(required=False)
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
+        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'telefone', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
                   'datafile', 'owner')
 
     def create(self, validated_data):
@@ -112,6 +113,7 @@ class ItemSerializer(serializers.ModelSerializer):
                 'fileId': self.data['fileId'],
                 'pin': self.data['pin'],
                 'datafile': self.data['datafile'],
+                'telefone': self.data['telefone'],
             })
             Ocorrencia.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
                 'dataehora': self.data['ocorrencia']['dataehora'],

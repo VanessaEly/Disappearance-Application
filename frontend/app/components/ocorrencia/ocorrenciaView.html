@@ -2,7 +2,7 @@
     <div class="tab-pane">
         <div class="col-md-12 col-sm-12 col-xs-12 ocorrencia-info">
             <div id="detalhesOcorrencia">
-                <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="col-md-7 col-sm-12 col-xs-12">
                     <h1>{{data.ocorrencia.titulo}}</h1>
                     <table class="table table-user-information">
                         <tbody>
@@ -73,6 +73,10 @@
                                 <td>Recompensa</td>
                                 <td>R${{data.ocorrencia.recompensa}}</td>
                             </tr>
+                            <tr ng-show="data.telefone">
+                                <td>Telefone p/ Contato</td>
+                                <td>{{data.telefone}}</td>
+                            </tr>
                             <tr ng-show="data.ocorrencia.detalhes">
                                 <td>Detalhes</td>
                                 <td>{{data.ocorrencia.detalhes}}</td>
@@ -81,7 +85,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="col-md-5 col-sm-12 col-xs-12">
                         <img class="inline-block ocorrencia-image" src="{{ host }}{{ data.datafile }}"/>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12 submit-wrapper">
@@ -91,13 +95,14 @@
             <!-- MODAL -->
             <div id="contatoCriador" class="col-md-10 col-sm-10 col-xs-10 col-md-offset-1 col-xs-offset-1 col-lg-offset-1 ocorrencia-info">
                 <form name="mensagemForm" class="form-horizontal col-md-12 col-sm-12 col-xs-12">
+                    <h3 class="center">Contato</h3>
                     <div class="form-group">
                         <label for="contatoNome">Assunto</label>
-                        <input ng-model="contato.assunto" type="text" class="form-control" name="assunto" placeholder="Assunto do email." ng-required="true">
+                        <input ng-model="contato.assunto" type="text" class="form-control" name="assunto" placeholder="Insira o assunto do email." ng-required="true">
                     </div>
                     <div class="form-group">
                         <label for="contatoEmail">Email</label>
-                        <input ng-model="contato.email" type="email" class="form-control" name="email" placeholder="Insira o seu email." ng-required="true">
+                        <input ng-model="contato.email" type="email" class="form-control" name="email" placeholder="Insira o seu endereço de email." ng-required="true">
                     </div>
                     <div class="form-group">
                         <label for="contatoText">Mensagem</label>

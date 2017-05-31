@@ -11,6 +11,10 @@
   display: inline-block;
 }
 
+.center {
+    text-align: center;
+}
+
 .right {
     float: right;
 }
@@ -185,7 +189,7 @@ body {
 }
 /* HOME */
 #home-map{
-    height: 80vh;
+    height: 81vh;
     width: 100%;
 }
 /* END HOME */
@@ -343,9 +347,6 @@ footer {
 #myFooter a:hover,
 #myFooter a:focus {  color: #0077e2;  }
 
-#myFooter .social-networks {
-    padding-left: 25px;
-}
 #myFooter .social-networks a {
     font-size: 25px;
     color: #000000;

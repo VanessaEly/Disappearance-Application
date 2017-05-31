@@ -2,7 +2,11 @@
 <cadastro-element> </cadastro-element>
 <div class="container page-content" ng-controller="NovaOcorrenciaController" ng-init="novaOcorrenciaInit()">
     <div class="col-md-12 col-xs-12 ocorrencia-info">
-        <h2>Nova Ocorrência</h2>
+        <div class="center">
+            <h2>Nova Ocorrência</h2>
+            <p>ATENÇÃO: Os campos destacados com * são obrigatórios!</p><br>
+        </div>
+
         <div class="col-md-8 col-sm-8 col-xs-8">
             <input id="pac-input" class="controls" type="text"
                    placeholder="Busque um endereço">
@@ -19,6 +23,7 @@
             <form name="ocorrenciaform" enctype="multipart/form-data">
 
                 <div class="form-group col-md-12">
+
                     <div class="col-md-8">
                         <label class="control-label"> Onde? Utilize o mapa para identificar um local próximo da Ocorrência</label>
                         <input id="endereco" type="text" class="form-control" placeholder="{{ coordinates.formatted_address }}" readonly/>
@@ -81,7 +86,7 @@
                     </div>
                     <div class="col-md-5">
                         <label class="control-label">Peculiaridades</label>
-                        <input ng-model="pessoa.peculiaridades" ng-required="false" minlength="5" maxlength="150"
+                        <input ng-model="pessoa.peculiaridades" ng-required="false" maxlength="300"
                                type="text" class="form-control" placeholder="Ex: Piercing, tatuagem, etc."  />
                     </div>
                 </div>
@@ -183,15 +188,21 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <label class="control-label">Detalhes da ocorrência</label>
-                        <input ng-model="ocorrencia.detalhes" ng-required="false" minlength="5" maxlength="100"
-                               type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
+                        <textarea ng-model="ocorrencia.detalhes" ng-required="false" maxlength="500"
+                               type="text" class="form-control" placeholder="Ex: Desapareceu em uma festa, vestia bermuda vermelha e camiseta azul."  />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Telefone</label>
+                        <input ng-model="item.telefone" ng-required="false" minlength="8" maxlength="16"
+                               type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
+                               oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
                     </div>
                     <div class="col-md-4" ng-show="ocorrencia.tipo === 'Desaparecimento'">
                         <label class="control-label">Recompensa</label><div></div>
                         <input ng-model="ocorrencia.recompensa" ng-required="false"
-                               type="number" class="form-control" placeholder="R$1000,00" step="0.01" min="0">
+                               type="number" class="form-control" placeholder="R$1000,00" step="0.01" min="0" max="999999999">
                     </div>
                 </div>
                 <li class="">
