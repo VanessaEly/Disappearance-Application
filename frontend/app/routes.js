@@ -52,10 +52,4 @@ app.config(function($routeProvider, $httpProvider) {
         .otherwise({
             redirectTo: '/'
         });
-
-    // //Removing fragment identifier from AngularJS urls (# symbol)
-    //  $locationProvider.html5Mode({
-    //      enabled: true,
-    //      requireBase: false
-    //  });
 });

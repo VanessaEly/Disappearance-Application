@@ -8,18 +8,18 @@
                         <div class="col-md-8 col-xs-8 col-lg-8 col-md-offset-2 col-xs-offset-2 col-lg-offset-2">
                             <form name="contatoForm" class="form-horizontal">
                                 <div class="form-group">
-                                    <label for="contatoAssunto">Assunto</label>
-                                    <input ng-model="contato.assunto" type="text" name="assunto" class="form-control" id="contatoAssunto" placeholder="Assunto do email" ng-required="true" >
+                                    <label>Assunto</label>
+                                    <input ng-model="contato.assunto" type="text" name="assunto" class="form-control" placeholder="Assunto do email" ng-required="true" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="contatoEmail">Email</label>
-                                    <input ng-model="contato.email" type="email" name="email" class="form-control" id="contatoEmail" placeholder="Insira o seu email" ng-required="true" >
+                                    <label>Email</label>
+                                    <input ng-model="contato.email" type="email" name="email" class="form-control" placeholder="Insira o seu email" ng-required="true" >
                                 </div>
                                 <div class="form-group ">
-                                    <label for="contatoText">Mensagem</label>
-                                    <textarea ng-model="contato.mensagem" name="mensagem" class="form-control" placeholder="Escreva aqui a sua mensagem." id="contatoText" ng-required="true" ></textarea>
+                                    <label>Mensagem</label>
+                                    <textarea ng-model="contato.mensagem" name="mensagem" class="form-control" placeholder="Escreva aqui a sua mensagem." ng-required="true" ></textarea>
                                 </div>
-                                <button ng-click="contatoForm.$valid && enviar()" type="button" class="btn btn-default">Enviar Mensagem</button>
+                                <button ng-click="contatoForm.$valid && enviar()" class="btn btn-default">Enviar Mensagem</button>
                             </form>
                         </div>
                     </div>

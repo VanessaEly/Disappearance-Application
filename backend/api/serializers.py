@@ -169,7 +169,9 @@ class ContatoSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     mensagem = serializers.CharField(required=True)
     assunto = serializers.CharField(required=True)
+    owner = serializers.CharField(required=False)
+    url = serializers.CharField(required=False)
 
     class Meta:
         model = Item
-        fields = ('email', 'mensagem', 'assunto',)
+        fields = ('email', 'mensagem', 'assunto', 'owner', 'url')

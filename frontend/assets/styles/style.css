@@ -523,20 +523,22 @@ textarea.form-control{
     height:100px;
 }
 /* END CONTATO */
-
 /* CONTATO CRIADOR */
+#contatoCriador {
+    margin-top: 5%;
+    padding: 5% 15% 5% 15% !important;
+}
 .submit-wrapper {
-    margin-top:2%;
+    margin-top:20px;
 }
 .submit-wrapper a {
-    border:2px solid #f33;
-    color:#000;
-    padding:20px 25px;
-    text-decoration:none;
-    position:relative;
-    letter-spacing:8px;
-    transition:all 0.6s;
-    z-index:1;
+    border: 2px solid #1e8bac;
+    color: #000;
+    padding: 10px 25px;
+    position: relative;
+    transition: all 0.1s;
+    z-index: 1;
+    margin-left: 8%;
 }
 .submit-wrapper a:before,
 .submit-wrapper a:after {
@@ -546,7 +548,7 @@ textarea.form-control{
     left:0;
     width:24px;
     height:4px;
-    background:#f33;
+    background: #1e8bac;
     margin-left:-12px;
     margin-top:-2px;
     transition:all 0.6s;
@@ -566,8 +568,8 @@ textarea.form-control{
 }
 .submit-wrapper a:hover {
     text-decoration:none;
-    background:#f33;
+    background:rgba(30, 139, 172, 0.1);
     transition:all 0.6s;
-    color:#f33;
+    color: #000000;
 }
 /* END CONTATO CRIADOR */

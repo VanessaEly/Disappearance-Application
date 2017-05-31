@@ -187,17 +187,29 @@ class ContatoViewSet(viewsets.ViewSet):
         email = self.request.query_params.get('email', None)
         mensagem = self.request.query_params.get('mensagem', None)
         assunto = self.request.query_params.get('assunto', None)
-        print email
-        print assunto
-        print mensagem
-        if email and mensagem and assunto is not None:
+
+        owner = self.request.query_params.get('owner', None)
+        url = self.request.query_params.get('url', None)
+
+        if owner is not None:
+            queryset = User.objects.filter(id=owner)
             send_mail(
                 assunto,
-                mensagem + '\n\n Enviado por - ' + email,
-                None,
-                ['disapp.contato@gmail.com'],
+                'Mensagem recebida - ' + url + '\n\n' + mensagem + '\n\n Enviado por - ' + email,
+                'Disapp<disapp.contato@gmail.com>',
+                [queryset[0]],
                 fail_silently=False,
             )
             return Response("success")
         else:
-            return Response("error")
+            if email and mensagem and assunto is not None:
+                send_mail(
+                    assunto,
+                    mensagem + '\n\n Enviado por - ' + email,
+                    'disapp.contato@gmail.com',
+                    ['disapp.contato@gmail.com'],
+                    fail_silently=False,
+                )
+                return Response("success")
+            else:
+                return Response("error")
