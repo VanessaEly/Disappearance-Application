@@ -47,6 +47,10 @@ app.config(function($routeProvider, $httpProvider) {
 			templateUrl: 'app/components/contato/contatoView.html',
 			replace: true,
 			reloadOnSearch: false
+        }).when('/estatisticas', {
+			templateUrl: 'app/components/estatisticas/estatisticasView.html',
+			replace: true,
+			reloadOnSearch: false
         })
         // DEFAULT
         .otherwise({

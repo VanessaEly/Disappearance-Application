@@ -18,6 +18,10 @@
 .right {
     float: right;
 }
+.no-padding {
+  padding: 0px !important;
+}
+
 
 body { font-family: HelvNeueMd !important; }
 p {  margin: 0px !important;  }
@@ -204,6 +208,13 @@ body {
     font-size: 1rem;
 }
 
+.btn-save {
+        padding: 15px 25px !important;
+    font-size: 16px !important;
+}
+
+.salvar {     margin-top: 5%;}
+
 .ocorrencia-t1 {
     font-size: 1.3em;
 }
@@ -303,7 +314,7 @@ body {
     border-radius: 10%;
 }
 .ocorrencia-info {
-    padding: 5% !important;
+    padding: 3% !important;
     margin: 0 auto;
     background-color: #fefefe;
     border: 2px solid #E2E2E2;
@@ -574,3 +585,47 @@ textarea.form-control{
     color: #000000;
 }
 /* END CONTATO CRIADOR */
+/* ESTATISTICAS */
+.dash-tiles {
+  margin: 1.875rem 0px;
+}
+
+.dash-tile-wrapper {
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.dash-tile {
+  background: #F7F7F7 !important;
+  box-shadow: 0.0625rem 0.0625rem 0.125rem 0 #dadada !important;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  margin-left: 50%;
+  cursor: pointer;
+}
+
+.dash-tile:hover {
+  background-color: #eaeaea !important;
+}
+
+.dash-tile > .value {
+  display: block;
+  font-size: 5rem;
+  text-align: center;
+  vertical-align: middle;
+  color: #606060;
+  padding-top: 20px;
+}
+
+.dash-tile > .text {
+  display: block;
+  font-size: 1.5rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0 20px;
+  color: #606060;
+}
+/* END ESTATISTICAS */

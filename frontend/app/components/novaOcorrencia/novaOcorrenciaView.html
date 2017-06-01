@@ -41,13 +41,13 @@
                 </div>
                 <div class="form-group col-md-12">
                     <div class="col-md-5">
-                        <label class="control-label">*Dê um título para a ocorrência</label>
+                        <label class="control-label">* Dê um título para a ocorrência</label>
                         <input ng-model="ocorrencia.titulo" ng-required="true" maxlength="100"
                                type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
                     </div>
 
                     <div class="col-md-3">
-                        <label class="control-label">*Tipo de ocorrência</label>
+                        <label class="control-label">* Tipo de ocorrência</label>
                         <select ng-model="ocorrencia.tipo" ng-required="true" class="form-control">
                             <option disabled selected value="">Selecione um tipo</option>
                             <option value="Aparecimento">Aparecimento</option>
@@ -55,7 +55,7 @@
                         </select>
                     </div>
                     <div class="col-md-4" ng-show="ocorrencia.tipo">
-                        <label class="control-label">*{{ocorrencia.tipo}} de quê?</label>
+                        <label class="control-label">* {{ocorrencia.tipo}} de quê?</label>
                         <select ng-model="item.categoria" ng-change="clearData()" ng-required="ocorrencia.tipo" class="form-control">
                             <option disabled selected value="">Selecione uma categoria</option>
                             <option value="1">Pessoa</option>
@@ -68,7 +68,7 @@
                 <!-- PESSOA -->
                 <div class="form-group col-md-12" ng-show="item.categoria === '1'">
                     <div class="col-md-5">
-                        <label class="control-label">*Etnia</label>
+                        <label class="control-label">* Etnia</label>
                         <select ng-model="pessoa.etnia" ng-required="item.categoria === '1'" class="form-control">
                             <option disabled selected value="">Selecione uma etnia</option>
                             <option value="Branco">Branco</option>
@@ -94,7 +94,7 @@
                 <!-- ANIMAL -->
                 <div class="form-group col-md-12" id="form-animal" ng-show="item.categoria === '2'">
                     <div class="col-md-4">
-                        <label class="control-label">*Espécie do Animal</label>
+                        <label class="control-label">* Espécie do Animal</label>
                         <select ng-model="animal.especie" ng-required="item.categoria === '2'" class="form-control">
                             <option disabled selected value="">Selecione uma espécie</option>
                             <option value="Pássaro">Pássaro</option>
@@ -105,7 +105,7 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="control-label">*Raça do Animal</label>
+                        <label class="control-label">* Raça do Animal</label>
                         <select ng-model="animal.raca" ng-required="item.categoria === '2'" class="form-control">
                             <option disabled selected value="">Selecione uma raça</option>
                             <option value="Pitbull">Pitbull</option>
@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label class="control-label">*Cor predominante</label>
+                        <label class="control-label">* Cor predominante</label>
                         <select ng-model="animal.cor_primaria" ng-required="item.categoria === '2'" class="form-control">
                             <option disabled selected value="">Selecione a cor do animal</option>
                             <option value="Preto">Preto</option>
@@ -133,8 +133,8 @@
 
                 <!-- PESSOA E ANIMAL-->
                 <div class="form-group col-md-12" ng-show="item.categoria === '2' || item.categoria === '1'">
-                    <div class="col-md-3">
-                        <label class="control-label">*Nome</label>
+                    <div class="col-md-4">
+                        <label class="control-label">* Nome</label>
                         <input ng-model="pa.nome" ng-required="item.categoria === '2' || item.categoria === '1'" maxlength="100"
                                type="text" class="form-control" placeholder="Nome do desaparecido" minlength="5" maxlength="30" />
                     </div>
@@ -143,8 +143,8 @@
                         <input ng-model="pa.idade" ng-required="false"
                                type="number" class="form-control" placeholder="10 anos" min="0" max="150"/>
                     </div>
-                    <div class="col-md-2">
-                        <label class="control-label">*Sexo</label>
+                    <div class="col-md-3">
+                        <label class="control-label">* Sexo</label>
                         <select ng-model="pa.sexo" ng-required="item.categoria === '2' || item.categoria === '1'" class="form-control">
                             <option disabled selected value="">Sexo</option>
                             <option value="Feminino">Feminino</option>
@@ -157,7 +157,7 @@
                 <!-- OBJETO -->
                 <div class="form-group col-md-12" ng-show="item.categoria === '3'">
                     <div class="col-md-4">
-                        <label class="control-label">*Tipo</label>
+                        <label class="control-label">* Tipo do Objeto</label>
                         <select ng-model="objeto.tipo" ng-required="item.categoria === '3'" class="form-control">
                             <option disabled selected value="">Selecione o tipo do objeto</option>
                             <option value="Carteira">Carteira</option>
@@ -188,26 +188,40 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <div class="col-md-6">
-                        <label class="control-label">Detalhes da ocorrência</label>
-                        <textarea ng-model="ocorrencia.detalhes" ng-required="false" maxlength="500"
-                               type="text" class="form-control" placeholder="Ex: Desapareceu em uma festa, vestia bermuda vermelha e camiseta azul."  />
-                    </div>
+
                     <div class="col-md-2">
                         <label class="control-label">Telefone</label>
                         <input ng-model="item.telefone" ng-required="false" minlength="8" maxlength="16"
                                type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
                                oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
                     </div>
-                    <div class="col-md-4" ng-show="ocorrencia.tipo === 'Desaparecimento'">
+                    <div class="col-md-3" ng-show="ocorrencia.tipo === 'Desaparecimento'">
                         <label class="control-label">Recompensa</label><div></div>
                         <input ng-model="ocorrencia.recompensa" ng-required="false"
                                type="number" class="form-control" placeholder="R$1000,00" step="0.01" min="0" max="999999999">
                     </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Fez Boletim de Ocorrência?</label>
+                        <select ng-model="item.bo" class="form-control">
+                            <option disabled selected value="">Selecione uma opção</option>
+                            <option value="True">Sim</option>
+                            <option value="False">Não</option>
+                        </select>
+                    </div>
                 </div>
-                <li class="">
-                    <button ng-click="ocorrenciaform.$valid && save()" class="btn btn-primary right">Save</button>
-                </li>
+                <div class="form-group col-md-12">
+                    <div class="col-md-9 col-xs-9 col-lg-9 col-sm-9">
+                        <label class="control-label">Detalhes da ocorrência</label>
+                        <textarea ng-model="ocorrencia.detalhes" ng-required="false" maxlength="500"
+                                  type="text" class="form-control" placeholder="Ex: Desapareceu em uma festa, vestia bermuda vermelha e camiseta azul."  />
+                    </div>
+                    <div class="col-md-3 col-xs-3 col-lg-3 col-sm-3 salvar">
+                        <li class="">
+                            <button ng-click="ocorrenciaform.$valid && save()" class="btn btn-primary btn-save">Save</button>
+                        </li>
+                    </div>
+                </div>
+
             </form>
         </ul>
     </div>

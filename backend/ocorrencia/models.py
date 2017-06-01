@@ -21,6 +21,7 @@ class Item (models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Telefone deve possuir o formato '+999999999' "
                                                                    "com menos de 15 digitos.")
     telefone = models.CharField(validators=[phone_regex], blank=True, max_length=16,)
+    bo = models.BooleanField(default='False')
 
 
 class Ocorrencia (models.Model):
@@ -32,9 +33,9 @@ class Ocorrencia (models.Model):
     recompensa = models.DecimalField(blank=True, default=0, decimal_places=2, max_digits=10)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
-    endereco = models.CharField(max_length=300, default='')
+    endereco = models.CharField(max_length=400, default='')
     cidade = models.CharField(max_length=100, blank=True)
-    estado = models.CharField(max_length=20, blank=True)
+    estado = models.CharField(max_length=100, blank=True)
     pais = models.CharField(max_length=100, blank=True)
     item = models.ForeignKey(Item)
 

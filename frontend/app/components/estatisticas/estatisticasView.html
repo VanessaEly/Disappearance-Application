@@ -1,0 +1,92 @@
+<div class="container page-content" ng-controller="EstatisticasController" ng-init="estatisticasInit()">
+    <div class="container ocorrencia-info">
+        <div class="center">
+            <h2>Estatísticas</h2>
+        </div>
+        <div class="dash-content">
+
+            <div class="dash-tiles row ">
+
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-md-offset-2 col-xs-offset-2 col-lg-offset-2 no-padding">
+                    <div class="dash-tile-wrapper" ng-click="filterTasks.assigned()">
+                        <div class="dash-tile row">
+                            <div class="value">
+                                1
+                            </div>
+                            <div class="text">
+                                <span>Tasks Assigned to you</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                    <div class="dash-tile-wrapper" ng-click="filterTasks.assigned()">
+                        <div class="dash-tile row">
+                            <div class="value">
+                                1
+                            </div>
+                            <div class="text">
+                                <span>Tasks Assigned to you</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                    <div class="dash-tile-wrapper" ng-click="filterTasks.assigned()">
+                        <div class="dash-tile row">
+                            <div class="value">
+                                2
+                            </div>
+                            <div class="text">
+                                <span>Tasks Assigned to you</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                    <div class="dash-tile-wrapper" ng-click="filterTasks.assigned()">
+                        <div class="dash-tile row">
+                            <div class="value">
+                                3
+                            </div>
+                            <div class="text">
+                                <span>Tasks Assigned to you</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 no-padding">
+                    <div class="dash-tile-wrapper" ng-click="filterTasks.assigned()">
+                        <div class="dash-tile row">
+                            <div class="value">
+                                4
+                            </div>
+                            <div class="text">
+                                <span>Tasks Assigned to you</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <canvas id="line" class="chart chart-line" chart-data="data"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+            <canvas id="bar" class="chart chart-bar"
+                    chart-data="data" chart-labels="labels" chart-series="series">
+            </canvas>
+            <!--<canvas id="base" class="chart-horizontal-bar"
+              chart-data="data" chart-labels="labels" >
+            </canvas>-->
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+
+            <canvas id="polar-area" class="chart chart-polar-area"
+                    chart-data="data" chart-labels="labels" chart-options="options">
+            </canvas>
+        </div>
+    </div>
+</div>

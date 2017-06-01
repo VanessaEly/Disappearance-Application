@@ -81,7 +81,7 @@
                     <div class="col-md-5">
                         <label class="control-label">Peculiaridades</label>
                         <textarea ng-model="data.pessoa.peculiaridades" ng-required="false" maxlength="300"
-                               type="text" class="form-control" placeholder="Ex: Piercing, tatuagem, etc."  />
+                                  type="text" class="form-control" placeholder="Ex: Piercing, tatuagem, etc."  />
                     </div>
                 </div>
 
@@ -182,26 +182,38 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    <div class="col-md-6">
-                        <label class="control-label">Detalhes da ocorrência</label>
-                        <textarea ng-model="data.ocorrencia.detalhes" ng-required="false" maxlength="500"
-                               type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
-                    </div>
                     <div class="col-md-2">
                         <label class="control-label">Telefone</label>
                         <input ng-model="data.telefone" ng-required="false" minlength="8" maxlength="16"
                                type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
                                oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
                     </div>
-                    <div class="col-md-4" ng-show="data.ocorrencia.tipo === 'Desaparecimento'">
+                    <div class="col-md-3" ng-show="data.ocorrencia.tipo === 'Desaparecimento'">
                         <label class="control-label">Recompensa</label>
                         <input ng-model="data.ocorrencia.recompensa" ng-required="false"
                                type="number" class="form-control" placeholder="1000,00 reais" step="0.01" min="0"/>
                     </div>
+                    <div class="col-md-4">
+                        <label class="control-label">* Fez Boletim de Ocorrência?</label>
+                        <select ng-model="data.bo" class="form-control">
+                            <option disabled selected value="">Selecione o tipo do objeto</option>
+                            <option value="true">Sim</option>
+                            <option value="false">Não</option>
+                        </select>
+                    </div>
                 </div>
-                <li class="">
-                    <button ng-click="ocorrenciaform.$valid && save()" class="btn btn-primary right">Save</button>
-                </li>
+                <div class="form-group col-md-12">
+                    <div class="col-md-9 col-xs-9 col-lg-9 col-sm-9">
+                        <label class="control-label">Detalhes da ocorrência</label>
+                        <textarea ng-model="data.ocorrencia.detalhes" ng-required="false" maxlength="500"
+                                  type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
+                    </div>
+                    <div class="col-md-3 col-xs-3 col-lg-3 col-sm-3 salvar">
+                        <li class="">
+                            <button ng-click="ocorrenciaform.$valid && save()" class="btn btn-primary right">Save</button>
+                        </li>
+                    </div>
+                </div>
             </form>
         </ul>
     </div>

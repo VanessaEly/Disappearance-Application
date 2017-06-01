@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from ocorrencia.models import *
+import rest_framework_filters as filters
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -91,11 +92,12 @@ class ItemSerializer(serializers.ModelSerializer):
     oldfileId = serializers.IntegerField(required=False),
     owner = serializers.CharField(source='owner.id', required=False)
     telefone = serializers.CharField(required=False)
+    bo = serializers.BooleanField(required=False)
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'telefone', 'pin', 'ocorrencia', 'pessoa', 'animal', 'objeto',
-                  'datafile', 'owner')
+        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo', 'pin', 'ocorrencia',
+                  'pessoa', 'animal', 'objeto', 'datafile', 'owner')
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')
@@ -114,6 +116,7 @@ class ItemSerializer(serializers.ModelSerializer):
                 'pin': self.data['pin'],
                 'datafile': self.data['datafile'],
                 'telefone': self.data['telefone'],
+                'bo': self.data['bo'],
             })
             Ocorrencia.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
                 'dataehora': self.data['ocorrencia']['dataehora'],

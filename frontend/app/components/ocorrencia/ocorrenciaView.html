@@ -77,6 +77,12 @@
                                 <td>Telefone p/ Contato</td>
                                 <td>{{data.telefone}}</td>
                             </tr>
+                            <tr>
+                                <td>Boletim de Ocorrência</td>
+                                <td ng-show="data.bo === true">Sim</td>
+                                <td ng-show="data.bo === false">Não</td>
+
+                            </tr>
                             <tr ng-show="data.ocorrencia.detalhes">
                                 <td>Detalhes</td>
                                 <td>{{data.ocorrencia.detalhes}}</td>

@@ -1,1 +1,1 @@
-var app = angular.module("disapp",['ngRoute', 'ngCookies', 'ngStorage']);
+var app = angular.module("disapp",['ngRoute', 'ngCookies', 'ngStorage', 'chart.js']);
