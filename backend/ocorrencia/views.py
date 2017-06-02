@@ -213,3 +213,18 @@ class ContatoViewSet(viewsets.ViewSet):
                 return Response("success")
             else:
                 return Response("error")
+
+
+class SolucionadoViewSet(viewsets.ModelViewSet):
+    serializer_class = SolucionadoSerializer
+
+    def get_queryset(self):
+        queryset = Item.objects.get(id=self.request.query_params.get('id', None))
+
+        if queryset.solucionado is False:
+            queryset.solucionado = True
+        else:
+            queryset.solucionado = False
+        queryset.save()
+        print queryset.solucionado
+        return "ok"

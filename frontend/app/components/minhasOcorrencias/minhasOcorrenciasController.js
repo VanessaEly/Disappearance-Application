@@ -1,7 +1,6 @@
 app.controller('MinhasOcorrenciasController', function($scope, $http, StorageService, $cookies, $rootScope) {
 
     $scope.data = { item:[], ocorrencia:[], detalhes:[], imagem:[], date:[]}
-
     $scope.minhasOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
         $scope.currentPage = "";
@@ -58,18 +57,10 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
 
     $scope.editarOcorrencia =  function (item) {
         $rootScope.goTo('/edit/' + item.id +'/'+ item.ocorrencia.latitude + '/'+ item.ocorrencia.longitude);
-        // $http.get(StorageService.get("host") + 'api/isowner/?id=', item, {
-        //     headers: {"Authorization": "Token " + $cookies.get('token')}}
-        // ).success(function(response){
-        //     $scope.data = response.results;
-        //     for (var i = 0; i < $scope.data.length; i++)
-        //        $scope.data[i].ocorrencia.dataehoraToShow =
-        //            new Date($scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR')
-        //     console.log($scope.data)
-        //
-        // }).error(function(response){
-        //     console.log("get error", response);
-        // });
+    }
+
+    $scope.atualizarSolucionado = function(id) {
+        $http.get(StorageService.get("host") + 'api/solucionado/?id=' + id);
     }
 
 });

@@ -8,22 +8,28 @@
         <table class="table table-hover">
             <thead ng-show="data.length != 0">
                 <tr >
+                    <th>Data Criação</th>
                     <th>Tipo</th>
                     <th>Título</th>
-                    <th>Data Criação</th>
+                    <th>Solucionado</th>
+                    <th>Editar</th>
+                    <th>Deletar</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="d in data" >
-
-                    <td ng-click="detalhesOcorrencia($index)">{{ d.ocorrencia.tipo }}</td>
-                    <td ng-click="detalhesOcorrencia($index)">{{ d.ocorrencia.titulo }}</td>
-                    <td ng-click="detalhesOcorrencia($index)">{{ d.ocorrencia.dataehoraToShow }}</td>
+                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.ocorrencia.dataehoraToShow }}">{{ d.ocorrencia.dataehoraToShow }}</td>
+                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.ocorrencia.tipo }}">{{ d.ocorrencia.tipo }}</td>
+                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.ocorrencia.titulo }}">{{ d.ocorrencia.titulo }}</td>
                     <td>
-                        <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"title="Editar Ocorrência" ng-click="editarOcorrencia(d)"></i>
+                        <input class="width-center" type="checkbox" ng-model="d.solucionado" ng-change='atualizarSolucionado({{ d.id }})'/>
+                    </td>
+                    <td ng-show="d.bo">{{ d.ocorrencia.dataehoraToShow }}</td>
+                    <td>
+                        <i class="fa fa-pencil-square-o fa-2x width-center" aria-hidden="true"title="Editar Ocorrência" ng-click="editarOcorrencia(d)"></i>
 
                     </td>
-                    <td><i class="fa fa-times fa-2x" aria-hidden="true"
+                    <td><i class="fa fa-times fa-2x width-center" aria-hidden="true"
                            title="Deletar Ocorrência" ng-click="deletarOcorrencia(d.id)"></i>
                     </td>
                 </tr>

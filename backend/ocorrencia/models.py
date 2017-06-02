@@ -22,6 +22,7 @@ class Item (models.Model):
                                                                    "com menos de 15 digitos.")
     telefone = models.CharField(validators=[phone_regex], blank=True, max_length=16,)
     bo = models.BooleanField(default='False')
+    solucionado = models.BooleanField(default='False')
 
 
 class Ocorrencia (models.Model):

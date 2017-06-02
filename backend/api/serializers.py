@@ -93,11 +93,12 @@ class ItemSerializer(serializers.ModelSerializer):
     owner = serializers.CharField(source='owner.id', required=False)
     telefone = serializers.CharField(required=False)
     bo = serializers.BooleanField(required=False)
+    solucionado = serializers.BooleanField(required=False)
 
     class Meta:
         model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo', 'pin', 'ocorrencia',
-                  'pessoa', 'animal', 'objeto', 'datafile', 'owner')
+        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo', 'solucionado', 'pin',
+                  'ocorrencia', 'pessoa', 'animal', 'objeto', 'datafile', 'owner')
 
     def create(self, validated_data):
         ocorrencia_data = validated_data.pop('ocorrencia')
@@ -116,7 +117,7 @@ class ItemSerializer(serializers.ModelSerializer):
                 'pin': self.data['pin'],
                 'datafile': self.data['datafile'],
                 'telefone': self.data['telefone'],
-                'bo': self.data['bo'],
+                'solucionado': self.data['solucionado'],
             })
             Ocorrencia.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
                 'dataehora': self.data['ocorrencia']['dataehora'],
@@ -180,3 +181,10 @@ class ContatoSerializer(serializers.Serializer):
     class Meta:
         model = Item
         fields = ('email', 'mensagem', 'assunto', 'owner', 'url')
+
+
+class SolucionadoSerializer(serializers.Serializer):
+
+    class Meta:
+        model = Item
+        fields = 'id'

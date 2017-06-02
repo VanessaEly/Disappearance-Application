@@ -15,6 +15,7 @@ router.register(r'animal', ocorrenciaviews.AnimalViewSet, 'animal')
 router.register(r'pessoa', ocorrenciaviews.PessoaViewSet, 'pessoa')
 router.register(r'imagem', ocorrenciaviews.ImagemViewSet, 'imagem')
 router.register(r'contato', ocorrenciaviews.ContatoViewSet, 'contato')
+router.register(r'solucionado', ocorrenciaviews.SolucionadoViewSet, 'encontrado')
 router.register(r'users', userviews.UserViewSet)
 
 # Os URLs da API sao determinados automaticamente pelo router
