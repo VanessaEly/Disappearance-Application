@@ -27,47 +27,34 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class OcorrenciaSerializer(serializers.ModelSerializer):
-    item = serializers.CharField(source='item.id', required=False)
-
-    class Meta:
-        model = Ocorrencia
-        fields = ('id', 'data_criacao', 'dataehora', 'titulo', 'tipo', 'detalhes', 'recompensa',
-                  'latitude', 'longitude', 'endereco', 'cidade', 'estado', 'pais', 'item')
-        read_only_fields = ('item',)
-
-    # def create(self, validated_data):
-    #     return Ocorrencia.objects.create(**validated_data)
-
-
 class PessoaSerializer(serializers.ModelSerializer):
-    item = serializers.CharField(source='item.id', required=False)
+    ocorrencia = serializers.CharField(source='ocorrencia.id', required=False)
 
     class Meta:
         model = Pessoa
-        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades', 'item')
+        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades', 'ocorrencia')
 
     # def create(self, validated_data):
     #     return Pessoa.objects.create(**validated_data)
 
 
 class AnimalSerializer(serializers.ModelSerializer):
-    item = serializers.CharField(source='item.id', required=False)
+    ocorrencia = serializers.CharField(source='ocorrencia.id', required=False)
 
     class Meta:
         model = Animal
-        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria', 'item')
+        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria', 'ocorrencia')
 
     # def create(self, validated_data):
     #     return Animal.objects.create(**validated_data)
 
 
 class ObjetoSerializer(serializers.ModelSerializer):
-    item = serializers.CharField(source='item.id', required=False)
+    ocorrencia = serializers.CharField(source='ocorrencia.id', required=False)
 
     class Meta:
         model = Objeto
-        fields = ('id', 'tipo', 'cor_primaria', 'item')
+        fields = ('id', 'tipo', 'cor_primaria', 'ocorrencia')
 
     # def create(self, validated_data):
     #     print validated_data
@@ -82,57 +69,59 @@ class ImagemSerializer(serializers.ModelSerializer):
         fields = ('id', 'datafile')
 
 
-class ItemSerializer(serializers.ModelSerializer):
-    ocorrencia = OcorrenciaSerializer(required=False)
+class OcorrenciaSerializer(serializers.ModelSerializer):
     pessoa = PessoaSerializer(required=False)
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)
     datafile = serializers.CharField(required=False),
     oldfileId = serializers.IntegerField(required=False),
     owner = serializers.CharField(source='owner.id', required=False)
-    telefone = serializers.CharField(required=False)
     bo = serializers.BooleanField(required=False)
     solucionado = serializers.BooleanField(required=False)
 
     class Meta:
-        model = Item
-        fields = ('id', 'data_criacao', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo', 'solucionado', 'pin',
-                  'ocorrencia', 'pessoa', 'animal', 'objeto', 'datafile', 'owner')
+        model = Ocorrencia
+        fields = ('id', 'data_criacao', 'dataehora', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo',
+                  'solucionado', 'dataSolucao', 'pin', 'titulo', 'tipo', 'detalhes', 'recompensa',
+                  'latitude', 'longitude', 'endereco', 'cidade', 'estado', 'pais', 'pessoa',
+                  'animal', 'objeto', 'datafile', 'owner')
+        extra_kwargs = {
+            "id": {
+                "read_only": False,
+                "required": False,
+            },
+        }
 
     def create(self, validated_data):
-        ocorrencia_data = validated_data.pop('ocorrencia')
         pessoa_data = validated_data.pop('pessoa')
         animal_data = validated_data.pop('animal')
         objeto_data = validated_data.pop('objeto')
-
-        # caso receba id do item (ja criado, tela de edit)
-        if 'item' in self.data['ocorrencia']:
-            print self.data['oldfileId']
-            print self.data['fileId']
+        # caso receba id da ocorrencia (ja criado, tela de edit)
+        ocorrenciaId = self.data.get('id', None)
+        if ocorrenciaId is not None:
             Imagem.delete(Imagem.objects.get(id=self.data['oldfileId']))
-            item = Item.objects.update_or_create(id=self.data['ocorrencia']['item'], defaults={
+            ocorrencia = Ocorrencia.objects.update_or_create(id=self.data['id'], defaults={
                 'categoria': self.data['categoria'],
                 'fileId': self.data['fileId'],
                 'pin': self.data['pin'],
                 'datafile': self.data['datafile'],
                 'telefone': self.data['telefone'],
                 'solucionado': self.data['solucionado'],
-            })
-            Ocorrencia.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
-                'dataehora': self.data['ocorrencia']['dataehora'],
-                'titulo': self.data['ocorrencia']['titulo'],
-                'tipo': self.data['ocorrencia']['tipo'],
-                'detalhes': self.data['ocorrencia']['detalhes'],
-                'recompensa': self.data['ocorrencia']['recompensa'],
-                'latitude': self.data['ocorrencia']['latitude'],
-                'longitude': self.data['ocorrencia']['longitude'],
-                'endereco': self.data['ocorrencia']['endereco'],
-                'cidade': self.data['ocorrencia']['cidade'],
-                'estado': self.data['ocorrencia']['estado'],
-                'pais': self.data['ocorrencia']['pais']
+                'dataSolucao': self.data['dataSolucao'],
+                'dataehora': self.data['dataehora'],
+                'titulo': self.data['titulo'],
+                'tipo': self.data['tipo'],
+                'detalhes': self.data['detalhes'],
+                'recompensa': self.data['recompensa'],
+                'latitude': self.data['latitude'],
+                'longitude': self.data['longitude'],
+                'endereco': self.data['endereco'],
+                'cidade': self.data['cidade'],
+                'estado': self.data['estado'],
+                'pais': self.data['pais']
             })
             if validated_data['categoria'] == 1:
-                Pessoa.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                Pessoa.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
                     'nome': self.data['pessoa']['nome'],
                     'sexo': self.data['pessoa']['sexo'],
                     'idade': self.data['pessoa']['idade'],
@@ -141,7 +130,7 @@ class ItemSerializer(serializers.ModelSerializer):
                     'peculiaridades': self.data['pessoa']['peculiaridades'],
                 })
             if validated_data['categoria'] == 2:
-                Animal.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                Animal.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
                     'nome': self.data['animal']['nome'],
                     'sexo': self.data['animal']['sexo'],
                     'idade': self.data['animal']['idade'],
@@ -150,23 +139,23 @@ class ItemSerializer(serializers.ModelSerializer):
                     'cor_primaria': self.data['animal']['cor_primaria'],
                 })
             if validated_data['categoria'] == 3:
-                Objeto.objects.update_or_create(item_id=self.data['ocorrencia']['item'], defaults={
+                Objeto.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
                     'tipo': self.data['objeto']['tipo'],
                     'cor_primaria': self.data['objeto']['cor_primaria'],
                 })
 
         # cria novos itens
         else:
-            item = Item.objects.create(**validated_data)
-            Ocorrencia.objects.create(item=item, **ocorrencia_data)
+            ocorrencia = Ocorrencia.objects.create(**validated_data)
+            print ocorrencia
             if validated_data['categoria'] == 1:
-                Pessoa.objects.create(item=item, **pessoa_data)
+                Pessoa.objects.create(ocorrencia=ocorrencia, **pessoa_data)
             if validated_data['categoria'] == 2:
-                Animal.objects.create(item=item, **animal_data)
+                Animal.objects.create(ocorrencia=ocorrencia, **animal_data)
             if validated_data['categoria'] == 3:
-                Objeto.objects.create(item=item, **objeto_data)
+                Objeto.objects.create(ocorrencia=ocorrencia, **objeto_data)
 
-        return item
+        return ocorrencia
 
 
 class ContatoSerializer(serializers.Serializer):
@@ -178,12 +167,12 @@ class ContatoSerializer(serializers.Serializer):
     url = serializers.CharField(required=False)
 
     class Meta:
-        model = Item
+        model = Ocorrencia
         fields = ('email', 'mensagem', 'assunto', 'owner', 'url')
 
 
 class SolucionadoSerializer(serializers.Serializer):
 
     class Meta:
-        model = Item
+        model = Ocorrencia
         fields = 'id'

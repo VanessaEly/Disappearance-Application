@@ -1,7 +1,7 @@
 app.controller('EstatisticasController', function($scope, $http, StorageService) {
 
     $scope.estatisticasInit = function() {
-      $http.get(StorageService.get("host") + 'api/filteritem/?solucionado=True&categoria=3').success(function(response){
+      $http.get(StorageService.get("host") + 'api/ocorrencia/?solucionado=True&categoria=3').success(function(response){
             console.log(response.results);
         }).error(function(response){
             console.log(response);

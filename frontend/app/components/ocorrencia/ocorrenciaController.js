@@ -1,10 +1,11 @@
 app.controller('OcorrenciaController', function($scope, $http, $routeParams, StorageService, $cookies, $rootScope, $location) {
     $scope.ocorrenciaInit = function() {
         $scope.host = StorageService.get("host");
-        $http.get($scope.host + 'api/item/?id=' + $routeParams.id).success(function(response){
+        $http.get($scope.host + 'api/ocorrencia/?id=' + $routeParams.id).success(function(response){
             if (response.count != 0) {
                 $scope.data = response.results[0]
-                $scope.data.ocorrencia.dataehoraToShow = new Date($scope.data.ocorrencia.dataehora).toLocaleString('pt-BR')
+                $scope.data.dataSolucaoToShow = new Date($scope.data.dataSolucao).toLocaleString('pt-BR')
+                $scope.data.dataehoraToShow = new Date($scope.data.dataehora).toLocaleString('pt-BR')
                 console.log($scope.data)
             } else {
                 $rootScope.$broadcast("toast", {

@@ -17,7 +17,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
     });
 
     $('#datepicker').datetimepicker().on('dp.change', function (ev) {
-        $scope.data.ocorrencia.dataehora = $('#datepicker').find("input").val();
+        $scope.data.dataehora = $('#datepicker').find("input").val();
     });
     function handleImage(e) {
         var reader = new FileReader();
@@ -30,11 +30,11 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
 
     $scope.editOcorrenciaInit = function() {
         $scope.host = StorageService.get("host");
-        $http.get($scope.host + 'api/item/?id=' + $routeParams.id,{
+        $http.get($scope.host + 'api/ocorrencia/?id=' + $routeParams.id,{
             headers: {"Authorization": "Token " + $cookies.get('token')}}
             ).success(function(response){
                 $scope.data = response.results[0];
-                $scope.data.ocorrencia.recompensa = parseFloat($scope.data.ocorrencia.recompensa);
+                $scope.data.recompensa = parseFloat($scope.data.recompensa);
                 $scope.data.categoria= $scope.data.categoria.toString();
                 var detail;
                 if ($scope.data.categoria != "3") {
@@ -52,7 +52,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
                     }
                 }
 
-                $('#datepicker').data("DateTimePicker").date(new Date($scope.data.ocorrencia.dataehora));
+                $('#datepicker').data("DateTimePicker").date(new Date($scope.data.dataehora));
                 console.log($scope.data);
         }).error(function(response){
             if (response.detail = "Token inváido") {
@@ -66,8 +66,8 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
     }
 
     $scope.save = function() {
-        $scope.data.ocorrencia.dataehora = $('#datepicker').data('date');
-        $scope.data.ocorrencia.endereco = $scope.coordinates.formatted_address;
+        $scope.data.dataehora = $('#datepicker').data('date');
+        $scope.data.endereco = $scope.coordinates.formatted_address;
 
         if ($scope.data.categoria == "1") {
             $scope.data.animal = {}, $scope.data.objeto = {};
@@ -99,7 +99,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
         function successCallback(response) {
             console.log(response.data);
             $scope.data.fileId = response.data.id;
-            $scope.salvarItem();
+            $scope.salvarOcorrencia();
         }, function errorCallback(response) {
             console.log(response);
             if(response.status == 401 || response.status == -1) {
@@ -113,10 +113,10 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
 
     }
 
-    $scope.salvarItem = function() {
-        console.log("item", $scope.data);
-        $scope.data.pin = "assets/images/" + $scope.data.ocorrencia.tipo + $scope.data.categoria + ".png"
-        $http.post(StorageService.get("host") + 'api/item/', $scope.data, {
+    $scope.salvarOcorrencia = function() {
+        console.log("ocorrencia", $scope.data);
+        $scope.data.pin = "assets/images/" + $scope.data.tipo + $scope.data.categoria + ".png"
+        $http.post(StorageService.get("host") + 'api/ocorrencia/', $scope.data, {
             headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
             function successCallback(response) {
                 console.log(response);
@@ -130,7 +130,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
                 if(response.status == 400) {
                     $rootScope.$broadcast("toast", {
                         priority: "high",
-                        text: "Não foi possível cadastrar o item"
+                        text: "Não foi possível cadastrar a ocorrência"
                     });
                 }
                 if(response.status == 401) {

@@ -18,13 +18,12 @@
             </thead>
             <tbody>
                 <tr ng-repeat="d in data" >
-                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.ocorrencia.dataehoraToShow }}">{{ d.ocorrencia.dataehoraToShow }}</td>
-                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.ocorrencia.tipo }}">{{ d.ocorrencia.tipo }}</td>
-                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.ocorrencia.titulo }}">{{ d.ocorrencia.titulo }}</td>
+                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
+                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.tipo }}">{{ d.tipo }}</td>
+                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.titulo }}">{{ d.titulo }}</td>
                     <td>
                         <input class="width-center" type="checkbox" ng-model="d.solucionado" ng-change='atualizarSolucionado({{ d.id }})'/>
                     </td>
-                    <td ng-show="d.bo">{{ d.ocorrencia.dataehoraToShow }}</td>
                     <td>
                         <i class="fa fa-pencil-square-o fa-2x width-center" aria-hidden="true"title="Editar Ocorrência" ng-click="editarOcorrencia(d)"></i>
 

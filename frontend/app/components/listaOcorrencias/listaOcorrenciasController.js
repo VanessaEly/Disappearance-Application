@@ -1,15 +1,15 @@
 app.controller('ListaOcorrenciasController', function($scope, $http, StorageService, $rootScope) {
 
-    $scope.data = { item:[], ocorrencia:[], detalhes:[], imagem:[], date:[]}
+    $scope.data = { ocorrencia:[], detalhes:[], imagem:[], date:[]}
 
     $scope.listaOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
-        $http.get(StorageService.get("host") + 'api/item/'
+        $http.get(StorageService.get("host") + 'api/ocorrencia/'
         ).success(function(response){
             $scope.data = response.results;
             for (var i = 0; i < $scope.data.length; i++)
-               $scope.data[i].ocorrencia.dataehoraToShow =
-                   new Date($scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR')
+               $scope.data[i].dataehoraToShow =
+                   new Date($scope.data[i].dataehora).toLocaleString('pt-BR')
             console.log($scope.data)
 
         }).error(function(response){

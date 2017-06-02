@@ -7,28 +7,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from disapp import settings
 import os
 from django.core.mail import send_mail
+from datetime import datetime
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
     serializer_class = OcorrenciaSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
-
-    def get_queryset(self):
-        queryset = Ocorrencia.objects.all()
-        ocorrencia = self.request.query_params.get('item_id', None)
-
-        # se recebe item_id como parametro, filtra por id, como default retorna objects.all
-        if ocorrencia is not None:
-            queryset = queryset.filter(item_id=ocorrencia)
-        return queryset
-
-    def create(self, serializer):
-        # serializer.save(owner=self.request.user)
-        serializer.save()
-
-
-class ItemViewSet(viewsets.ModelViewSet):
-    serializer_class = ItemSerializer
 
     def get_queryset(self):
         filter_args = {}
@@ -36,31 +19,30 @@ class ItemViewSet(viewsets.ModelViewSet):
             filter_args['owner'] = self.request.user
         for p in self.request.query_params:
             filter_args[p] = self.request.GET.get(p)
-        queryset = Item.objects.filter(**filter_args)
+        queryset = Ocorrencia.objects.filter(**filter_args)
 
-        for item in queryset:
-            item.ocorrencia = Ocorrencia.objects.get(item_id=item.id)
-            item.datafile = settings.MEDIA_URL + Imagem.objects.get(id=item.fileId).datafile.__str__()
-            if item.categoria == 1:
-                item.pessoa = Pessoa.objects.get(item_id=item.id)
+        for ocorrencia in queryset:
+            ocorrencia.datafile = settings.MEDIA_URL + Imagem.objects.get(id=ocorrencia.fileId).datafile.__str__()
+            if ocorrencia.categoria == 1:
+                ocorrencia.pessoa = Pessoa.objects.get(ocorrencia_id=ocorrencia.id)
             else:
-                if item.categoria == 2:
-                    item.animal = Animal.objects.get(item_id=item.id)
+                if ocorrencia.categoria == 2:
+                    ocorrencia.animal = Animal.objects.get(ocorrencia_id=ocorrencia.id)
                 else:
-                    item.objeto = Objeto.objects.get(item_id=item.id)
+                    ocorrencia.objeto = Objeto.objects.get(ocorrencia_id=ocorrencia.id)
         return queryset
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)   # datafile=self.request.data.get('datafile'
+        serializer.save(owner=self.request.user)  # datafile=self.request.data.get('datafile'
 
     def delete(self, request):
 
-        item_id = self.request.query_params.get('id', None)
-        item = Item.objects.get(id=item_id)
-        if self.request.user == item.owner:
+        ocorrencia_id = self.request.query_params.get('id', None)
+        ocorrencia = Ocorrencia.objects.get(id=ocorrencia_id)
+        if self.request.user == ocorrencia.owner:
             # deleta imagem
             try:
-                imagem = Imagem.objects.get(id=item.fileId)
+                imagem = Imagem.objects.get(id=ocorrencia.fileId)
                 try:
                     os.remove(imagem.datafile.path)
                 except OSError:
@@ -71,38 +53,31 @@ class ItemViewSet(viewsets.ModelViewSet):
             except ObjectDoesNotExist:
                 return Response("Imagem nao existe")
 
-            # deleta ocorrencia
-            try:
-                ocorrencia = Ocorrencia.objects.get(item_id=item.id)
-                Ocorrencia.delete(ocorrencia)
-            except ObjectDoesNotExist:
-                return Response("Ocorrencia nao existe")
-
             # deleta detalhes
-            if item.categoria == 1:
+            if ocorrencia.categoria == 1:
                 try:
-                    pessoa = Pessoa.objects.get(item_id=item.id)
+                    pessoa = Pessoa.objects.get(ocorrencia_id=ocorrencia.id)
                     Pessoa.delete(pessoa)
                 except ObjectDoesNotExist:
                     return Response("Pessoa nao existe")
-            elif item.categoria == 2:
+            elif ocorrencia.categoria == 2:
                 try:
-                    animal = Animal.objects.get(item_id=item.id)
+                    animal = Animal.objects.get(ocorrencia_id=ocorrencia.id)
                     Animal.delete(animal)
                 except ObjectDoesNotExist:
                     return Response("Animal nao existe")
             else:
                 try:
-                    objeto = Objeto.objects.get(item_id=item.id)
+                    objeto = Objeto.objects.get(ocorrencia_id=ocorrencia.id)
                     Objeto.delete(objeto)
                 except ObjectDoesNotExist:
                     return Response("Objeto nao existe")
 
-            # deleta item
+            # deleta ocorrencia
             try:
-                Item.delete(item)
+                Ocorrencia.delete(ocorrencia)
             except ObjectDoesNotExist:
-                return Response("Item nao existe")
+                return Response("Ocorrencia nao existe")
 
             return Response("Deletada com sucesso!", status=status.HTTP_200_OK)
         else:
@@ -135,9 +110,9 @@ class ObjetoViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Objeto.objects.all()
-        objeto = self.request.query_params.get('item_id', None)
+        objeto = self.request.query_params.get('ocorrencia_id', None)
         if objeto is not None:
-            queryset = queryset.filter(item_id=objeto)
+            queryset = queryset.filter(ocorrencia_id=objeto)
         return queryset
 
     def perform_create(self, serializer):
@@ -149,9 +124,9 @@ class AnimalViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Animal.objects.all()
-        animal = self.request.query_params.get('item_id', None)
+        animal = self.request.query_params.get('ocorrencia_id', None)
         if animal is not None:
-            queryset = queryset.filter(item_id=animal)
+            queryset = queryset.filter(ocorrencia_id=animal)
         return queryset
 
     def perform_create(self, serializer):
@@ -163,9 +138,9 @@ class PessoaViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Pessoa.objects.all()
-        pessoa = self.request.query_params.get('item_id', None)
+        pessoa = self.request.query_params.get('ocorrencia_id', None)
         if pessoa is not None:
-            queryset = queryset.filter(item_id=pessoa)
+            queryset = queryset.filter(ocorrencia_id=pessoa)
         return queryset
 
     def perform_create(self, serializer):
@@ -210,34 +185,12 @@ class SolucionadoViewSet(viewsets.ModelViewSet):
     serializer_class = SolucionadoSerializer
 
     def get_queryset(self):
-        queryset = Item.objects.get(id=self.request.query_params.get('id', None))
+        queryset = Ocorrencia.objects.get(id=self.request.query_params.get('id', None))
 
         if queryset.solucionado is False:
             queryset.solucionado = True
+            queryset.dataSolucao = datetime.now()
         else:
             queryset.solucionado = False
         queryset.save()
         return "ok"
-
-
-class FilterItemViewSet(viewsets.ModelViewSet):
-    serializer_class = ItemSerializer
-
-    def get_queryset(self):
-        filter_args = {}
-        for p in self.request.query_params:
-            filter_args[p] = self.request.GET.get(p)
-        print filter_args
-        queryset = Item.objects.filter(**filter_args)
-
-        for item in queryset:
-            item.ocorrencia = Ocorrencia.objects.get(item_id=item.id)
-            item.datafile = settings.MEDIA_URL + Imagem.objects.get(id=item.fileId).datafile.__str__()
-            if item.categoria == 1:
-                item.pessoa = Pessoa.objects.get(item_id=item.id)
-            else:
-                if item.categoria == 2:
-                    item.animal = Animal.objects.get(item_id=item.id)
-                else:
-                    item.objeto = Objeto.objects.get(item_id=item.id)
-        return queryset

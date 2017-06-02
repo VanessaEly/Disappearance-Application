@@ -1,6 +1,6 @@
 app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies, StorageService ) {
 
-    $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {}, $scope.item = {};
+    $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {};
     var imageLoader = document.getElementById('filePhoto');
     imageLoader.addEventListener('change', handleImage, false);
 
@@ -43,9 +43,8 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
     $scope.save = function() {
         $scope.ocorrencia.dataehora = $('#datetimepicker').data('date');
         $scope.ocorrencia.endereco = $scope.coordinates.formatted_address;
-        $scope.item.ocorrencia = $scope.ocorrencia;
 
-        if ($scope.item.categoria == "1") {
+        if ($scope.ocorrencia.categoria == "1") {
             $scope.pessoa.nome = $scope.pa.nome;
             $scope.pessoa.idade = $scope.pa.idade;
             $scope.pessoa.sexo = $scope.pa.sexo;
@@ -55,9 +54,9 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
             $scope.animal.idade  = $scope.pa.idade;
             $scope.animal.sexo = $scope.pa.sexo;
         }
-        $scope.item.pessoa = $scope.pessoa;
-        $scope.item.animal = $scope.animal;
-        $scope.item.objeto = $scope.objeto;
+        $scope.ocorrencia.pessoa = $scope.pessoa;
+        $scope.ocorrencia.animal = $scope.animal;
+        $scope.ocorrencia.objeto = $scope.objeto;
 
         fileFormData = new FormData();
         if (document.getElementById('filePhoto').files.length > 0)
@@ -69,8 +68,8 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
             headers: {"Authorization": "Token " + $cookies.get('token'), "Content-Type":undefined, }}).then(
             function successCallback(response) {
                 console.log(response.data);
-                $scope.item.fileId = response.data.id;
-                $scope.salvarItem();
+                $scope.ocorrencia.fileId = response.data.id;
+                $scope.salvarOcorrencia();
             }, function errorCallback(response) {
                 console.log(response);
                 if(response.status == 401 || response.status == -1) {
@@ -83,10 +82,10 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
             });
     }
 
-    $scope.salvarItem = function() {
-        console.log("item", $scope.item);
-        $scope.item.pin = "assets/images/" + $scope.ocorrencia.tipo + $scope.item.categoria + ".png"
-        $http.post(StorageService.get("host") + 'api/item/', $scope.item, {
+    $scope.salvarOcorrencia = function() {
+        console.log("ocorrencia", $scope.ocorrencia);
+        $scope.ocorrencia.pin = "assets/images/" + $scope.ocorrencia.tipo + $scope.ocorrencia.categoria + ".png"
+        $http.post(StorageService.get("host") + 'api/ocorrencia/', $scope.ocorrencia, {
             headers: {"Authorization": "Token " + $cookies.get('token')}}).then(
             function successCallback(response) {
                 console.log(response);
@@ -100,7 +99,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                 if(response.status == 400) {
                     $rootScope.$broadcast("toast", {
                         priority: "high",
-                        text: "Não foi possível cadastrar o item"
+                        text: "Não foi possível cadastrar a ocorrência"
                     });
                 }
                 if(response.status == 401) {

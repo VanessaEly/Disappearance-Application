@@ -1,16 +1,16 @@
 app.controller('MinhasOcorrenciasController', function($scope, $http, StorageService, $cookies, $rootScope) {
 
-    $scope.data = { item:[], ocorrencia:[], detalhes:[], imagem:[], date:[]}
+    $scope.data = { ocorrencia:[], detalhes:[], imagem:[], date:[]}
     $scope.minhasOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
         $scope.currentPage = "";
-        $http.get(StorageService.get("host") + 'api/item/'
+        $http.get(StorageService.get("host") + 'api/ocorrencia/'
             , {headers: {"Authorization": "Token " + $cookies.get('token')}}
         ).success(function(response){
             $scope.data = response.results;
             for (var i = 0; i < $scope.data.length; i++)
-               $scope.data[i].ocorrencia.dataehoraToShow =
-                   new Date($scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR')
+               $scope.data[i].dataehoraToShow =
+                   new Date($scope.data[i].dataehora).toLocaleString('pt-BR')
             console.log($scope.data)
 
         }).error(function(response){
@@ -25,7 +25,7 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
     }
 
     $scope.deletarOcorrencia = function(id) {
-        $http.delete($scope.host + 'api/item/?id=' + id, {
+        $http.delete($scope.host + 'api/ocorrencia/?id=' + id, {
             headers: {"Authorization": "Token " + $cookies.get('token')}}).success(function(response){
             $rootScope.$broadcast("toast", {
                 priority: "ok",
@@ -55,8 +55,8 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
         $rootScope.goTo(url);
     }
 
-    $scope.editarOcorrencia =  function (item) {
-        $rootScope.goTo('/edit/' + item.id +'/'+ item.ocorrencia.latitude + '/'+ item.ocorrencia.longitude);
+    $scope.editarOcorrencia =  function (ocorrencia) {
+        $rootScope.goTo('/edit/' + ocorrencia.id +'/'+ ocorrencia.latitude + '/'+ ocorrencia.longitude);
     }
 
     $scope.atualizarSolucionado = function(id) {

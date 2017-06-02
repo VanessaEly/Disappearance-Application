@@ -9,8 +9,6 @@ from django.conf.urls.static import static
 # Cria um router e registra os viewsets com ele
 router = DefaultRouter()
 router.register(r'ocorrencia', ocorrenciaviews.OcorrenciaViewSet, 'ocorrencia')
-router.register(r'item', ocorrenciaviews.ItemViewSet, 'item')
-router.register(r'filteritem', ocorrenciaviews.FilterItemViewSet, 'filteritem')
 router.register(r'objeto', ocorrenciaviews.ObjetoViewSet, 'objeto')
 router.register(r'animal', ocorrenciaviews.AnimalViewSet, 'animal')
 router.register(r'pessoa', ocorrenciaviews.PessoaViewSet, 'pessoa')

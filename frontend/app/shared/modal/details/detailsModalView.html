@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
                 <h4 class="modal-title" id="myModalLabel">
                     <i class="text-muted fa fa-map-marker"></i>
-                    <strong>{{ data[index].ocorrencia.tipo }}</strong> - {{ data[index].ocorrencia.titulo }} </h4>
+                    <strong>{{ data[index].tipo }}</strong> - {{ data[index].titulo }} </h4>
             </div>
             <div class="modal-body">
 
@@ -13,19 +13,19 @@
                     <tbody>
                     <tr>
                         <td class="h6"><strong>Tipo</strong></td>
-                        <td class="h5">{{ data[index].ocorrencia.tipo }}</td>
+                        <td class="h5">{{ data[index].tipo }}</td>
                     </tr>
                     <tr>
                         <td class="h6"><strong>Título</strong></td>
-                        <td class="h5">{{ data[index].ocorrencia.titulo }}</td>
+                        <td class="h5">{{ data[index].titulo }}</td>
                     </tr>
                     <tr>
                         <td class="h6"><strong>Endereço</strong></td>
-                        <td class="h5">{{ data[index].ocorrencia.endereco }}</td>
+                        <td class="h5">{{ data[index].endereco }}</td>
                     </tr>
                     <tr>
                         <td class="h6"><strong>Data</strong></td>
-                        <td class="h5">{{ data[index].ocorrencia.dataehoraToShow }}</td>
+                        <td class="h5">{{ data[index].dataehoraToShow }}</td>
                     </tr>
 
                     <tr class="btn-mais-info text-primary">
@@ -49,12 +49,6 @@
             </div>
 
             <div class="modal-footer">
-
-                <div class="text-right pull-right col-md-3">
-                    <button type="button" class="btn btn-info btn-circle btn-lg" title="Contato">
-                        <i class="fa fa-envelope animated"></i>
-                    </button>
-                </div>
 
             </div>
         </div>

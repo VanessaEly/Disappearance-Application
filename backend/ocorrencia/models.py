@@ -10,35 +10,31 @@ class Imagem(models.Model):
                                  default='settings.MEDIA_ROOT/default.jpg')
 
 
-class Item (models.Model):
+class Ocorrencia (models.Model):
     owner = models.ForeignKey('auth.User', related_name='itens', on_delete=models.CASCADE, unique=False)
     data_criacao = models.DateTimeField(auto_now_add=True)
     categoria = models.IntegerField(default=0)
     fileId = models.IntegerField(default=0)
     oldfileId = models.IntegerField(blank=True, null=True, )
     pin = models.CharField(max_length=100, default='')
-    datafile = models.CharField(max_length=250, blank=True)
+    datafile = models.CharField(max_length=250, null=True,)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Telefone deve possuir o formato '+999999999' "
                                                                    "com menos de 15 digitos.")
-    telefone = models.CharField(validators=[phone_regex], blank=True, max_length=16,)
+    telefone = models.CharField(validators=[phone_regex], null=True, max_length=16, )
     bo = models.BooleanField(default='False')
     solucionado = models.BooleanField(default='False')
-
-
-class Ocorrencia (models.Model):
-    data_criacao = models.DateTimeField(auto_now_add=True)
-    dataehora = models.DateTimeField(blank=True)
+    dataSolucao = models.DateTimeField(null=True,)
+    dataehora = models.DateTimeField(null=True,)
     titulo = models.CharField(max_length=100, default='')
     tipo = models.CharField(max_length=20, default='')
-    detalhes = models.CharField(max_length=500, blank=True)
+    detalhes = models.CharField(max_length=500, null=True,)
     recompensa = models.DecimalField(blank=True, default=0, decimal_places=2, max_digits=10)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     endereco = models.CharField(max_length=400, default='')
-    cidade = models.CharField(max_length=100, blank=True)
-    estado = models.CharField(max_length=100, blank=True)
-    pais = models.CharField(max_length=100, blank=True)
-    item = models.ForeignKey(Item)
+    cidade = models.CharField(max_length=100, null=True,)
+    estado = models.CharField(max_length=100, null=True,)
+    pais = models.CharField(max_length=100, null=True,)
 
     class Meta:
         ordering = ('titulo',)
@@ -46,8 +42,8 @@ class Ocorrencia (models.Model):
 
 class Objeto (models.Model):
     tipo = models.CharField(max_length=50, default='')
-    cor_primaria = models.CharField(max_length=30, blank=True)
-    item = models.ForeignKey(Item)
+    cor_primaria = models.CharField(max_length=30, null=True,)
+    ocorrencia = models.ForeignKey(Ocorrencia)
 
 
 class Animal (models.Model):
@@ -57,7 +53,7 @@ class Animal (models.Model):
     especie = models.CharField(max_length=30, default='')
     raca = models.CharField(max_length=30, default='')
     cor_primaria = models.CharField(max_length=30, default='')
-    item = models.ForeignKey(Item)
+    ocorrencia = models.ForeignKey(Ocorrencia)
 
 
 class Pessoa (models.Model):
@@ -67,5 +63,5 @@ class Pessoa (models.Model):
     etnia = models.CharField(max_length=30, default='')
     altura = models.DecimalField(blank=True, null=True, decimal_places=2, max_digits=10)
     peculiaridades = models.CharField(max_length=300, blank=True)
-    item = models.ForeignKey(Item)
+    ocorrencia = models.ForeignKey(Ocorrencia)
 

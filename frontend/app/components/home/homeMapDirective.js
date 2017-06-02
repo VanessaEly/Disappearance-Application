@@ -48,7 +48,7 @@ app.directive('homeMap', function($http, StorageService, $window) {
         }
 
         //fazendo requisicao das ocorrencias cadastradas
-        $http.get(host + 'api/item/').success(function(response){
+        $http.get(host + 'api/ocorrencia/').success(function(response){
             scope.data = response.results;
             console.log(scope.data)
             //scope.data.dataehoraToShow = scope.data.dataehora.toLocaleString('pt-BR');
@@ -59,16 +59,16 @@ app.directive('homeMap', function($http, StorageService, $window) {
                 //conteúdo do marker
                 var content  =
                     '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
-                        '<p><strong>'+ scope.data[i].ocorrencia.titulo + '</strong></p>' +
-                        '<p>'+ scope.data[i].ocorrencia.tipo + '</p>' +
-                        '<p>'+ new Date(scope.data[i].ocorrencia.dataehora).toLocaleString('pt-BR') + '</p>' +
+                        '<p><strong>'+ scope.data[i].titulo + '</strong></p>' +
+                        '<p>'+ scope.data[i].tipo + '</p>' +
+                        '<p>'+ new Date(scope.data[i].dataehora).toLocaleString('pt-BR') + '</p>' +
                         '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
                         'Consultar detalhes</a> </p>'+
                     '</div>';
 
                 //adicionando marker
-                setMarker(map, new google.maps.LatLng(scope.data[i].ocorrencia.latitude,
-                    scope.data[i].ocorrencia.longitude), scope.data[i].ocorrencia.titulo,
+                setMarker(map, new google.maps.LatLng(scope.data[i].latitude,
+                    scope.data[i].longitude), scope.data[i].titulo,
                     content, infoWindow, markers, scope.data[i].pin);
             }
         }).error(function(response){

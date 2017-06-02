@@ -18,10 +18,10 @@
             </thead>
             <tbody>
             <tr ng-repeat="d in data" ng-click="detalhesOcorrencia($index)">
-                <td>{{ d.ocorrencia.tipo }}</td>
-                <td>{{ d.ocorrencia.titulo }}</td>
-                <td>{{ d.ocorrencia.dataehoraToShow }}</td>
-                <td>{{ d.ocorrencia.cidade }}/{{ d.ocorrencia.estado }}, {{ d.ocorrencia.pais }}</td>
+                <td>{{ d.tipo }}</td>
+                <td>{{ d.titulo }}</td>
+                <td>{{ d.dataehoraToShow }}</td>
+                <td>{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
             </tr>
             <td ng-show="d.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>
