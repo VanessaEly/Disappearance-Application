@@ -1,4 +1,4 @@
-app.controller('HomeController', function($scope, $http, StorageService) {
+app.controller('HomeController', function($scope) {
 
     $scope.homeInit = function() {
     }

@@ -7,7 +7,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from disapp import settings
 import os
 from django.core.mail import send_mail
-# import smtplib
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
@@ -32,21 +31,13 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
-        item = self.request.query_params.get('id', None)
-        auth = self.request.auth
-        # se recebe item_id como parametro, filtra por id, como default retorna objects.all
-        if item is not None:
-            queryset = Item.objects.filter(id=item)
-        else:
-            # se recebe token, busca apenas itens do user que fez a requisicao
-            if auth is not None:
-                queryset = Item.objects.filter(owner=self.request.user)
-            # busca todas as requests
-            else:
-                queryset = Item.objects.all()
+        filter_args = {}
+        if self.request.auth is not None:
+            filter_args['owner'] = self.request.user
+        for p in self.request.query_params:
+            filter_args[p] = self.request.GET.get(p)
+        queryset = Item.objects.filter(**filter_args)
 
-        if not queryset:
-            return []
         for item in queryset:
             item.ocorrencia = Ocorrencia.objects.get(item_id=item.id)
             item.datafile = settings.MEDIA_URL + Imagem.objects.get(id=item.fileId).datafile.__str__()
@@ -226,5 +217,27 @@ class SolucionadoViewSet(viewsets.ModelViewSet):
         else:
             queryset.solucionado = False
         queryset.save()
-        print queryset.solucionado
         return "ok"
+
+
+class FilterItemViewSet(viewsets.ModelViewSet):
+    serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        filter_args = {}
+        for p in self.request.query_params:
+            filter_args[p] = self.request.GET.get(p)
+        print filter_args
+        queryset = Item.objects.filter(**filter_args)
+
+        for item in queryset:
+            item.ocorrencia = Ocorrencia.objects.get(item_id=item.id)
+            item.datafile = settings.MEDIA_URL + Imagem.objects.get(id=item.fileId).datafile.__str__()
+            if item.categoria == 1:
+                item.pessoa = Pessoa.objects.get(item_id=item.id)
+            else:
+                if item.categoria == 2:
+                    item.animal = Animal.objects.get(item_id=item.id)
+                else:
+                    item.objeto = Objeto.objects.get(item_id=item.id)
+        return queryset

@@ -114,7 +114,7 @@ REST_FRAMEWORK = {
     ),
     'PAGE_SIZE': 100,
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework_filters.backends.DjangoFilterBackend',
+        'django_filters.rest_framework.DjangoFilterBackend',
     )
 }
 

@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from ocorrencia.models import *
-import rest_framework_filters as filters
 
 
 class UserSerializer(serializers.ModelSerializer):
