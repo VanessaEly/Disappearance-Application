@@ -196,9 +196,8 @@
                     <div class="col-md-4">
                         <label class="control-label">* Fez Boletim de Ocorrência?</label>
                         <select ng-model="data.bo" class="form-control">
-                            <option disabled selected value="">Selecione o tipo do objeto</option>
-                            <option value="true">Sim</option>
-                            <option value="false">Não</option>
+                            <option value="true" ng-selected="data.bo == true">Sim</option>
+                            <option value="false" ng-selected="data.bo == false">Não</option>
                         </select>
                     </div>
                 </div>

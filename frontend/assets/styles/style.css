@@ -295,7 +295,7 @@ body {
 #uploader-text {
     margin-left: 1vh;
 }
-#filePhoto, #contatoCriador, #dropdown{
+#filePhoto, #contatoCriador, #dropdown, #filtros_solucionadas, #filtros_abertos, #filtros_aparecimentos, #filtros_desaparecimentos{
     display:none;
 }
 
@@ -599,46 +599,4 @@ textarea.form-control{
 }
 /* END CONTATO CRIADOR */
 /* ESTATISTICAS */
-.dash-tiles {
-  margin: 1.875rem 0px;
-}
-
-.dash-tile-wrapper {
-  padding-bottom: 15px;
-  position: relative;
-}
-
-.dash-tile {
-  background: #F7F7F7 !important;
-  box-shadow: 0.0625rem 0.0625rem 0.125rem 0 #dadada !important;
-  border-radius: 50%;
-  height: 150px;
-  width: 150px;
-  -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
-  margin-left: 50%;
-  cursor: pointer;
-}
-
-.dash-tile:hover {
-  background-color: #eaeaea !important;
-}
-
-.dash-tile > .value {
-  display: block;
-  font-size: 5rem;
-  text-align: center;
-  vertical-align: middle;
-  color: #606060;
-  padding-top: 20px;
-}
-
-.dash-tile > .text {
-  display: block;
-  font-size: 1.5rem;
-  text-align: center;
-  vertical-align: middle;
-  padding: 0 20px;
-  color: #606060;
-}
 /* END ESTATISTICAS */

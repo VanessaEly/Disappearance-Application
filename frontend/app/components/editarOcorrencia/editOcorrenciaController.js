@@ -36,6 +36,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
                 $scope.data = response.results[0];
                 $scope.data.recompensa = parseFloat($scope.data.recompensa);
                 $scope.data.categoria= $scope.data.categoria.toString();
+                console.log($scope.data.bo)
                 var detail;
                 if ($scope.data.categoria != "3") {
                     if ($scope.data.pessoa) {

@@ -76,7 +76,6 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
     datafile = serializers.CharField(required=False),
     oldfileId = serializers.IntegerField(required=False),
     owner = serializers.CharField(source='owner.id', required=False)
-    bo = serializers.BooleanField(required=False)
     solucionado = serializers.BooleanField(required=False)
 
     class Meta:
@@ -118,7 +117,8 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
                 'endereco': self.data['endereco'],
                 'cidade': self.data['cidade'],
                 'estado': self.data['estado'],
-                'pais': self.data['pais']
+                'pais': self.data['pais'],
+                'bo': self.data['bo']
             })
             if validated_data['categoria'] == 1:
                 Pessoa.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
