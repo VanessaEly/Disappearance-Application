@@ -30,5 +30,9 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
         var url = 'ocorrencia/'+ $scope.data[$scope.index].id;
         $rootScope.goTo(url);
     }
+
+    $scope.filtrarLista = function () {
+
+    }
 });
 

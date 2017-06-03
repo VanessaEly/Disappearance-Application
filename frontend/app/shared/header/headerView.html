@@ -22,18 +22,18 @@
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4"></div>
             <div class="col-md-1 col-sm-1 col-xs-1 col-lg-1 nav-dropdown" ng-click="toggleId('dropdown')" >
-                <button type="button  btn-default" class="">
+                <button type="button  btn-default" title="Menu">
                     <i class="fa fa-bars fa-2x"></i>
                 </button>
             </div>
         </div><div class="header-dropdown" id="dropdown">
             <ul class="nav">
-                <li ng-show="!token"><a ng-click="toggleId('dropdown'); goTo('/login')" class="pointer">Login</a></li>
-                <li><a ng-click="toggleId('dropdown'); goTo('/nova-ocorrencia')" class="pointer">Nova Ocorrência</a></li>
-                <li><a ng-click="toggleId('dropdown'); goTo('/listaOcorrencias')" class="pointer">Lista de Ocorrências</a></li>
-                <li><a ng-click="toggleId('dropdown'); goTo('/estatisticas')" class="pointer">Estatísticas</a></li>
-                <li ng-show="token"><a ng-click="toggleId('dropdown'); goTo('/minhasocorrencias')" class="pointer">Minhas Ocorrências</a></li>
-                <li ng-show="token"><a ng-click="toggleId('dropdown'); logout()" class="pointer">Logout</a></li>
+                <li ng-show="!token"><a ng-click="toggleId('dropdown'); goTo('/login')" class="pointer" title="Login">Login</a></li>
+                <li><a ng-click="toggleId('dropdown'); goTo('/nova-ocorrencia')" class="pointer" title="Nova Ocorrência">Nova Ocorrência</a></li>
+                <li><a ng-click="toggleId('dropdown'); goTo('/listaOcorrencias')" class="pointer" title="Lista de Ocorrências">Lista de Ocorrências</a></li>
+                <li><a ng-click="toggleId('dropdown'); goTo('/estatisticas')" class="pointer" title="Estatísticas">Estatísticas</a></li>
+                <li ng-show="token"><a ng-click="toggleId('dropdown'); goTo('/minhasocorrencias')" class="pointer" title="Minhas Ocorrências">Minhas Ocorrências</a></li>
+                <li ng-show="token"><a ng-click="toggleId('dropdown'); logout()" class="pointer" title="Logout">Logout</a></li>
             </ul>
     </div>
     </nav>

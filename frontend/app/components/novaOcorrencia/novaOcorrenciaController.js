@@ -30,7 +30,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
     $scope.$watch($scope.coordinates, function() {});
 
     $scope.novaOcorrenciaInit = function() {
-        console.log("nova ocorrencia init");
+        $scope.lista = StorageService.get("lista");
     }
 
     $scope.clearData = function () {
@@ -63,7 +63,6 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
             fileFormData.append('datafile', document.getElementById('filePhoto').files[0]);
         else
             fileFormData = undefined
-
         $http.post(StorageService.get("host") + 'api/imagem/', fileFormData, { transformRequest: angular.identity,
             headers: {"Authorization": "Token " + $cookies.get('token'), "Content-Type":undefined, }}).then(
             function successCallback(response) {

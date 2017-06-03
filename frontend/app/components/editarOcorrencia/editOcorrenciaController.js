@@ -29,6 +29,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
     }
 
     $scope.editOcorrenciaInit = function() {
+        $scope.lista = StorageService.get("lista");
         $scope.host = StorageService.get("host");
         $http.get($scope.host + 'api/ocorrencia/?id=' + $routeParams.id,{
             headers: {"Authorization": "Token " + $cookies.get('token')}}

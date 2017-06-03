@@ -295,7 +295,7 @@ body {
 #uploader-text {
     margin-left: 1vh;
 }
-#filePhoto, #contatoCriador, #dropdown, #filtros_solucionadas, #filtros_abertos, #filtros_aparecimentos, #filtros_desaparecimentos{
+#filePhoto, #contatoCriador, #dropdown{
     display:none;
 }
 

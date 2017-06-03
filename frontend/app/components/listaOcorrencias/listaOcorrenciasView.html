@@ -3,25 +3,31 @@
     <div class="ocorrencia-info">
 
         <div class="center">
-            <h1> <i class="fa fa-map-marker"></i> Ocorrências <small> - clique em uma ocorrência para obter detalhes</small></h1>
+            <h1 class=""> <i class="fa fa-map-marker "></i> Ocorrências <small> - clique em uma ocorrência para obter detalhes</small></h1>
         </div>
+            <div>
+                <h3 title="Filtrar" class="pointer" ng-click="toggleId('filtros')"><i class="fa fa-filter"/> Filtrar</h3>
+                <div id="filtros">
+                </div>
+            </div>
+
         <hr>
 
         <table class="table table-hover">
             <thead>
             <tr >
-                <th>Tipo</th>
-                <th>Título</th>
-                <th>Data Criação</th>
-                <th>Local</th>
+                <th title="Tipo">Tipo</th>
+                <th title="Título">Título</th>
+                <th title="Data Criação">Data Criação</th>
+                <th title="Local">Local</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="d in data" ng-click="detalhesOcorrencia($index)">
-                <td>{{ d.tipo }}</td>
-                <td>{{ d.titulo }}</td>
-                <td>{{ d.dataehoraToShow }}</td>
-                <td>{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
+                <td title="{{ d.tipo }}">{{ d.tipo }}</td>
+                <td title="{{ d.titulo }}">{{ d.titulo }}</td>
+                <td title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
+                <td title="{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}">{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
             </tr>
             <td ng-show="d.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>
