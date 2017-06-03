@@ -28,33 +28,30 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PessoaSerializer(serializers.ModelSerializer):
-    ocorrencia = serializers.CharField(source='ocorrencia.id', required=False)
 
     class Meta:
         model = Pessoa
-        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades', 'ocorrencia')
+        fields = ('id', 'nome', 'sexo', 'idade', 'etnia', 'altura', 'peculiaridades')
 
     # def create(self, validated_data):
     #     return Pessoa.objects.create(**validated_data)
 
 
 class AnimalSerializer(serializers.ModelSerializer):
-    ocorrencia = serializers.CharField(source='ocorrencia.id', required=False)
 
     class Meta:
         model = Animal
-        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria', 'ocorrencia')
+        fields = ('id', 'nome', 'sexo', 'idade', 'especie', 'raca', 'cor_primaria')
 
     # def create(self, validated_data):
     #     return Animal.objects.create(**validated_data)
 
 
 class ObjetoSerializer(serializers.ModelSerializer):
-    ocorrencia = serializers.CharField(source='ocorrencia.id', required=False)
 
     class Meta:
         model = Objeto
-        fields = ('id', 'tipo', 'cor_primaria', 'ocorrencia')
+        fields = ('id', 'tipo', 'cor_primaria')
 
     # def create(self, validated_data):
     #     print validated_data
@@ -75,7 +72,6 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
     objeto = ObjetoSerializer(required=False)
     datafile = serializers.CharField(required=False),
     oldfileId = serializers.IntegerField(required=False),
-    owner = serializers.CharField(source='owner.id', required=False)
     solucionado = serializers.BooleanField(required=False)
 
     class Meta:
@@ -83,7 +79,7 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
         fields = ('id', 'data_criacao', 'dataehora', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo',
                   'solucionado', 'dataSolucao', 'pin', 'titulo', 'tipo', 'detalhes', 'recompensa',
                   'latitude', 'longitude', 'endereco', 'cidade', 'estado', 'pais', 'pessoa',
-                  'animal', 'objeto', 'datafile', 'owner')
+                  'animal', 'objeto', 'datafile')
         extra_kwargs = {
             "id": {
                 "read_only": False,
@@ -98,51 +94,30 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
         # caso receba id da ocorrencia (ja criado, tela de edit)
         ocorrenciaId = self.data.get('id', None)
         if ocorrenciaId is not None:
+            filter_args = {}
+            for p in self.data:
+                print p
+                filter_args[p] = self.data.get(p)
+            print filter_args
             Imagem.delete(Imagem.objects.get(id=self.data['oldfileId']))
-            ocorrencia = Ocorrencia.objects.update_or_create(id=self.data['id'], defaults={
-                'categoria': self.data['categoria'],
-                'fileId': self.data['fileId'],
-                'pin': self.data['pin'],
-                'datafile': self.data['datafile'],
-                'telefone': self.data['telefone'],
-                'solucionado': self.data['solucionado'],
-                'dataSolucao': self.data['dataSolucao'],
-                'dataehora': self.data['dataehora'],
-                'titulo': self.data['titulo'],
-                'tipo': self.data['tipo'],
-                'detalhes': self.data['detalhes'],
-                'recompensa': self.data['recompensa'],
-                'latitude': self.data['latitude'],
-                'longitude': self.data['longitude'],
-                'endereco': self.data['endereco'],
-                'cidade': self.data['cidade'],
-                'estado': self.data['estado'],
-                'pais': self.data['pais'],
-                'bo': self.data['bo']
-            })
+            ocorrencia = Ocorrencia.objects.update_or_create(id=self.data['id'], defaults=filter_args)
             if validated_data['categoria'] == 1:
-                Pessoa.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
-                    'nome': self.data['pessoa']['nome'],
-                    'sexo': self.data['pessoa']['sexo'],
-                    'idade': self.data['pessoa']['idade'],
-                    'etnia': self.data['pessoa']['etnia'],
-                    'altura': self.data['pessoa']['altura'],
-                    'peculiaridades': self.data['pessoa']['peculiaridades'],
-                })
+                filter_args = {}
+                for p in self.data['pessoa']:
+                    print p
+                    filter_args[p] = self.data['pessoa'].get(p)
+                Pessoa.objects.update_or_create(ocorrencia_id=self.data['id'], defaults=filter_args)
             if validated_data['categoria'] == 2:
-                Animal.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
-                    'nome': self.data['animal']['nome'],
-                    'sexo': self.data['animal']['sexo'],
-                    'idade': self.data['animal']['idade'],
-                    'especie': self.data['animal']['especie'],
-                    'raca': self.data['animal']['raca'],
-                    'cor_primaria': self.data['animal']['cor_primaria'],
-                })
+                filter_args = {}
+                for p in self.data['animal']:
+                    filter_args[p] = self.data['animal'].get(p)
+                print filter_args
+                Animal.objects.update_or_create(ocorrencia_id=self.data['id'], defaults=filter_args)
             if validated_data['categoria'] == 3:
-                Objeto.objects.update_or_create(ocorrencia_id=self.data['id'], defaults={
-                    'tipo': self.data['objeto']['tipo'],
-                    'cor_primaria': self.data['objeto']['cor_primaria'],
-                })
+                filter_args = {}
+                for p in self.data['objeto']:
+                    filter_args[p] = self.data['objeto'].get(p)
+                Objeto.objects.update_or_create(ocorrencia_id=self.data['id'], defaults=filter_args)
 
         # cria novos itens
         else:

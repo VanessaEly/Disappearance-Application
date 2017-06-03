@@ -35,9 +35,16 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
             headers: {"Authorization": "Token " + $cookies.get('token')}}
             ).success(function(response){
                 $scope.data = response.results[0];
+                if ($scope.data === undefined) {
+                    $rootScope.$broadcast("toast", {
+                        priority: "high",
+                        text: "Ocorrência não encontrada :("
+                    });
+                    $rootScope.goTo('/');
+                }
                 $scope.data.recompensa = parseFloat($scope.data.recompensa);
                 $scope.data.categoria= $scope.data.categoria.toString();
-                console.log($scope.data.bo)
+
                 var detail;
                 if ($scope.data.categoria != "3") {
                     if ($scope.data.pessoa) {
@@ -70,6 +77,8 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
     $scope.save = function() {
         $scope.data.dataehora = $('#datepicker').data('date');
         $scope.data.endereco = $scope.coordinates.formatted_address;
+        $scope.data.latitude = $scope.ocorrencia.latitude;
+        $scope.data.longitude = $scope.ocorrencia.longitude;
 
         if ($scope.data.categoria == "1") {
             $scope.data.animal = {}, $scope.data.objeto = {};

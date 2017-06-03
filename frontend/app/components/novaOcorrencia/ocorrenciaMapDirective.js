@@ -134,6 +134,7 @@ app.directive('ocorrenciaMap', ['$routeParams', function($routeParams) {
                                     scope.ocorrencia.pais = results[0].address_components[j].long_name;
                             }
                         }
+                        scope.$apply();
                     callback(results[0]);
                 }
             });
