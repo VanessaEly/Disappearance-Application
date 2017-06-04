@@ -6,28 +6,80 @@
             <h1 class=""> <i class="fa fa-map-marker "></i> Ocorrências <small> - clique em uma ocorrência para obter detalhes</small></h1>
         </div>
             <div>
-                <h3 title="Filtrar" class="pointer" ng-click="toggleId('filtros')"><i class="fa fa-filter"/> Filtrar</h3>
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                    <h3 class="col-md-2 col-xs-4 col-sm-4 col-lg-4 pointer center" ng-click="toggleId('filtros')">
+                        <i title="Filtrar" class="fa fa-filter" /> Filtrar
+                    </h3>
+
+                </div>
+
                 <div id="filtros">
+                    <h4 class="col-md-12 col-xs-12 col-sm-12 col-lg-12 pointer center" ng-click="limparFiltros()">
+                        <i title="Filtrar" class="fa fa-close" /> Limpar Filtros
+                    </h4>
+                    <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                        <label>Por Tipo</label>
+                        <select ng-model="filtros.tipo" class="form-control">
+                            <option disabled selected value="">Filtrar Tipo</option>
+                            <option value="Aparecimento">Aparecimento</option>
+                            <option value="Desaparecimento">Desaparecimento</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                        <label>Por Categoria</label>
+                        <select ng-model="filtros.categoria" class="form-control">
+                            <option disabled selected value="">Filtrar Categoria</option>
+                            <option value="Pessoa">Pessoa</option>
+                            <option value="Animal">Animal</option>
+                            <option value="Objeto">Objeto</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                        <label>Por Solucionadas</label>
+                        <select ng-model="filtros.solucionado" class="form-control"
+                                ng-options="boolToStr(item) for item in [true, false]">
+                            <option disabled selected value="">Solucionada</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                        <label>Por Boletins de Ocorrência</label>
+                        <select ng-model="filtros.bo" class="form-control"
+                                ng-options="boolToStr(item) for item in [true, false]">
+                            <option disabled selected value="">Boletim de Ocorrência</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                        <label>Por Palavra-Chave</label>
+						<input type="text" ng-model="filtros.busca" placeholder="Busca por palavra" >
+                        <i class="fa fa-search"></i>
+                    </div>
                 </div>
             </div>
-
-        <hr>
 
         <table class="table table-hover">
             <thead>
             <tr >
-                <th title="Tipo">Tipo</th>
-                <th title="Título">Título</th>
-                <th title="Data Criação">Data Criação</th>
-                <th title="Local">Local</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'tipo'}"
+                    ng-click="filtros.orderBy = 'tipo'; reverseOrder()" title="Tipo">Tipo</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'titulo'}"
+                    ng-click="filtros.orderBy = 'titulo'; reverseOrder()" title="Título">Título</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'categoria'}"
+                    ng-click="filtros.orderBy = 'categoria'; reverseOrder()" title="Título">Categoria</th>
+                <th class="hidden-xs" ng-class="{'th-active': filtros.orderBy == 'dataehoraToShow'}"
+                    ng-click="filtros.orderBy = 'dataehoraToShow'; reverseOrder()" title="Data Criação">Data Criação</th>
+                <th class="hidden-xs" ng-class="{'th-active': filtros.orderBy == 'cidade'}"
+                    ng-click="filtros.orderBy = 'cidade'; reverseOrder()" title="Local">Local</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="d in data" ng-click="detalhesOcorrencia($index)">
-                <td title="{{ d.tipo }}">{{ d.tipo }}</td>
-                <td title="{{ d.titulo }}">{{ d.titulo }}</td>
-                <td title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
-                <td title="{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}">{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
+            <tr ng-repeat="d in data | orderBy: filtros.orderBy:reverse | filter: filtros.busca
+            | filter: {tipo: filtros.tipo, categoria: filtros.categoria, solucionado: filtros.solucionado, bo: filtros.bo} : true"
+                ng-click="detalhesOcorrencia(d)">
+                <td class="td-wrapper" title="{{ d.tipo }}">{{ d.tipo }}</td>
+                <td class="td-wrapper" title="{{ d.titulo }}">{{ d.titulo }}</td>
+                <td class="td-wrapper" title="{{ d.categoria }}">{{ d.categoria }}</td>
+                <td class="td-wrapper hidden-xs" title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
+                <td class="td-wrapper hidden-xs" title="{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}">{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
             </tr>
             <td ng-show="d.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>

@@ -62,7 +62,6 @@ app.controller('EstatisticasController', function($scope, $http, StorageService)
                     else
                         $scope.emAbertoCategoria.data[2] += 1;
                 }
-                //Em Aberto por Categoria
             }
         });
 

@@ -36,10 +36,10 @@ app.directive('homeMap', function($http, StorageService, $window) {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
+                map.panTo(pos);
             }, function(error) {
                 clearTimeout(location_timeout);
-                setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
+                map.panTo(pos);
                 console.log("error",error);
             });
         }

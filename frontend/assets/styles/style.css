@@ -26,7 +26,7 @@
     width: 50%;
 }
 
-body { font-family: HelvNeueMd !important; }
+body { font-family: HelvNeueMd !important; overflow-wrap: break-word;}
 p {  margin: 0px !important;  }
 textarea {
     resize:vertical;
@@ -295,7 +295,7 @@ body {
 #uploader-text {
     margin-left: 1vh;
 }
-#filePhoto, #contatoCriador, #dropdown{
+#filePhoto, #contatoCriador, #dropdown, #filtros{
     display:none;
 }
 
@@ -337,6 +337,22 @@ body {
 /* LISTA OCORRENCIAS */
 .modal-body {
     margin-top: 15px;
+}
+
+.th-active {
+	font-weight: bold;
+	border-bottom: solid 3px #000 !important;
+}
+
+.th-active:after {
+	content: "▼";
+	font-size: .6rem;
+}
+
+.td-wrapper {
+	max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 /* END LISTA OCORRENCIAS */
 
@@ -527,8 +543,8 @@ footer {
 /* SOBRE */
 #sobre-panel, #contact {
     padding: 3%;
-    width: 50%;
-    margin: 0% 25%;
+    width: 70%;
+    margin: 0% 15%;
     box-shadow: 1px 3px 10px 1px #5b5b5b;
 }
 #sobre-panel h2, h4 {  text-align: center;  }
@@ -600,3 +616,18 @@ textarea.form-control{
 /* END CONTATO CRIADOR */
 /* ESTATISTICAS */
 /* END ESTATISTICAS */
+/* DETALHES */
+.detalhes-wrapper {
+	max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.h5, .h6 {
+        padding: 1px;
+}
+.h5 {
+        border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+
+}
+/* END DETALHES */

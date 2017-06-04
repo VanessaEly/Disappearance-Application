@@ -1,5 +1,4 @@
 app.controller('HeaderController', function($scope, $cookies, LoginService) {
-
     $scope.token = $cookies.get('token');
 
     $('dropdown').hover(function() {

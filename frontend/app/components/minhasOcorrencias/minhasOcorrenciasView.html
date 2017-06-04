@@ -8,19 +8,19 @@
         <table class="table table-hover">
             <thead ng-show="data.length != 0">
                 <tr >
-                    <th>Data Criação</th>
-                    <th>Tipo</th>
-                    <th>Título</th>
-                    <th>Solucionado</th>
-                    <th>Editar</th>
-                    <th>Deletar</th>
+                    <th class="hidden-xs" title="Data Criação">Data Criação</th>
+                    <th class="hidden-xs" title="Tipo">Tipo</th>
+                    <th title="Títuloo">Título</th>
+                    <th title="Solucionado">Solucionado</th>
+                    <th title="Editar">Editar</th>
+                    <th title="Deletar">Deletar</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="d in data" >
-                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
-                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.tipo }}">{{ d.tipo }}</td>
-                    <td ng-click="detalhesOcorrencia($index)" title="{{ d.titulo }}">{{ d.titulo }}</td>
+                <tr ng-repeat="d in data">
+                    <td class="hidden-xs" title="{{ d.dataehoraToShow }}" ng-click="detalhesOcorrencia(d)">{{ d.dataehoraToShow }}</td>
+                    <td class="hidden-xs" title="{{ d.tipo }}" ng-click="detalhesOcorrencia(d)">{{ d.tipo }}</td>
+                    <td class="td-wrapper" title="{{ d.titulo }}" ng-click="detalhesOcorrencia(d)">{{ d.titulo }}</td>
                     <td>
                         <input class="width-center" type="checkbox" ng-model="d.solucionado" ng-change='atualizarSolucionado({{ d.id }})'/>
                     </td>

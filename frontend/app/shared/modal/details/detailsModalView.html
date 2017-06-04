@@ -3,29 +3,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
-                <h4 class="modal-title" id="myModalLabel">
+                <h4 class="modal-title">
                     <i class="text-muted fa fa-map-marker"></i>
-                    <strong>{{ data[index].tipo }}</strong> - {{ data[index].titulo }} </h4>
+                    <strong>{{ selected.tipo }}</strong>
+                </h4>
             </div>
             <div class="modal-body">
 
                 <table class="pull-left col-md-8 ">
                     <tbody>
                     <tr>
-                        <td class="h6"><strong>Tipo</strong></td>
-                        <td class="h5">{{ data[index].tipo }}</td>
+                        <td class="h6"><strong>Título</strong></td>
+                        <td class="h5" title="{{ selected.titulo }}"><div class="detalhes-wrapper">{{ selected.titulo }}</div></td>
                     </tr>
                     <tr>
-                        <td class="h6"><strong>Título</strong></td>
-                        <td class="h5">{{ data[index].titulo }}</td>
+                        <td class="h6"><strong>Solucionado</strong></td>
+                        <td class="h5" title="Sim" ng-show="data.solucionado">Sim</td>
+                        <td class="h5" title="Não" ng-show="!data.solucionado">Não</td>
                     </tr>
                     <tr>
                         <td class="h6"><strong>Endereço</strong></td>
-                        <td class="h5">{{ data[index].endereco }}</td>
+                        <td class="h5" title="{{ selected.endereco }}"><div class="detalhes-wrapper">{{ selected.endereco }}</div></td>
                     </tr>
                     <tr>
                         <td class="h6"><strong>Data</strong></td>
-                        <td class="h5">{{ data[index].dataehoraToShow }}</td>
+                        <td class="h5" title="{{ selected.dataehoraToShow }}">{{ selected.dataehoraToShow }}</td>
+                    </tr>
+                    <tr>
+                        <td class="h6"><strong>Detalhes</strong></td>
+                        <td class="h5" title="{{ selected.detalhes }}"><div class="detalhes-wrapper">{{ selected.detalhes}}</div></td>
                     </tr>
 
                     <tr class="btn-mais-info text-primary">
@@ -42,7 +48,7 @@
 
 
                 <div class="col-md-4">
-                    <img src="{{ host }}{{ data[index].datafile }}" class="inline-block ocorrencia-image">
+                    <img src="{{ host }}{{ selected.datafile }}" class="inline-block ocorrencia-image">
                 </div>
 
                 <div class="clearfix"></div>

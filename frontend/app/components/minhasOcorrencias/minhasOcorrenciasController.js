@@ -42,16 +42,15 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
         });
     }
 
-    $scope.detalhesOcorrencia = function(index) {
+    $scope.detalhesOcorrencia = function(data) {
         event.preventDefault();
-        $scope.index = index
+        $scope.selected = data
         $('#detalhesModal').modal('show');
-
     }
 
     $scope.getUrl = function() {
         $('#detalhesModal').modal('hide');
-        var url = 'ocorrencia/'+ $scope.data[$scope.index].id;
+        var url = 'ocorrencia/'+ $scope.selected.id;
         $rootScope.goTo(url);
     }
 

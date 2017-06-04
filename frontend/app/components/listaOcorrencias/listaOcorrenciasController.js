@@ -1,15 +1,19 @@
 app.controller('ListaOcorrenciasController', function($scope, $http, StorageService, $rootScope) {
 
     $scope.data = { ocorrencia:[], detalhes:[], imagem:[], date:[]}
+    $scope.filtros = {};
+    $scope.filtrosAtuais = '';
 
     $scope.listaOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
         $http.get(StorageService.get("host") + 'api/ocorrencia/'
         ).success(function(response){
             $scope.data = response.results;
-            for (var i = 0; i < $scope.data.length; i++)
-               $scope.data[i].dataehoraToShow =
-                   new Date($scope.data[i].dataehora).toLocaleString('pt-BR')
+            for (var i = 0; i < $scope.data.length; i++) {
+                $scope.data[i].categoria == 1? $scope.data[i].categoria = "Pessoa": $scope.data[i].categoria == 2?
+                        $scope.data[i].categoria = "Animal": $scope.data[i].categoria = "Objeto";
+                $scope.data[i].dataehoraToShow = new Date($scope.data[i].dataehora).toLocaleString('pt-BR');
+            }
             console.log($scope.data)
 
         }).error(function(response){
@@ -17,22 +21,30 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
         });
     }
 
-    $scope.detalhesOcorrencia = function(index) {
+    $scope.detalhesOcorrencia = function(data) {
         event.preventDefault();
-        $scope.index = index
-        console.log($scope.data[index])
+        $scope.selected = data
         $('#detalhesModal').modal('show');
-
     }
 
     $scope.getUrl = function() {
         $('#detalhesModal').modal('hide');
-        var url = 'ocorrencia/'+ $scope.data[$scope.index].id;
+        var url = 'ocorrencia/'+ $scope.selected.id;
         $rootScope.goTo(url);
     }
 
-    $scope.filtrarLista = function () {
+    $scope.reverseOrder = function () {
+		if ($scope.reverse == false){
+			$scope.reverse = true;
+		}
+		else {
+			$scope.reverse = false;
+		}
+	}
+    $scope.boolToStr = function(arg) {return arg ? 'Sim' : 'Não'};
 
+    $scope.limparFiltros = function () {
+        $scope.filtros = {};
     }
 });
 
