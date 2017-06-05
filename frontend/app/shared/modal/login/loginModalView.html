@@ -2,12 +2,8 @@
     <div id="login-dp" class="">
             <div class="row">
                 <div class="col-md-12">
-                    Login utilizando:
-                    <div class="social-buttons">
-                        <div class="btn btn-fb" ng-click="fbLogin()"><i class="fa fa-facebook"></i> Facebook</div>
-                        <div class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</div>
-                    </div>
                     Possui cadastro?
+                    <i class="fa fa-close right" ng-click="toggleId('login-modal')"/>
                     <form class="form" name="loginnav">
                         <div class="form-group">
                             <input ng-model="usuario.email" type="email" class="form-control" name="email" placeholder="Email"  ng-required="true">
@@ -18,11 +14,6 @@
                         </div>
                         <div class="form-group">
                             <button ng-click="loginnav.$valid && login()" type="submit" class="btn btn-primary btn-block">Login</button>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Lembrar senha
-                            </label>
                         </div>
                     </form>
                 </div>

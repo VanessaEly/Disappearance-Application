@@ -142,7 +142,7 @@ header {
     left: 50%;
     transform: translate(-50%, -10%);
     position: absolute;
-    margin-top: 15%;
+    margin-top: 30%;
     max-width: 500px;
 	border-radius: 2%;
     overflow: hidden;
