@@ -61,8 +61,8 @@ app.service("LoginService", function($window, $location, $http, $q, $cookies, St
 				text: "Logado com sucesso!"
 			});
             $cookies.put("token", response.data.token);
-            $window.location.reload();
             if ($location.path() == "/login") {
+            	$window.location.reload();
                 $rootScope.goTo("/");
             } else {
                 document.getElementById('login-modal').style.display='none';

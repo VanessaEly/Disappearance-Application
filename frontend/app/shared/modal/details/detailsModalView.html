@@ -18,8 +18,8 @@
                     </tr>
                     <tr>
                         <td class="h6"><strong>Solucionado</strong></td>
-                        <td class="h5" title="Sim" ng-show="data.solucionado">Sim</td>
-                        <td class="h5" title="Não" ng-show="!data.solucionado">Não</td>
+                        <td class="h5" title="Sim" ng-show="selected.solucionado">Sim</td>
+                        <td class="h5" title="Não" ng-show="!selected.solucionado">Não</td>
                     </tr>
                     <tr>
                         <td class="h6"><strong>Endereço</strong></td>
@@ -29,7 +29,7 @@
                         <td class="h6"><strong>Data</strong></td>
                         <td class="h5" title="{{ selected.dataehoraToShow }}">{{ selected.dataehoraToShow }}</td>
                     </tr>
-                    <tr>
+                    <tr ng-show="selected.detalhes">
                         <td class="h6"><strong>Detalhes</strong></td>
                         <td class="h5" title="{{ selected.detalhes }}"><div class="detalhes-wrapper">{{ selected.detalhes}}</div></td>
                     </tr>

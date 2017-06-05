@@ -1,5 +1,5 @@
-app.controller('MinhasOcorrenciasController', function($scope, $http, StorageService, $cookies, $rootScope) {
-
+app.controller('MinhasOcorrenciasController', function($scope, $http, StorageService, $cookies, $rootScope, $route) {
+    $scope.toDelete = {};
     $scope.data = { ocorrencia:[], detalhes:[], imagem:[], date:[]}
     $scope.minhasOcorrenciasInit = function() {
         $scope.host = StorageService.get("host");
@@ -25,13 +25,13 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
     }
 
     $scope.deletarOcorrencia = function(id) {
-        $http.delete($scope.host + 'api/ocorrencia/?id=' + id, {
+        $http.delete($scope.host + 'api/ocorrencia/?id=' + $scope.toDelete.id, {
             headers: {"Authorization": "Token " + $cookies.get('token')}}).success(function(response){
             $rootScope.$broadcast("toast", {
                 priority: "ok",
                 text: response
             });
-            $rootScope.goTo("/");
+            $route.reload();
         }).error(function(response){
             $rootScope.$broadcast("toast", {
                 priority: "high",
@@ -44,7 +44,8 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
 
     $scope.detalhesOcorrencia = function(data) {
         event.preventDefault();
-        $scope.selected = data
+        $scope.selected = data;
+        console.log($scope.selected)
         $('#detalhesModal').modal('show');
     }
 

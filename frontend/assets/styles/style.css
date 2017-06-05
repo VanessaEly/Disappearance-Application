@@ -295,7 +295,7 @@ body {
 #uploader-text {
     margin-left: 1vh;
 }
-#filePhoto, #contatoCriador, #dropdown, #filtros{
+#filePhoto, #contatoCriador, #dropdown, #filtros, #delete-confirmation-modal{
     display:none;
 }
 
@@ -631,3 +631,51 @@ textarea.form-control{
 
 }
 /* END DETALHES */
+/*MINHAS OCORRENCIAS */
+.options-modal {
+    top:45%;
+	right: 5%;
+    max-width: 450px;
+    position: absolute;
+    z-index: 100000000;
+    background-color: rgba(255, 255, 255, .97);
+    box-shadow: 0 2px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.options-modal-head {
+	margin-bottom: 15px;
+}
+
+.options-modal-title {
+	display: inline-block;
+	margin-top: 5px;
+}
+
+.options-modal-close-button {
+	position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 3rem;
+}
+
+.modal-message h4 span {
+	font-size: 1.6rem;
+}
+
+.modal-message-option {
+	font-size: 1.6rem;
+	margin-bottom: 10px;
+}
+
+.modal-message-option:hover {
+	color: #5596E6;
+	cursor: pointer;
+}
+
+.modal-message-option i {
+	font-size: 2rem;
+	margin-right: 5px;
+}
+
+/*END MINHAS OCORRENCIAS */
