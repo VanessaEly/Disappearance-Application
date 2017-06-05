@@ -39,7 +39,9 @@
                     <div class="form-group">
                         <label class="col-md-3 col-xs-4 col-sm-3 col-lg-3 control-label">Senha</label>
                         <div class="col-md-8 col-xs-7 col-sm-8 col-lg-8">
-                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password" placeholder="Senha" />
+                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password"
+                                   placeholder="Senha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,12}$"
+                                    oninvalid="this.setCustomValidity('Senha deve possuir entre 6 e 12 dígitos, uma letra maiúscula, uma minúscula e um número')"/>
                         </div>
                     </div>
 
