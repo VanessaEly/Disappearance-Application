@@ -99,7 +99,8 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
                 print p
                 filter_args[p] = self.data.get(p)
             print filter_args
-            Imagem.delete(Imagem.objects.get(id=self.data['oldfileId']))
+            if self.data['datafile'] != 'media/imagens/default.jpg':
+                Imagem.delete(Imagem.objects.get(id=self.data['oldfileId']))
             ocorrencia = Ocorrencia.objects.update_or_create(id=self.data['id'], defaults=filter_args)
             if validated_data['categoria'] == 1:
                 filter_args = {}

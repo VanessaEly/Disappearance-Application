@@ -29,10 +29,13 @@
         </div><div class="header-dropdown" id="dropdown">
             <ul class="nav">
                 <li ng-show="!token"><a ng-click="toggleId('dropdown'); goTo('/login')" class="pointer" title="Login">Login</a></li>
+                <li ng-show="!token"><a ng-click="toggleId('dropdown'); goTo('/cadastro-usuario')" class="pointer" title="Cadastre-se">Cadastre-se</a></li>
                 <li><a ng-click="toggleId('dropdown'); goTo('/nova-ocorrencia')" class="pointer" title="Nova Ocorrência">Nova Ocorrência</a></li>
                 <li><a ng-click="toggleId('dropdown'); goTo('/listaOcorrencias')" class="pointer" title="Lista de Ocorrências">Lista de Ocorrências</a></li>
                 <li><a ng-click="toggleId('dropdown'); goTo('/estatisticas')" class="pointer" title="Estatísticas">Estatísticas</a></li>
                 <li ng-show="token"><a ng-click="toggleId('dropdown'); goTo('/minhasocorrencias')" class="pointer" title="Minhas Ocorrências">Minhas Ocorrências</a></li>
+                <li><a ng-click="toggleId('dropdown'); goTo('/contato')" class="pointer" title="Fale Conosco">Fale Conosco</a></li>
+                <li><a ng-click="toggleId('dropdown'); goTo('/sobre')" class="pointer" title="Quem Somos">Quem Somos</a></li>
                 <li ng-show="token"><a ng-click="toggleId('dropdown'); logout()" class="pointer" title="Logout">Logout</a></li>
             </ul>
     </div>
