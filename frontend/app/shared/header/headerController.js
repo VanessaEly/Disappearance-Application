@@ -1,7 +1,9 @@
-app.controller('HeaderController', function($scope, $cookies, LoginService) {
+app.controller('HeaderController', function($scope, $cookies, LoginService, $rootScope) {
     $scope.token = $cookies.get('token');
 
-    $scope.$watch($scope.token, function() {});
+    $rootScope.$on('updateHeader', function() {
+         $scope.token = $cookies.get('token');
+     });
 
     $('dropdown').hover(function() {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);

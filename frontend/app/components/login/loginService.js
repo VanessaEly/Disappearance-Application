@@ -1,4 +1,4 @@
-app.service("LoginService", function($window, $location, $http, $q, $cookies, StorageService, $rootScope) {
+app.service("LoginService", function($location, $http, $q, $cookies, StorageService, $rootScope) {
 	var loginService = this;
 	this.loginInfo = {
 		isLogged: true
@@ -9,7 +9,7 @@ app.service("LoginService", function($window, $location, $http, $q, $cookies, St
 		$cookies.remove('token');
 		$cookies.remove('user');
 		$location.path('/login');
-		$window.location.reload();
+		$rootScope.$emit('updateHeader');
 	}
 
 	this.cadastrar =  function(usuario) {
@@ -61,8 +61,8 @@ app.service("LoginService", function($window, $location, $http, $q, $cookies, St
 				text: "Logado com sucesso!"
 			});
             $cookies.put("token", response.data.token);
+			$rootScope.$emit('updateHeader');
             if ($location.path() == "/login") {
-            	$window.location.reload();
                 $rootScope.goTo("/");
             } else {
                 document.getElementById('login-modal').style.display='none';

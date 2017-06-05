@@ -1,4 +1,4 @@
-app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies, StorageService, $window ) {
+app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $cookies, StorageService ) {
 
     $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {};
     var imageLoader = document.getElementById('filePhoto');
@@ -92,7 +92,6 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                     priority: "ok",
                     text: "Ocorrencia cadastrada com sucesso!"
                 });
-                angular.element($('#header')).scope().init(args);
                 $rootScope.goTo("/");
             }, function errorCallback(response) {
                 console.log(response);
