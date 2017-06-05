@@ -141,8 +141,9 @@ header {
 #login-dp{
     left: 50%;
     transform: translate(-50%, -10%);
-    position: absolute;
-    margin-top: 30%;
+    position: fixed;
+    top:auto;
+    bottom:30%;
     max-width: 500px;
 	border-radius: 2%;
     overflow: hidden;
