@@ -7,12 +7,12 @@
             <p>ATENÇÃO: Os campos destacados com * são obrigatórios!</p><br>
         </div>
 
-        <div class="col-md-8 col-sm-8 col-xs-7">
+        <div class="col-md-8 col-sm-8 col-xs-8">
             <input id="pac-input" class="controls" type="text"
                    placeholder="Busque um endereço">
             <div ocorrencia-map="" selected-item="coordinates"></div>
         </div>
-        <div class="col-md-4 col-sm-4 col-xs-5">
+        <div class="col-md-4 col-sm-4 col-xs-4">
             <div id="uploader" class="image"onclick="$('#filePhoto').click()">
                 <h5 id="uploader-text">Selecione uma imagem para a ocorrência</h5>
                 <img src=""/>
@@ -42,7 +42,8 @@
                 <div class="form-group col-md-12">
                     <div class="col-md-5">
                         <label class="control-label">* Dê um título para a ocorrência</label>
-                        <input ng-model="ocorrencia.titulo" ng-required="true" maxlength="100"
+                        <input ng-model="ocorrencia.titulo" ng-required="true" minlength="5" maxlength="100"
+                               oninvalid="this.setCustomValidity('Mínimo de 5 caracteres.')"
                                type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
                     </div>
 
@@ -166,7 +167,7 @@
                         <label class="control-label">Telefone</label>
                         <input ng-model="ocorrencia.telefone" ng-required="false" minlength="8" maxlength="16"
                                type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
-                               oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
+                               oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 entre 9 e 15 dígitos')" placeholder="+999999999"/>
                     </div>
                     <div class="col-md-3" ng-show="ocorrencia.tipo === 'Desaparecimento'">
                         <label class="control-label">Recompensa</label><div></div>

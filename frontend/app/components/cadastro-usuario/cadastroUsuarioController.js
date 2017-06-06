@@ -29,7 +29,7 @@ app.controller('CadastroUsuarioController', function($scope,$rootScope, $http, T
             if(response.status == 500) {
                 $rootScope.$broadcast("toast", {
                     priority: "high",
-                    text: "Email já cadastrado!"
+                    text: "Ops, este e-mail já cadastrado!"
                 });
             }
 

@@ -2,6 +2,7 @@
     <div id="login-dp" class="">
             <div class="row">
                 <div class="col-md-12">
+                    <i class="fa fa-close right" ng-click="toggleId('cadastro-modal')"/>
                     <form class="form" name="cadastronav">
                         <div id="signupalert" class="alert alert-danger" ng-show="errors">
                             <span class="glyphicon glyphicon-warning-sign"></span>
@@ -20,7 +21,7 @@
                             <input ng-model="usuario.last_name" ng-required="true" type="text" class="form-control" name="last_name" placeholder="Sobrenome" />
                         </div>
                         <div class="form-group">
-                            <input ng-model="usuario.email" ng-required="true" type="email" class="form-control" name="email" placeholder="Email" />
+                            <input ng-model="usuario.email" ng-required="true" type="email" class="form-control" name="email" placeholder="E-mail" />
                         </div>
                         <div class="form-group">
                             <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password" placeholder="Senha" />

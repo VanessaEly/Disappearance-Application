@@ -90,7 +90,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                 console.log(response);
                 $rootScope.$broadcast("toast", {
                     priority: "ok",
-                    text: "Ocorrencia cadastrada com sucesso!"
+                    text: "Ocorrência cadastrada com sucesso!"
                 });
                 $rootScope.goTo("/");
             }, function errorCallback(response) {
@@ -104,7 +104,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
                 if(response.status == 401) {
                     $rootScope.$broadcast("toast", {
                         priority: "high",
-                        text: "Necessário efetuar login"
+                        text: "É necessário efetuar login."
                     });
                     $rootScope.toggleId('login-modal');
                 }

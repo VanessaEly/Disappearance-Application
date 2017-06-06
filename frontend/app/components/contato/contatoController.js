@@ -9,7 +9,7 @@ app.controller('ContatoController', function($scope, $http, StorageService, $roo
             '&email=' + $scope.contato.email + '&mensagem=' + $scope.contato.mensagem).success(function(response){
             $rootScope.$broadcast("toast", {
                 priority: "ok",
-                text: "Obrigado! Seu email enviado com sucesso :)"
+                text: "Obrigado! Seu e-mail enviado com sucesso :)"
             });
             $rootScope.goTo("/");
         }).error(function(response){
