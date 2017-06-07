@@ -73,16 +73,21 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
     datafile = serializers.CharField(required=False),
     oldfileId = serializers.IntegerField(required=False),
     solucionado = serializers.BooleanField(required=False)
+    owner = serializers.IntegerField(source='owner.id', required=False)
 
     class Meta:
         model = Ocorrencia
         fields = ('id', 'data_criacao', 'dataehora', 'categoria', 'fileId', 'oldfileId', 'telefone', 'bo',
                   'solucionado', 'dataSolucao', 'pin', 'titulo', 'tipo', 'detalhes', 'recompensa',
                   'latitude', 'longitude', 'endereco', 'cidade', 'estado', 'pais', 'pessoa',
-                  'animal', 'objeto', 'datafile')
+                  'animal', 'objeto', 'datafile', 'owner')
         extra_kwargs = {
             "id": {
                 "read_only": False,
+                "required": False,
+            },
+            "owner": {
+                "read_only": True,
                 "required": False,
             },
         }
@@ -97,7 +102,10 @@ class OcorrenciaSerializer(serializers.ModelSerializer):
             filter_args = {}
             for p in self.data:
                 print p
-                filter_args[p] = self.data.get(p)
+                if p == "owner":
+                    filter_args[p] = User.objects.get(id=self.data.get(p))
+                else:
+                    filter_args[p] = self.data.get(p)
             print filter_args
             if self.data['datafile'] != 'media/imagens/default.jpg':
                 Imagem.delete(Imagem.objects.get(id=self.data['oldfileId']))
