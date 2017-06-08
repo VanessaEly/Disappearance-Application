@@ -160,3 +160,21 @@ class SolucionadoSerializer(serializers.Serializer):
     class Meta:
         model = Ocorrencia
         fields = 'id'
+
+
+class OcorrenciaFiltersSerializer(serializers.Serializer):
+    pessoa = PessoaSerializer(required=False)
+    animal = AnimalSerializer(required=False)
+    objeto = ObjetoSerializer(required=False)
+    titulo = serializers.CharField(required=False)
+    tipo = serializers.CharField(required=False)
+    pin = serializers.CharField(required=False)
+    id = serializers.IntegerField(required=False)
+    dataehora = serializers.DateTimeField(required=False)
+    latitude = serializers.FloatField(required=False)
+    longitude = serializers.FloatField(required=False)
+
+
+
+    class Meta:
+        model = Ocorrencia

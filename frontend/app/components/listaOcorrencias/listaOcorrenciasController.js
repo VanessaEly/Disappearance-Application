@@ -13,9 +13,9 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
                 $scope.data[i].categoria == 1? $scope.data[i].categoria = "Pessoa": $scope.data[i].categoria == 2?
                         $scope.data[i].categoria = "Animal": $scope.data[i].categoria = "Objeto";
                 $scope.data[i].dataehoraToShow = new Date($scope.data[i].dataehora).toLocaleString('pt-BR');
+                $scope.data[i].toFilter = new Date($scope.data[i].dataehora).getTime();
             }
             console.log($scope.data)
-
         }).error(function(response){
             console.log("get error", response);
         });

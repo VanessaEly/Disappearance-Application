@@ -21,49 +21,37 @@ app.directive('homeMap', function($http, StorageService, $window) {
 
     // directive link function
     var link = function(scope, element, attrs, http) {
-        scope.data = { item:[], categoria: [], ocorrencia:[], detalhes:[], imagem:[], date:[]}
-
+        var host = StorageService.get("host");
         map = new google.maps.Map(element[0], mapOptions);
 
-        var host = StorageService.get("host");
-
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            var location_timeout = setTimeout("geolocFail()", 10000);
-            navigator.geolocation.getCurrentPosition(function (position) {
-            clearTimeout(location_timeout);
-                pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                map.panTo(pos);
-            }, function(error) {
-                clearTimeout(location_timeout);
-                map.panTo(pos);
-                console.log("error",error);
-            });
-        }
-        else {
-            setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
-        }
-
-        //fazendo requisicao das ocorrencias cadastradas
         $http.get(host + 'api/ocorrencia/').success(function(response){
-            scope.data = response.results;
-            console.log(scope.data)
-            //scope.data.dataehoraToShow = scope.data.dataehora.toLocaleString('pt-BR');
+            scope.updateMap(response.results);
+        }).error(function(response){
+            console.log("get error", response);
+        });
 
+        scope.updateMap = function(value) {
+            scope.data = { item:[], categoria: [], ocorrencia:[], detalhes:[], imagem:[], date:[]}
+
+            //fazendo requisicao das ocorrencias cadastradas
+            scope.data = value;
+            function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }
+            }
+            setMapOnAll(null);
+            markers = []
             //criando marcadores para todas as ocorrecias encontradas
             for (var i = 0; i < scope.data.length; i++) {
-
                 //conteúdo do marker
                 var content  =
                     '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
-                        '<p><strong>'+ scope.data[i].titulo + '</strong></p>' +
-                        '<p>'+ scope.data[i].tipo + '</p>' +
-                        '<p>'+ new Date(scope.data[i].dataehora).toLocaleString('pt-BR') + '</p>' +
-                        '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
-                        'Consultar detalhes</a> </p>'+
+                    '<p><strong>'+ scope.data[i].titulo + '</strong></p>' +
+                    '<p>'+ scope.data[i].tipo + '</p>' +
+                    '<p>'+ new Date(scope.data[i].dataehora).toLocaleString('pt-BR') + '</p>' +
+                    '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
+                    'Consultar detalhes</a> </p>'+
                     '</div>';
 
                 //adicionando marker
@@ -71,9 +59,9 @@ app.directive('homeMap', function($http, StorageService, $window) {
                     scope.data[i].longitude), scope.data[i].titulo,
                     content, infoWindow, markers, scope.data[i].pin);
             }
-        }).error(function(response){
-            console.log("get error", response);
-        });
+
+        }
+        scope.setFn({theDirFn: scope.updateMap});
     };
 
     // place a marker
@@ -106,6 +94,9 @@ app.directive('homeMap', function($http, StorageService, $window) {
 
     return {
         restrict: 'A',
+        scope: {
+            setFn: '&'
+        },
         template: '<div id="home-map"></div>',
         replace: true,
         link: link

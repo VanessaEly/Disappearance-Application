@@ -8,6 +8,7 @@ from disapp import settings
 import os
 from django.core.mail import send_mail
 from datetime import datetime
+from django.utils import timezone
 
 
 class OcorrenciaViewSet(viewsets.ModelViewSet):
@@ -194,3 +195,25 @@ class SolucionadoViewSet(viewsets.ModelViewSet):
             queryset.solucionado = False
         queryset.save()
         return "ok"
+
+
+class OcorrenciaFiltersViewSet(viewsets.ModelViewSet):
+    serializer_class = OcorrenciaFiltersSerializer
+
+    def get_queryset(self):
+        queryset = Ocorrencia.objects.filter(
+            dataehora__gte=datetime.strptime(self.request.query_params.get('datefrom', None), '%Y-%m-%d %H:%M'),
+            dataehora__lte=datetime.strptime(self.request.query_params.get('dateto', None), '%Y-%m-%d %H:%M'))
+        for ocorrencia in queryset:
+            ocorrencia.datafile = settings.MEDIA_URL + Imagem.objects.get(id=ocorrencia.fileId).datafile.__str__()
+            if ocorrencia.categoria == 1:
+                ocorrencia.pessoa = Pessoa.objects.get(ocorrencia_id=ocorrencia.id)
+            else:
+                if ocorrencia.categoria == 2:
+                    ocorrencia.animal = Animal.objects.get(ocorrencia_id=ocorrencia.id)
+                else:
+                    ocorrencia.objeto = Objeto.objects.get(ocorrencia_id=ocorrencia.id)
+            print ocorrencia.datafile
+        print queryset
+        return queryset
+

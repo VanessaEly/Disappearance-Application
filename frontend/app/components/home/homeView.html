@@ -1,3 +1,55 @@
 <div class="home" ng-controller="HomeController" ng-init="homeInit()">
-    <div home-map=""></div>
+    <div home-map="" set-fn="setDirectiveFn(theDirFn)"></div>
+    <div id="home-panel">
+
+        <div class="col-md-12">
+        <p class="col-md-1 col-xs-1 col-sm-1 vertical-text">FILTRAR</p>
+
+            <label class="control-label col-md-2 col-xs-2 col-sm-2 col-md-offset-1 col-xs-offset-1 col-sm-offset-1">De</label>
+            <div class="input-group date col-md-8 col-xs-8 col-sm-8" id="datefrom">
+                <input type="text" class="form-control"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon-calendar glyphicon"></span>
+                </span>
+            </div>
+            <label class="control-label col-md-2 col-xs-2 col-sm-2 col-md-offset-1 col-xs-offset-1 col-sm-offset-1">Até</label>
+            <div class="input-group date col-md-8 col-xs-8 col-sm-8" id="dateto">
+                <input type="text" class="form-control"/>
+                <span class="input-group-addon">
+                <span class="glyphicon-calendar glyphicon"></span>
+            </span>
+            </div>
+            <button class="btn  col-md-7 col-xs-7 col-sm-7 col-md-offset-2 col-xs-offset-2 col-sm-offset-2" ng-click="filtrarData()" type="submit">Filtrar por Data</button>
+        <div class="col-md-10 col-xs-10 col-sm-10 col-md-offset-1 col-xs-offset-1 col-sm-offset-1">
+            <label class="hidden-xs hidden-sm">Por Tipo</label>
+            <select ng-model="tipo" ng-change="filtrar()" class="form-control">
+                <option disabled selected value="">Filtrar tipo</option>
+                <option value="">Todos</option>
+                <option value="Aparecimento">Aparecimento</option>
+                <option value="Desaparecimento">Desaparecimento</option>
+            </select>
+        </div>
+        <div class="col-md-10 col-xs-10 col-sm-10 col-md-offset-1 col-xs-offset-1 col-sm-offset-1">
+            <label class="hidden-xs hidden-sm">Por Categoria</label>
+            <select ng-model="categoria" ng-change="filtrar()" class="form-control">
+                <option disabled selected value="">Filtrar categoria</option>
+                <option value="">Todas</option>
+                <option value="1">Pessoa</option>
+                <option value="2">Animal</option>
+                <option value="3">Objeto</option>
+            </select>
+        </div>
+
+        <div class="col-md-10 col-xs-10 col-sm-10 col-md-offset-1 col-xs-offset-1 col-sm-offset-1">
+            <label class="hidden-xs hidden-sm">Por Solucionadas</label>
+            <select ng-model="solucionado" ng-change="filtrar()" class="form-control">
+                <option disabled selected value="">Filtrar solucionadas</option>
+                <option value="">Todas</option>
+                <option value="True">Solucionadas</option>
+                <option value="False">Em Aberto</option>
+            </select>
+        </div>
+        </div>
+
+    </div>
 </div>

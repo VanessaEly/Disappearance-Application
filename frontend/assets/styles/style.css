@@ -107,7 +107,6 @@ header {
 .header-dropdown ul li:hover {
 	cursor: pointer;
 }
-
 .navbar {
     margin-top:4px;
     margin-bottom: 0px !important;
@@ -202,13 +201,57 @@ body {
 }
 /* END BODY */
 
-
-.home{
-}
 /* HOME */
 #home-map{
     height: 81vh;
     width: 100%;
+}
+
+#home-panel {
+    overflow: hidden;
+    top: 60px;
+    width: 15%;
+    position: fixed;
+    right: -250px;
+    z-index: 99;
+    min-width: 300px;
+    height: 50vh;
+    min-height: 310px !important;
+    transition: margin-right .3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.83);
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid transparent;
+    border-radius: 0 0 0 30px;
+}
+#home-panel:hover {
+    right:0;
+}
+.vertical-text {
+	word-wrap: break-word;
+    letter-spacing:1px;
+    font-weight: bold;
+    font-size: 18px;
+    min-height: 310px !important;
+    color: white;
+    text-align: center;
+    padding-top: 25%;
+    padding-left: 0 !important;
+}
+#home-panel div {
+    padding-top: 3px;
+}
+#home-panel label {
+    padding: 0;
+    color: #f6f6f6;
+    text-shadow: 2px 0 0 #000;
+}
+#home-panel button {
+    top: 5px;
+    margin-bottom: 10px !important;
+}
+
+#home-panel select {
+    margin-top:3px;
 }
 /* END HOME */
 
