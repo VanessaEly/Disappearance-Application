@@ -1,0 +1,188 @@
+<login-element> </login-element>
+<cadastro-element> </cadastro-element>
+<div class="container page-content" ng-controller="EditOcorrenciaController" ng-init="editOcorrenciaInit()">
+    <div class="col-md-12 col-xs-12 ocorrencia-info">
+        <div class="center">
+            <h2>Editar Ocorrência</h2>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8">
+            <input id="pac-input" class="controls" type="text"
+                   placeholder="Busque um endereço">
+            <div ocorrencia-map=""  selected-item="coordinates"></div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <div id="uploader" class="image"onclick="$('#filePhoto').click()">
+                <img src="{{ host }}{{ data.datafile }}"/>
+            </div>
+            <input type="file"   class="form-control" id ="filePhoto" ng-required="true"/>
+        </div>
+        <ul class="list-inline">
+            <form name="ocorrenciaform" enctype="multipart/form-data">
+
+                <div class="form-group col-md-12">
+                    <div class="col-md-8">
+                        <label class="control-label"> Onde? Utilize o mapa para identificar um local próximo da Ocorrência</label>
+                        <input id="endereco" type="text" class="form-control" placeholder="{{ coordinates.formatted_address }}" readonly/>
+                        <!-- <p>{{ coordinates.geometry.location }} </p> -->
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label">* Quando?</label>
+                        <div class="input-group date" id="datepicker">
+                            <input type="text" class="form-control" />
+                            <span class="input-group-addon">
+                                    <span class="glyphicon-calendar glyphicon"></span>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="col-md-5">
+                        <label class="control-label">*Dê um título para a ocorrência</label>
+                        <input ng-model="data.titulo" ng-required="true" maxlength="100"
+                               type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="control-label">*Tipo de ocorrência</label>
+                        <select ng-model="data.tipo" ng-required="true" class="form-control">
+                            <option disabled selected value="">Selecione um tipo</option>
+                            <option value="Aparecimento">Aparecimento</option>
+                            <option value="Desaparecimento">Desaparecimento</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4" ng-show="data.tipo">
+                        <label class="control-label">*{{data.tipo}} de quê?</label>
+                        <select ng-model="data.categoria"  ng-required="data.tipo" class="form-control">
+                            <option disabled selected value="">Selecione uma categoria</option>
+                            <option value="1">Pessoa</option>
+                            <option value="2">Animal</option>
+                            <option value="3">Objeto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PESSOA -->
+                <div class="form-group col-md-12" ng-show="data.categoria === '1'">
+                    <div class="col-md-5">
+                        <label class="control-label">*Etnia</label>
+                        <select ng-model="data.pessoa.etnia" ng-required="data.categoria === '1'" class="form-control">
+                            <option disabled selected value="">Selecione uma etnia</option>
+                            <option ng-repeat="etnia in lista.etnias" value="{{ etnia }}">{{ etnia }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Altura</label>
+                        <input ng-model="data.pessoa.altura" ng-required="false"
+                               type="number" class="form-control" placeholder="1,70 metros" step="0.01" min="0" max="3"/>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="control-label">Peculiaridades</label>
+                        <input ng-model="data.pessoa.peculiaridades" ng-required="false" maxlength="300"
+                                  type="text" class="form-control" placeholder="Ex: Piercing, tatuagem, etc."  />
+                    </div>
+                </div>
+
+                <!-- ANIMAL -->
+                <div class="form-group col-md-12" id="form-animal" ng-show="data.categoria === '2'">
+                    <div class="col-md-4">
+                        <label class="control-label">*Espécie do Animal</label>
+                        <select ng-model="data.animal.especie" ng-change="data.animal.raca = undefined" ng-required="data.categoria === '2'" class="form-control">
+                            <option disabled selected value="">Selecione uma espécie</option>
+                            <option ng-repeat="(key,val) in lista.racas" value="{{ key }}">{{ key }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4" ng-show="data.animal.especie">
+                        <label class="control-label">*Raça do Animal</label>
+                        <select ng-model="data.animal.raca" ng-required="data.categoria === '2'" class="form-control">
+                            <option disabled selected value="">Selecione uma raça</option>
+                            <option ng-repeat="(key,val) in lista.racas[data.animal.especie]" value="{{ val }}">{{ val }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="control-label">*Cor predominante</label>
+                        <select ng-model="data.animal.cor_primaria" ng-required="data.categoria === '2'" class="form-control">
+                            <option disabled selected value="">Selecione a cor do animal</option>
+                            <option ng-repeat="cor in lista.cores" value="{{ cor }}">{{ cor }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- PESSOA E ANIMAL-->
+                <div class="form-group col-md-12" ng-show="data.categoria === '2' || data.categoria === '1'">
+                    <div class="col-md-3">
+                        <label class="control-label">*Nome</label>
+                        <input ng-model="pa.nome" ng-required="data.categoria === '2' || data.categoria === '1'" maxlength="100"
+                               type="text" class="form-control" placeholder="Nome do desaparecido" maxlength="30" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Idade Média</label>
+                        <input ng-model="pa.idade" ng-required="false"
+                               type="number" class="form-control" placeholder="10 anos" min="0" max="150"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">*Sexo</label>
+                        <select ng-model="pa.sexo" ng-required="data.categoria === '2' || data.categoria === '1'" class="form-control">
+                            <option disabled selected value="">Sexo</option>
+                            <option ng-repeat="sexo in lista.sexos" value="{{ sexo }}">{{ sexo }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- OBJETO -->
+                <div class="form-group col-md-12" ng-show="data.categoria === '3'">
+                    <div class="col-md-4">
+                        <label class="control-label">*Tipo</label>
+                        <select ng-model="data.objeto.tipo" ng-required="data.categoria === '3'" class="form-control">
+                            <option disabled selected value="">Selecione o tipo do objeto</option>
+                            <option ng-repeat="objeto in lista.objetos" value="{{ objeto }}">{{ objeto }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="control-label">Cor predominante</label>
+                        <select ng-model="data.objeto.cor_primaria" class="form-control">
+                            <option disabled selected value="">Selecione a cor do objeto</option>
+                            <option ng-repeat="cor in lista.cores" value="{{ cor }}">{{ cor }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div class="col-md-2">
+                        <label class="control-label">Telefone</label>
+                        <input ng-model="data.telefone" ng-required="false" minlength="8" maxlength="16"
+                               type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
+                               oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
+                    </div>
+                    <div class="col-md-3" ng-show="data.tipo === 'Desaparecimento'">
+                        <label class="control-label">Recompensa</label>
+                        <input ng-model="data.recompensa" ng-required="false"
+                               type="number" class="form-control" placeholder="1000,00 reais" step="0.01" min="0"/>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">* Fez Boletim de Ocorrência?</label>
+                        <select ng-model="data.bo" class="form-control">
+                            <option value="true" ng-selected="data.bo == true">Sim</option>
+                            <option value="false" ng-selected="data.bo == false">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="col-md-9 col-xs-9 col-lg-9 col-sm-9">
+                        <label class="control-label">Detalhes da ocorrência</label>
+                        <textarea ng-model="data.detalhes" ng-required="false" maxlength="500"
+                                  type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
+                    </div>
+                    <div class="col-md-3 col-xs-3 col-lg-3 col-sm-3 salvar">
+                        <li class="">
+                            <button ng-click="ocorrenciaform.$valid && save()" class="btn btn-primary right">Save</button>
+                        </li>
+                    </div>
+                </div>
+            </form>
+        </ul>
+    </div>
+
+
+</div>

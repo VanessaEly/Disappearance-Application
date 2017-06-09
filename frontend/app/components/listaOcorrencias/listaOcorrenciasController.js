@@ -1,47 +1,50 @@
-app.controller('ListaOcorrenciasController', function($scope, $http, $routeParams) {
+app.controller('ListaOcorrenciasController', function($scope, $http, StorageService, $rootScope) {
+
+    $scope.data = { ocorrencia:[], detalhes:[], imagem:[], date:[]}
+    $scope.filtros = {};
+    $scope.filtrosAtuais = '';
 
     $scope.listaOcorrenciasInit = function() {
-        console.log("lista ocorrencia init");
-        $scope.currentPage = "";
-
-        $http.get('http://localhost:8000/api/ocorrencia/'
+        $scope.host = StorageService.get("host");
+        $http.get(StorageService.get("host") + 'api/ocorrencia/'
         ).success(function(response){
-            $scope.ocorrencias = response.results;
-            console.log($scope.ocorrencias);
-
+            $scope.data = response.results;
+            for (var i = 0; i < $scope.data.length; i++) {
+                $scope.data[i].categoria == 1? $scope.data[i].categoria = "Pessoa": $scope.data[i].categoria == 2?
+                        $scope.data[i].categoria = "Animal": $scope.data[i].categoria = "Objeto";
+                $scope.data[i].dataehoraToShow = new Date($scope.data[i].dataehora).toLocaleString('pt-BR');
+                $scope.data[i].toFilter = new Date($scope.data[i].dataehora).getTime();
+            }
+            console.log($scope.data)
         }).error(function(response){
             console.log("get error", response);
         });
     }
 
-    $scope.detalhesOcorrencia = function(ocorrencia) {
+    $scope.detalhesOcorrencia = function(data) {
         event.preventDefault();
-        $scope.ocorrencia = ocorrencia;
+        $scope.selected = data
         $('#detalhesModal').modal('show');
     }
 
-//     $(function () {
-//     /* BOOTSNIPP FULLSCREEN FIX */
-//     if (window.location == window.parent.location) {
-//         $('#back-to-bootsnipp').removeClass('hide');
-//         $('.alert').addClass('hide');
-//     }
-//
-//     $('#fullscreen').on('click', function(event) {
-//         event.preventDefault();
-//         window.parent.location = "http://bootsnipp.com/iframe/Q60Oj";
-//     });
-//
-//     $('tbody > tr').on('click', function(event) {
-//         event.preventDefault();
-//         $('#myModal').modal('show');
-//     })
-//
-    $('.btn-mais-info').on('click', function(event) {
-        $( '.open_info' ).toggleClass( "hide" );
-    })
-//
-//
-// });
+    $scope.getUrl = function() {
+        $('#detalhesModal').modal('hide');
+        var url = 'ocorrencia/'+ $scope.selected.id;
+        $rootScope.goTo(url);
+    }
+
+    $scope.reverseOrder = function () {
+		if ($scope.reverse == false){
+			$scope.reverse = true;
+		}
+		else {
+			$scope.reverse = false;
+		}
+	}
+    $scope.boolToStr = function(arg) {return arg ? 'Sim' : 'Não'};
+
+    $scope.limparFiltros = function () {
+        $scope.filtros = {};
+    }
 });
 

@@ -1,5 +1,6 @@
-app.directive('homeMap', function($http) {
-    var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786};
+app.directive('homeMap', function($http, StorageService, $window) {
+    var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786}, pin;
+
     var mapOptions = {
         center: pos,
         styles: [{"stylers": [{"saturation": -100}, {"gamma": 1}]},
@@ -20,38 +21,47 @@ app.directive('homeMap', function($http) {
 
     // directive link function
     var link = function(scope, element, attrs, http) {
-
+        var host = StorageService.get("host");
         map = new google.maps.Map(element[0], mapOptions);
 
-         // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-
-                map.setCenter(pos);
-                setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
-            })
-        }
-        else {
-            setMarker(map, pos, "Você está aqui.", "Esta é a sua localização atual.", infoWindow, markers);
-        }
-        //fazendo requisicao das ocorrencias cadastradas
-        $http.get('http://localhost:8000/api/ocorrencia/').success(function(response){
-            scope.ocorrencias = response.results;
-            //criando marcadores para todas as ocorrecias encontradas
-            for (var i = 0; i < scope.ocorrencias.length; i++) {
-                var content  = '<div id="content">'+
-                    '<p>'+ scope.ocorrencias[i].titulo+ '</p><p><a href="http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'">'+
-                    'http://localhost:8100/frontend/#/ocorrencia/'+ scope.ocorrencias[i].id +'</a> </p>'+
-                    '</div>';
-                setMarker(map, new google.maps.LatLng(scope.ocorrencias[i].latitude, scope.ocorrencias[i].longitude), scope.ocorrencias[i].titulo, content, infoWindow, markers, 'https://maps.google.com/mapfiles/ms/icons/green-dot.png');
-            }
+        $http.get(host + 'api/ocorrencia/').success(function(response){
+            scope.updateMap(response.results);
         }).error(function(response){
             console.log("get error", response);
         });
+
+        scope.updateMap = function(value) {
+            scope.data = { item:[], categoria: [], ocorrencia:[], detalhes:[], imagem:[], date:[]}
+
+            //fazendo requisicao das ocorrencias cadastradas
+            scope.data = value;
+            function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }
+            }
+            setMapOnAll(null);
+            markers = []
+            //criando marcadores para todas as ocorrecias encontradas
+            for (var i = 0; i < scope.data.length; i++) {
+                //conteúdo do marker
+                var content  =
+                    '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
+                    '<p><strong>'+ scope.data[i].titulo + '</strong></p>' +
+                    '<p>'+ scope.data[i].tipo + '</p>' +
+                    '<p>'+ new Date(scope.data[i].dataehora).toLocaleString('pt-BR') + '</p>' +
+                    '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
+                    'Consultar detalhes</a> </p>'+
+                    '</div>';
+
+                //adicionando marker
+                setMarker(map, new google.maps.LatLng(scope.data[i].latitude,
+                    scope.data[i].longitude), scope.data[i].titulo,
+                    content, infoWindow, markers, scope.data[i].pin);
+            }
+
+        }
+        scope.setFn({theDirFn: scope.updateMap});
     };
 
     // place a marker
@@ -62,7 +72,7 @@ app.directive('homeMap', function($http) {
             map: map,
             title: title,
             //animation: google.maps.Animation.DROP,
-            icon: icon
+            icon: icon,optimized: false,
         };
 
         marker = new google.maps.Marker(markerOptions);
@@ -70,7 +80,7 @@ app.directive('homeMap', function($http) {
 
         google.maps.event.addListener(marker, 'click', function () {
             // close window if not undefined
-            if (infoWindow !== void 0) {
+            if (infoWindow) {
                 infoWindow.close();
             }
             // create new window
@@ -84,6 +94,9 @@ app.directive('homeMap', function($http) {
 
     return {
         restrict: 'A',
+        scope: {
+            setFn: '&'
+        },
         template: '<div id="home-map"></div>',
         replace: true,
         link: link

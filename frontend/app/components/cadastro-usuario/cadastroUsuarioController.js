@@ -1,4 +1,4 @@
-app.controller('CadastroUsuarioController', function($scope, $http, ToastsService) {
+app.controller('CadastroUsuarioController', function($scope,$rootScope, $http, ToastsService, LoginService) {
     $scope.usuario = {};
 
     $scope.cadastroUsuarioInit = function() {
@@ -8,11 +8,8 @@ app.controller('CadastroUsuarioController', function($scope, $http, ToastsServic
     $scope.cadastrar = function() {
 
         console.log($scope.usuario);
-        return $http.post('http://localhost:8000/api/users/', $scope.usuario).then(function successCallback(response) {
-                console.log(response);
-                ToastsService.makeToast("ok", "Cadastrado com sucesso!", 2000);
-                $scope.goTo("/");
-        }, function errorCallback(response) {
+        LoginService.cadastrar($scope.usuario).then(function (response){
+        }, function (response) {
             console.log(response);
             if(response.status == 400) {
                 $scope.errors = [];
@@ -23,9 +20,19 @@ app.controller('CadastroUsuarioController', function($scope, $http, ToastsServic
                     }
                 }
                 for (var i = 0; i < $scope.errors.length; i++) {
-                    ToastsService.makeToast("high", $scope.errors[i], 2000);
+                    $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: $scope.errors[i]
+                });
                 }
             }
+            if(response.status == 500) {
+                $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: "Ops, este e-mail já cadastrado!"
+                });
+            }
+
         });
     }
 

@@ -1,0 +1,67 @@
+<div class="container page-content" ng-controller="MinhasOcorrenciasController" ng-init="minhasOcorrenciasInit()">
+
+    <div class="ocorrencia-info">
+        <div class="center">
+            <h1><i class="fa fa-map-marker"></i> Minhas Ocorrências</h1>
+            <h4 class="right pointer" ng-click="goTo('/nova-ocorrencia')" title="Nova Ocorrência">
+                <i class="fa fa-plus-square"/> Nova Ocorrência
+            </h4>
+
+        </div>
+        <hr>
+        <table class="table table-hover">
+            <thead ng-show="data.length != 0">
+            <tr >
+                <th class="hidden-xs" title="Data Criação">Data de Criação</th>
+                <th class="hidden-xs" title="Tipo">Tipo</th>
+                <th title="Títuloo">Título</th>
+                <th title="Solucionado">Solucionado</th>
+                <th title="Editar">Editar</th>
+                <th title="Deletar">Deletar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="d in data">
+                <td class="hidden-xs" title="{{ d.dataehoraToShow }}" ng-click="detalhesOcorrencia(d)">{{ d.dataehoraToShow }}</td>
+                <td class="hidden-xs" title="{{ d.tipo }}" ng-click="detalhesOcorrencia(d)">{{ d.tipo }}</td>
+                <td class="td-wrapper" title="{{ d.titulo }}" ng-click="detalhesOcorrencia(d)">{{ d.titulo }}</td>
+                <td>
+                    <input class="width-center" type="checkbox" ng-model="d.solucionado" ng-change='atualizarSolucionado({{ d.id }})'/>
+                </td>
+                <td>
+                    <i class="fa fa-pencil-square-o fa-2x width-center" aria-hidden="true"title="Editar Ocorrência" ng-click="editarOcorrencia(d)"></i>
+
+                </td>
+                <td><i class="fa fa-times fa-2x width-center" aria-hidden="true"
+                       title="Deletar Ocorrência" ng-click="toDelete.id = d.id;toggleId('delete-confirmation-modal')"></i>
+                </td>
+                <div class="options-modal" id="delete-confirmation-modal">
+                    <div class="options-modal-body">
+
+                        <div class="modal-message">
+                            <h4>Você tem certeza que deseja deletar esta ocorrência?{{ d }} <span>(Essa operação não pode ser desfeita)</span></h4>
+                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 modal-message-option center" ng-click="deletarOcorrencia(); toggleId('delete-confirmation-modal')">
+                                <i class="fa fa-check"></i>
+                                Sim
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 modal-message-option center" ng-click="toggleId('delete-confirmation-modal')">
+                                <i class="fa fa-close"></i>
+                                Não
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </tr>
+            <td ng-show="data.length == 0"><h4>Ooops! Você não possui nenhuma ocorrência cadastrada :(</h4></td>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+<details-modal></details-modal>
+
+</div>
+
+
+</div>

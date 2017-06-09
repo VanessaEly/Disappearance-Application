@@ -1,4 +1,7 @@
-app.config(function($routeProvider, $locationProvider) {
+app.config(function($routeProvider, $httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
     $routeProvider
 
         .when('/', {
@@ -28,16 +31,29 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'app/components/listaOcorrencias/listaOcorrenciasView.html',
 			replace: true,
 			reloadOnSearch: false
-		})
-
+		}).when('/minhasocorrencias/', {
+			templateUrl: 'app/components/minhasOcorrencias/minhasOcorrenciasView.html',
+			replace: true,
+			reloadOnSearch: false
+		}).when('/edit/:id/:lat/:lng', {
+			templateUrl: 'app/components/editarOcorrencia/editOcorrenciaView.html',
+			replace: true,
+			reloadOnSearch: false
+        }).when('/sobre', {
+			templateUrl: 'app/components/sobre/sobreView.html',
+			replace: true,
+			reloadOnSearch: false
+        }).when('/contato', {
+			templateUrl: 'app/components/contato/contatoView.html',
+			replace: true,
+			reloadOnSearch: false
+        }).when('/estatisticas', {
+			templateUrl: 'app/components/estatisticas/estatisticasView.html',
+			replace: true,
+			reloadOnSearch: false
+        })
         // DEFAULT
         .otherwise({
             redirectTo: '/'
         });
-
-    // //Removing fragment identifier from AngularJS urls (# symbol)
-    //  $locationProvider.html5Mode({
-    //      enabled: true,
-    //      requireBase: false
-    //  });
 });

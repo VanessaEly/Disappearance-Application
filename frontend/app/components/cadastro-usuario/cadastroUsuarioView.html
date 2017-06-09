@@ -2,8 +2,8 @@
     <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <div class="panel-title">Sign Up</div>
-                <div class="header-right"><a ng-click="goTo('/login')">Sign In</a></div>
+                <div class="panel-title">Cadastre-se</div>
+                <div class="header-right"><a ng-click="goTo('/login')">Efetuar Login</a></div>
             </div>
             <div class="panel-body" >
                 <form name="signupform" class="form-horizontal">
@@ -19,27 +19,29 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Nome</label>
-                        <div class="col-md-9">
+                        <label class="col-md-3 col-xs-4 col-sm-3 col-lg-3 control-label">Nome</label>
+                        <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8">
                             <input ng-model="usuario.first_name" ng-required="true" type="text" class="form-control" name="first_name" placeholder="Nome" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Sobrenome</label>
-                        <div class="col-md-9">
+                        <label class="col-md-3 col-xs-4 col-sm-3 col-lg-3 control-label">Sobrenome</label>
+                        <div class="col-md-8 col-xs-7 col-sm-8 col-lg-8">
                             <input ng-model="usuario.last_name" ng-required="true" type="text" class="form-control" name="last_name" placeholder="Sobrenome" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Email</label>
-                        <div class="col-md-9">
-                            <input ng-model="usuario.username" ng-required="true" type="email" class="form-control" name="username" placeholder="Email" />
+                        <label class="col-md-3 col-xs-4 col-sm-3 col-lg-3 control-label">E-mail</label>
+                        <div class="col-md-8 col-xs-7 col-sm-8 col-lg-8">
+                            <input ng-model="usuario.email" ng-required="true" type="email" class="form-control" name="email" placeholder="E-mail" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Senha</label>
-                        <div class="col-md-9">
-                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password" placeholder="Senha" />
+                        <label class="col-md-3 col-xs-4 col-sm-3 col-lg-3 control-label">Senha</label>
+                        <div class="col-md-8 col-xs-7 col-sm-8 col-lg-8">
+                            <input ng-model="usuario.password" ng-required="true" type="password" class="form-control" name="password"
+                                   placeholder="Senha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,12}$"
+                                    oninvalid="this.setCustomValidity('Senha deve possuir entre 6 e 12 dígitos, uma letra maiúscula, uma minúscula e um número')"/>
                         </div>
                     </div>
 
@@ -47,8 +49,6 @@
                         <div class="col-md-offset-2 col-md-9">
                             <button ng-click="signupform.$valid && cadastrar()" type="submit"
                                     class="btn btn-success"><i class="icon-hand-right"></i> Cadastrar</button>
-                            <button ng-click="getUsers()" type="button"
-                                    class="btn btn-primary"><i class="icon-facebook"></i>   Cadastrar com o Facebook</button>
                         </div>
                     </div>
                 </form>

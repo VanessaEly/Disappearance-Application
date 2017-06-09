@@ -1,19 +1,46 @@
 @font-face {
-    font-family: 'Caviar Dreams';
-    src: url('../fonts/Caviar_Dreams_Bold.ttf');
+    font-family: 'HelvNeueMd';
+    src: url('../fonts/HelveticaNeue-Md.ttf');
 }
 
 /* GENERAL */
 .pointer {
     cursor: pointer;
 }
+.inline-block {
+  display: inline-block;
+}
+
+.center {
+    text-align: center;
+}
 
 .right {
     float: right;
 }
+.no-padding {
+  padding: 0px !important;
+}
 
-p {
-    margin: 0px !important;
+.width-center {
+    width: 50%;
+}
+
+body { font-family: HelvNeueMd !important; overflow-wrap: break-word;}
+p {  margin: 0px !important;  }
+textarea {
+    resize:vertical;
+    min-height: 100px;
+}
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
 }
 /* END GENERAL */
 
@@ -43,7 +70,45 @@ header {
 /* END HEADER*/
 
 /* NAV */
+
+#disapp {
+    font-family: HelvNeueMd !important;
+}
+.nav-dropdown {
+    margin-top: 1vh;
+}
+
+.header-dropdown {
+	position: absolute;
+    margin-top: -1vh;
+    right: 5%;
+    text-align: center;
+    z-index: 999;
+    max-width: 200px;
+    background-color: #f8f8f8;
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.5);
+}
+
+.header-dropdown ul {
+	width: 100%;
+}
+.header-dropdown a {
+	width: 100%;
+}
+
+
+.header-dropdown ul li {
+	width: 100%;
+	border-bottom: 1px solid #545454;
+	margin: 0;
+	color: #fff;
+}
+
+.header-dropdown ul li:hover {
+	cursor: pointer;
+}
 .navbar {
+    margin-top:4px;
     margin-bottom: 0px !important;
     border-bottom: 2px solid #000000 !important;
 }
@@ -60,14 +125,9 @@ header {
     margin-left: 5% !important;
 }
 
-.navbar-prop {
-    background-color: rgba(247, 247, 247, 0.8) !important;
-    color: #0070BF !important;
-}
-
 .navbar a {  color: #000000 !important;  }
 
-#login-modal {
+#login-modal, #cadastro-modal {
     display: none;
     position: absolute;
     z-index: 10000;
@@ -80,8 +140,9 @@ header {
 #login-dp{
     left: 50%;
     transform: translate(-50%, -10%);
-    position: absolute;
-    margin-top: 15%;
+    position: fixed;
+    top:auto;
+    bottom:30%;
     max-width: 500px;
 	border-radius: 2%;
     overflow: hidden;
@@ -140,36 +201,89 @@ body {
 }
 /* END BODY */
 
-
-.home{
-}
 /* HOME */
 #home-map{
-    height: 80vh;
+    height: 81vh;
     width: 100%;
-    margin-top: 5px !important;
+}
+
+#home-panel {
+    overflow: hidden;
+    top: 60px;
+    width: 15%;
+    position: fixed;
+    right: -250px;
+    z-index: 99;
+    min-width: 300px;
+    height: 50vh;
+    min-height: 310px !important;
+    transition: margin-right .3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.83);
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid transparent;
+    border-radius: 0 0 0 30px;
+}
+#home-panel:hover {
+    right:0;
+}
+.vertical-text {
+	word-wrap: break-word;
+    letter-spacing:1px;
+    font-weight: bold;
+    font-size: 18px;
+    min-height: 310px !important;
+    color: white;
+    text-align: center;
+    padding-top: 25%;
+    padding-left: 0 !important;
+}
+#home-panel div {
+    padding-top: 3px;
+}
+#home-panel label {
+    padding: 0;
+    color: #f6f6f6;
+    text-shadow: 2px 0 0 #000;
+}
+#home-panel button {
+    top: 5px;
+    margin-bottom: 10px !important;
+}
+
+#home-panel select {
+    margin-top:3px;
 }
 /* END HOME */
 
-/*!* NOVO ocorrencia *!*/
-#ocorrencia-map, #ocorrencia-form {
+/*!* NOVA OCORRENCIA *!*/
+#ocorrencia-map, #edit-map, #ocorrencia-form {
     height: 40vh;
     width: 100%;
 }
+
+#pin-content {
+    font-size: 1rem;
+}
+
+.btn-save {
+        padding: 15px 25px !important;
+    font-size: 16px !important;
+}
+
+.salvar {     margin-top: 5%;}
 
 .ocorrencia-t1 {
     font-size: 1.3em;
 }
 
 .controls {
-    margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 2px 0 0 2px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     height: 32px;
     outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #pac-input {
@@ -207,43 +321,88 @@ body {
 #uploader {
     margin: 0;
     position:relative;
-    overflow:hidden;
+    overflow: hidden;
     width:100%;
     height: 40vh;
-    border: 3px dashed #000;
+    border: 2px dashed #000000;
     cursor:pointer;
-    color:#555;
+    color: #000000;
     font-weight:bold;
-    background-image: url("../images/upload.png");
-    background-size: 30%;
+    background-size: 100%;
+    background-image: url("../images/upload_file.png");
     background-repeat: no-repeat;
     background-position: center center;
 }
 
-#uploader:hover{  border: 3px dashed #7d7d7d; }
+#uploader:hover{  border: 2px dashed #7d7d7d; }
 
 #uploader-text {
     margin-left: 1vh;
 }
-#filePhoto{
+#filePhoto, #contatoCriador, #dropdown, #filtros, #delete-confirmation-modal{
     display:none;
 }
 
-#uploader img{
+.image img{
     position:absolute;
-    width:105%;
-    height:362px;
-    top:-1px;
-    left:-1px;
-    z-index:-1;
+    width: 100%;
+    min-height: 70%;
+    max-height: 100%;
     border:none;
-
+    image-rendering: -moz-crisp-edges;         /* Firefox */
+    image-rendering:   -o-crisp-edges;         /* Opera */
+    image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 /* END NOVA OCORRENCIA */
 
+/* OCORRENCIA */
+.page-content {
+    height: 100%;
+    width: 100%;
+    padding: 50px 0px 50px;
+    max-width: 1170px;
+    margin: 0 auto;
+}
+.ocorrencia-image {
+    width: 100%;
+    margin: 3px;
+    border-radius: 10%;
+}
+.ocorrencia-info {
+    padding: 3% !important;
+    margin: 0 auto;
+    background-color: #fefefe;
+    border: 2px solid #E2E2E2;
+}
+/* END OCORRENCIA*/
+
+/* LISTA OCORRENCIAS */
+.modal-body {
+    margin-top: 15px;
+}
+
+.th-active {
+	font-weight: bold;
+	border-bottom: solid 3px #000 !important;
+}
+
+.th-active:after {
+	content: "▼";
+	font-size: .6rem;
+}
+
+.td-wrapper {
+	max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* END LISTA OCORRENCIAS */
+
 /* FOOTER */
 footer {
-
+    font-family: HelvNeueMd !important;
     position: relative;
     right: 0;
     bottom: 0;
@@ -272,9 +431,6 @@ footer {
 #myFooter a:hover,
 #myFooter a:focus {  color: #0077e2;  }
 
-#myFooter .social-networks {
-    padding-left: 25px;
-}
 #myFooter .social-networks a {
     font-size: 25px;
     color: #000000;
@@ -347,7 +503,6 @@ footer {
 /*BUTTON*/
 .btn-circle
 {
-    margin-top: 5px;
     width: 30px;
     height: 30px;
     text-align: center;
@@ -418,8 +573,153 @@ footer {
 
 #login-panel { padding-top:30px;  }
 
+.panel-info {
+    margin: 10% 0 40% 0 !important;
+}
 .login-input { margin-bottom: 25px; }
+.control {
+    margin-bottom: 5%;
+}
 /* END LOGIN */
 
 /* CADASTRO USUARIO */
 /* END CADASTRO USUARIO*/
+/* SOBRE */
+#sobre-panel, #contact {
+    padding: 3%;
+    width: 70%;
+    margin: 0% 15%;
+    box-shadow: 1px 3px 10px 1px #5b5b5b;
+}
+#sobre-panel h2, h4 {  text-align: center;  }
+#sobre-panel p {
+    text-align: justify;
+    text-indent: 50px;
+}
+/*END SOBRE */
+
+/* CONTATO */
+#contact{
+	background:rgba(0, 0, 0, 0.76);
+	color:#f4f4f4;
+}
+
+textarea.form-control{
+    height:100px;
+}
+/* END CONTATO */
+/* CONTATO CRIADOR */
+#contatoCriador {
+    margin-top: 5%;
+    padding: 5% 15% 5% 15% !important;
+}
+.submit-wrapper {
+    margin-top:20px;
+}
+.submit-wrapper a {
+    border: 2px solid #1e8bac;
+    color: #000;
+    padding: 10px 25px;
+    position: relative;
+    transition: all 0.1s;
+    z-index: 1;
+    margin-left: 8%;
+}
+.submit-wrapper a:before,
+.submit-wrapper a:after {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+    width:24px;
+    height:4px;
+    background: #1e8bac;
+    margin-left:-12px;
+    margin-top:-2px;
+    transition:all 0.6s;
+}
+.submit-wrapper a:after {
+    left:auto;
+    right:0;
+    margin-right:-12px;
+}
+.submit-wrapper a:hover:before,
+.submit-wrapper a:hover:after {
+    width:100%;
+    transition:all 0.6s;
+    background:#fff;
+    transform:scaleY(5);
+    z-index:-1;
+}
+.submit-wrapper a:hover {
+    text-decoration:none;
+    background:rgba(30, 139, 172, 0.1);
+    transition:all 0.6s;
+    color: #000000;
+}
+/* END CONTATO CRIADOR */
+/* ESTATISTICAS */
+/* END ESTATISTICAS */
+/* DETALHES */
+.detalhes-wrapper {
+	max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.h5, .h6 {
+        padding: 1px;
+}
+.h5 {
+        border-bottom: 1px solid rgba(84, 84, 84, 0.2);
+
+}
+/* END DETALHES */
+/*MINHAS OCORRENCIAS */
+.options-modal {
+    top:45%;
+	right: 5%;
+    max-width: 450px;
+    position: absolute;
+    z-index: 100000000;
+    background-color: rgba(255, 255, 255, .97);
+    box-shadow: 0 2px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.options-modal-head {
+	margin-bottom: 15px;
+}
+
+.options-modal-title {
+	display: inline-block;
+	margin-top: 5px;
+}
+
+.options-modal-close-button {
+	position: absolute;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 3rem;
+}
+
+.modal-message h4 span {
+	font-size: 1.6rem;
+}
+
+.modal-message-option {
+	font-size: 1.6rem;
+	margin-bottom: 10px;
+}
+
+.modal-message-option:hover {
+	color: #5596E6;
+	cursor: pointer;
+}
+
+.modal-message-option i {
+	font-size: 2rem;
+	margin-right: 5px;
+}
+
+/*END MINHAS OCORRENCIAS */

@@ -29,6 +29,7 @@ target
 .classpath
 .project
 .idea
+media
 venv
 config.ini
 config.py

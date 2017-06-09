@@ -1,88 +1,92 @@
-<header-element></header-element>
-<div class="home" ng-controller="ListaOcorrenciasController" ng-init="listaOcorrenciasInit()">
+<div class="container page-content" ng-controller="ListaOcorrenciasController" ng-init="listaOcorrenciasInit()">
 
-    <div class="container">
+    <div class="ocorrencia-info">
 
+        <div class="center">
+            <h1 class=""> <i class="fa fa-map-marker "></i> Ocorrências <small> - clique em uma ocorrência para obter detalhes</small></h1>
+        </div>
+            <div>
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                    <h3 class="col-md-2 col-xs-6 col-sm-6 col-lg-4 pointer center" ng-click="toggleId('filtros')">
+                        <i title="Filtrar" class="fa fa-filter" /> Filtrar
+                    </h3>
 
-        <h1> <i class="fa fa-shopping-cart"></i> Ocorrência <small> - clique em uma ocorrência para obter detalhes</small> <a href="http://bootsnipp.com/alisonpedro/snippets/Q60Oj" class="btn btn-danger pull-right hide" id="back-to-bootsnipp">Back to Bootsnipp</a></h1>
+                </div>
 
-        <hr>
+                <div id="filtros">
+                    <h4 class="col-md-12 col-xs-12 col-sm-12 col-lg-12 pointer center" ng-click="limparFiltros()">
+                        <i title="Filtrar" class="fa fa-close" /> Limpar Filtros
+                    </h4>
+                    <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                        <label>Por Tipo</label>
+                        <select ng-model="filtros.tipo" class="form-control">
+                            <option disabled selected value="">Filtrar Tipo</option>
+                            <option value="Aparecimento">Aparecimento</option>
+                            <option value="Desaparecimento">Desaparecimento</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                        <label>Por Categoria</label>
+                        <select ng-model="filtros.categoria" class="form-control">
+                            <option disabled selected value="">Filtrar Categoria</option>
+                            <option value="Pessoa">Pessoa</option>
+                            <option value="Animal">Animal</option>
+                            <option value="Objeto">Objeto</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                        <label>Por Solucionadas</label>
+                        <select ng-model="filtros.solucionado" class="form-control"
+                                ng-options="boolToStr(item) for item in [true, false]">
+                            <option disabled selected value="">Solucionada</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                        <label>Por Boletins de Ocorrência</label>
+                        <select ng-model="filtros.bo" class="form-control"
+                                ng-options="boolToStr(item) for item in [true, false]">
+                            <option disabled selected value="">Boletim de Ocorrência</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                        <label>Por Palavra-Chave</label>
+						<input type="text" ng-model="filtros.busca" placeholder="Busca por palavra" >
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
 
         <table class="table table-hover">
             <thead>
             <tr >
-                <th>Id</th>
-                <th>Tipo</th>
-                <th>Título</th>
-                <th>Data Criação</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'tipo'}"
+                    ng-click="filtros.orderBy = 'tipo'; reverseOrder()" title="Tipo">Tipo</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'titulo'}"
+                    ng-click="filtros.orderBy = 'titulo'; reverseOrder()" title="Título">Título</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'categoria'}"
+                    ng-click="filtros.orderBy = 'categoria'; reverseOrder()" title="Título">Categoria</th>
+                <th class="hidden-xs" ng-class="{'th-active': filtros.orderBy == 'dataehoraToShow'}"
+                    ng-click="filtros.orderBy = 'toFilter'; reverseOrder()" title="Data Criação">Data de Criação</th>
+                <th class="hidden-xs" ng-class="{'th-active': filtros.orderBy == 'cidade'}"
+                    ng-click="filtros.orderBy = 'cidade'; reverseOrder()" title="Local">Local</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="ocorrencia in ocorrencias" ng-click="detalhesOcorrencia(ocorrencia)">
-                <td>{{ ocorrencia.id }}</td>
-                <td>{{ ocorrencia.tipo }}</td>
-                <td>{{ ocorrencia.titulo }}</td>
-                <td>{{ ocorrencia.data_criacao }}</td>
+            <tr ng-repeat="d in data | orderBy: filtros.orderBy:reverse | filter: filtros.busca
+            | filter: {tipo: filtros.tipo, categoria: filtros.categoria, solucionado: filtros.solucionado, bo: filtros.bo} : true "
+                ng-click="detalhesOcorrencia(d)">
+                <td class="td-wrapper" title="{{ d.tipo }}">{{ d.tipo }}</td>
+                <td class="td-wrapper" title="{{ d.titulo }}">{{ d.titulo }}</td>
+                <td class="td-wrapper" title="{{ d.categoria }}">{{ d.categoria }}</td>
+                <td class="td-wrapper hidden-xs" title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
+                <td class="td-wrapper hidden-xs" title="{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}">{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
             </tr>
+            <td ng-show="d.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>
         </table>
+        <hr>
 
     </div>
-
-    <!-- Modal -->
-    <div class="modal" id="detalhesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="text-danger fa fa-times"></i></button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        <i class="text-muted fa fa-shopping-cart"></i>
-                        <strong>{{ ocorrencia.tipo }}</strong> - {{ ocorrencia.titulo }} </h4>
-                </div>
-                <div class="modal-body">
-
-                    <table class="pull-left col-md-8 ">
-                        <tbody>
-                        <tr>
-                            <td class="h6"><strong>Id</strong></td>
-                            <td> </td>
-                            <td class="h5">{{ ocorrencia.id }}</td>
-                        </tr>
-
-                        <tr>
-                            <td class="btn-mais-info text-primary">
-                                <i class="open_info fa fa-plus-square-o"></i>
-                                <i class="open_info hide fa fa-minus-square-o"></i> informações
-                            </td>
-                            <td> </td>
-                            <td class="h5"></td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-
-
-                    <div class="col-md-4">
-                        <img src="http://lorempixel.com/150/150/technics/" alt="teste" class="img-thumbnail">
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <p class="open_info hide">{{ ocorrencia.detalhes }}</p>
-                </div>
-
-                <div class="modal-footer">
-
-                    <div class="text-right pull-right col-md-3">
-                        <button type="button" class="btn btn-info btn-circle btn-lg" title="Contato">
-                            <i class="fa fa-envelope animated"></i>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- fim Modal-->
+    <details-modal></details-modal>
 
 </div>
-<footer-element></footer-element>

@@ -1,16 +1,40 @@
-app.controller('OcorrenciaController', function($scope, $http, $routeParams, $timeout) {
+app.controller('OcorrenciaController', function($scope, $http, $routeParams, StorageService, $cookies, $rootScope, $location) {
     $scope.ocorrenciaInit = function() {
-        console.log("ocorrencia init");
-        $scope.currentPage = "";
-
-        $http.get('http://localhost:8000/api/ocorrencia/?id=' + $routeParams.id
-        ).success(function(response){
-            $scope.ocorrencia = response.results[0];
-            console.log($scope.ocorrencia);
-
+        $scope.host = StorageService.get("host");
+        $http.get($scope.host + 'api/ocorrencia/?id=' + $routeParams.id).success(function(response){
+            if (response.count != 0) {
+                $scope.data = response.results[0]
+                $scope.data.dataSolucaoToShow = new Date($scope.data.dataSolucao).toLocaleString('pt-BR')
+                $scope.data.dataehoraToShow = new Date($scope.data.dataehora).toLocaleString('pt-BR')
+                console.log($scope.data)
+            } else {
+                $rootScope.$broadcast("toast", {
+                    priority: "high",
+                    text: "Ocorrência não encontrada!"
+                });
+                $rootScope.goTo("/");
+            }
         }).error(function(response){
-            console.log("get error", response);
+            console.log(response);
+        });
+    }
+
+    $scope.enviar = function () {
+        var url =$location.absUrl().replace('#', '%23');
+        $http.get($scope.host + 'api/contato/?assunto=' + $scope.contato.assunto +
+            '&email=' + $scope.contato.email + '&mensagem=' + $scope.contato.mensagem + '&owner=' + $scope.data.owner +
+            '&url=' + url).success(function(response){
+            $rootScope.$broadcast("toast", {
+                priority: "ok",
+                text: "Obrigado! Seu email enviado com sucesso :)"
+            });
+            $rootScope.toggleId('contatoCriador');
+        }).error(function(response){
+            console.log(response);
+            $rootScope.$broadcast("toast", {
+                priority: "high",
+                text: "OPS! Algo deu errado :("
+            });
         });
     }
 });
-

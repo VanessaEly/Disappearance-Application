@@ -1,4 +1,4 @@
-app.directive('ocorrenciaMap', ['$parse', function($parse) {
+app.directive('ocorrenciaMap', ['$routeParams', function($routeParams) {
     var map,marker, pos = {lat: -22.905125, lng: -43.190786};
     var mapOptions = {
         center: pos,
@@ -25,23 +25,41 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
         geocoder = new google.maps.Geocoder();
 
         map = new google.maps.Map(element[0], mapOptions);
-
+        if($routeParams.lat && $routeParams.lng)
+        {
+            pos = {
+                lat: parseFloat($routeParams.lat),
+                lng: parseFloat($routeParams.lng)
+            }
+            setMarker(map, pos, "Local atual");
+        }
         // Try HTML5 geolocation.
-        if (navigator.geolocation) {
+        else if(navigator.geolocation) {
+            var location_timeout = setTimeout("", 10000);
             navigator.geolocation.getCurrentPosition(function (position) {
+            clearTimeout(location_timeout);
                 pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                setMarker(map, pos, "You're here");
-            })
+                setMarker(map, pos, "Você está aqui!");
+                address_to_coordinates(pos, function (pos) {
+                    scope.coordinates = pos;
+                    scope.$apply();
+                });
+            }, function(error) {
+                clearTimeout(location_timeout);
+                setMarker(map, pos, "Você está aqui!");
+                console.log("error",error);
+            });
         }
         else {
-            setMarker(map, pos, "You're here");
+            setMarker(map, pos, "Você está aqui!");
         }
 
         // place a marker
         function setMarker(map, position, title) {
+
             map.setCenter(pos);
             var markerOptions = {
                 position: position,
@@ -61,6 +79,10 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
                 });
 
             });
+
+            map.addListener('click', function(e) {
+                placeMarker(e.latLng, map);
+            });
         }
 
         //Call function to get formatted address based os pos lat/lng
@@ -75,6 +97,18 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
+        function placeMarker(position, map) {
+            pos = position;
+            if (marker)
+                marker.setMap(null);
+            setMarker(map, pos, "You're here");
+            map.panTo(position);
+
+            address_to_coordinates(pos, function (pos) {
+                scope.coordinates = pos;
+                scope.$apply();
+            });
+        }
         //Get Formatted address based os pos lat/lng
         function address_to_coordinates(address_text, callback) {
             var address = address_text;
@@ -83,6 +117,24 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     scope.ocorrencia.latitude = results[0].geometry.location.lat();
                     scope.ocorrencia.longitude = results[0].geometry.location.lng();
+                        for (j = 0; j < results[0].address_components.length; ++j) {
+                            var super_var2 = results[0].address_components[j].types;
+
+                            for (k = 0; k < super_var2.length; ++k) {
+                                //find city
+                                if (super_var2[k] == "locality")
+                                    scope.ocorrencia.cidade = results[0].address_components[j].long_name;
+
+                                //find State
+                                if (super_var2[k] == "administrative_area_level_1")
+                                    scope.ocorrencia.estado = results[0].address_components[j].short_name;
+
+                                //find county
+                                if (super_var2[k] == "country")
+                                    scope.ocorrencia.pais = results[0].address_components[j].long_name;
+                            }
+                        }
+                        scope.$apply();
                     callback(results[0]);
                 }
             });
@@ -106,7 +158,8 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
             }
 
             // Clear out the old marker.
-            marker.setMap(null);
+            if (marker)
+                marker.setMap(null);
 
             // For each place, get the name and location.
             var bounds = new google.maps.LatLngBounds();
@@ -146,6 +199,10 @@ app.directive('ocorrenciaMap', ['$parse', function($parse) {
                     scope.$apply();
                 });
 
+            });
+
+            map.addListener('click', function(e) {
+                placeMarker(e.latLng, map);
             });
         });
     };
