@@ -34,4 +34,4 @@ media
 venv
 config.ini
 config.py
-disapp/settings/local.py
+backend/disapp/settings/local.py
