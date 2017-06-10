@@ -143,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC-3'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -165,7 +165,7 @@ CORS_ALLOW_METHODS = (
 CSRF_COOKIE_NAME = 'csrftoken'
 CSRF_COOKIE_DOMAIN = None
 STATIC_URL = 'static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../../media')
 MEDIA_URL = 'media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -173,7 +173,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'Disapp<disapp.contato@gmail.com>'
-EMAIL_HOST_USER = 'disapp.contato@gmail.com'
-EMAIL_HOST_PASSWORD = '$disapp123'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 SERVER_EMAIL = 'disapp.contato@gmail.com'
 

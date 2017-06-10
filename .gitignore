@@ -1,6 +1,7 @@
 # Compiled source #
 #############
 *.pyc
+.pyc
 
 # Logs #
 #####
@@ -33,3 +34,4 @@ media
 venv
 config.ini
 config.py
+disapp/settings/local.py
