@@ -35,3 +35,4 @@ venv
 config.ini
 config.py
 backend/disapp/settings/local.py
+backend/disapp/wsgi_local.py
