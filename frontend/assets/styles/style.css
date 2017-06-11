@@ -339,7 +339,7 @@ body {
 #uploader-text {
     margin-left: 1vh;
 }
-#filePhoto, #contatoCriador, #dropdown, #filtros, #delete-confirmation-modal{
+#filePhoto, #contatoCriador, #dropdown, #filtros, #delete-confirmation-modal, #detalhesModal{
     display:none;
 }
 
@@ -371,6 +371,7 @@ body {
     border-radius: 10%;
 }
 .ocorrencia-info {
+    min-height: 68vh;
     padding: 3% !important;
     margin: 0 auto;
     background-color: #fefefe;
@@ -381,6 +382,10 @@ body {
 /* LISTA OCORRENCIAS */
 .modal-body {
     margin-top: 15px;
+}
+
+.imagem-lista {
+    width:10vh;
 }
 
 .th-active {
@@ -565,16 +570,16 @@ footer {
 /*END BUTTON BOUNCE */
 
 /* LOGIN */
-.mainbox {  margin-top:50px;  }
+.mainbox {  margin-top: 7.4vh;  }
 
 .header-right {
     float:right; font-size: 80%; position: relative; top:-10px
 }
 
-#login-panel { padding-top:30px;  }
+#login-panel { padding: 7vh 3vh 7vh 3vh;  }
 
 .panel-info {
-    margin: 10% 0 40% 0 !important;
+    margin: 10% 0 29% 0 !important;
 }
 .login-input { margin-bottom: 25px; }
 .control {
@@ -586,7 +591,6 @@ footer {
 /* END CADASTRO USUARIO*/
 /* SOBRE */
 #sobre-panel, #contact {
-    padding: 3%;
     width: 70%;
     margin: 0% 15%;
     box-shadow: 1px 3px 10px 1px #5b5b5b;

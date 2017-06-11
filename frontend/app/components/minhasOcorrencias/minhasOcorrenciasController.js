@@ -46,11 +46,11 @@ app.controller('MinhasOcorrenciasController', function($scope, $http, StorageSer
         event.preventDefault();
         $scope.selected = data;
         console.log($scope.selected)
-        $('#detalhesModal').modal('show');
+        $rootScope.toggleId('detalhesModal');
     }
 
     $scope.getUrl = function() {
-        $('#detalhesModal').modal('hide');
+        $rootScope.toggleId('detalhesModal');
         var url = 'ocorrencia/'+ $scope.selected.id;
         $rootScope.goTo(url);
     }

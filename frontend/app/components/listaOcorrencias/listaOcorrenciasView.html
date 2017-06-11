@@ -58,11 +58,12 @@
 
         <table class="table table-hover">
             <thead>
-            <tr >
-                <th ng-class="{'th-active': filtros.orderBy == 'tipo'}"
-                    ng-click="filtros.orderBy = 'tipo'; reverseOrder()" title="Tipo">Tipo</th>
+            <tr class="pointer">
+                <th></th>
                 <th ng-class="{'th-active': filtros.orderBy == 'titulo'}"
                     ng-click="filtros.orderBy = 'titulo'; reverseOrder()" title="Título">Título</th>
+                <th ng-class="{'th-active': filtros.orderBy == 'tipo'}"
+                    ng-click="filtros.orderBy = 'tipo'; reverseOrder()" title="Tipo">Tipo</th>
                 <th ng-class="{'th-active': filtros.orderBy == 'categoria'}"
                     ng-click="filtros.orderBy = 'categoria'; reverseOrder()" title="Título">Categoria</th>
                 <th class="hidden-xs" ng-class="{'th-active': filtros.orderBy == 'dataehoraToShow'}"
@@ -74,14 +75,15 @@
             <tbody>
             <tr ng-repeat="d in data | orderBy: filtros.orderBy:reverse | filter: filtros.busca
             | filter: {tipo: filtros.tipo, categoria: filtros.categoria, solucionado: filtros.solucionado, bo: filtros.bo} : true "
-                ng-click="detalhesOcorrencia(d)">
-                <td class="td-wrapper" title="{{ d.tipo }}">{{ d.tipo }}</td>
+                ng-click="detalhesOcorrencia(d)" class="pointer">
+                <td class="td-wrapper"><img class="imagem-lista" src="{{ host }}{{ d.datafile }}"/></td>
                 <td class="td-wrapper" title="{{ d.titulo }}">{{ d.titulo }}</td>
+                <td class="td-wrapper" title="{{ d.tipo }}">{{ d.tipo }}</td>
                 <td class="td-wrapper" title="{{ d.categoria }}">{{ d.categoria }}</td>
                 <td class="td-wrapper hidden-xs" title="{{ d.dataehoraToShow }}">{{ d.dataehoraToShow }}</td>
                 <td class="td-wrapper hidden-xs" title="{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}">{{ d.cidade }}/{{ d.estado }}, {{ d.pais }}</td>
             </tr>
-            <td ng-show="d.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
+            <td ng-show="data.length == 0"><h4>Ooops! Não foi encontrada nenhuma ocorrência :(</h4></td>
             </tbody>
         </table>
         <hr>

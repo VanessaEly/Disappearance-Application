@@ -45,7 +45,9 @@ class OcorrenciaViewSet(viewsets.ModelViewSet):
             try:
                 imagem = Imagem.objects.get(id=ocorrencia.fileId)
                 try:
-                    os.remove(imagem.datafile.path)
+                    print imagem.datafile
+                    if imagem.datafile != 'imagens/default.jpg':
+                        os.remove(imagem.datafile.path)
                 except OSError:
                     pass
                     # return Response("Arquivo" + imagem.datafile.path + " nao encontrado")

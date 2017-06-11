@@ -11,22 +11,24 @@
         <hr>
         <table class="table table-hover">
             <thead ng-show="data.length != 0">
-            <tr >
+            <tr>
+                <th></th>
                 <th class="hidden-xs" title="Data Criação">Data de Criação</th>
+                <th title="Título">Título</th>
                 <th class="hidden-xs" title="Tipo">Tipo</th>
-                <th title="Títuloo">Título</th>
                 <th title="Solucionado">Solucionado</th>
                 <th title="Editar">Editar</th>
                 <th title="Deletar">Deletar</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="d in data">
+            <tr ng-repeat="d in data"  class="pointer">
+                <td class="td-wrapper"><img class="imagem-lista" src="{{ host }}{{ d.datafile }}"/></td>
                 <td class="hidden-xs" title="{{ d.dataehoraToShow }}" ng-click="detalhesOcorrencia(d)">{{ d.dataehoraToShow }}</td>
-                <td class="hidden-xs" title="{{ d.tipo }}" ng-click="detalhesOcorrencia(d)">{{ d.tipo }}</td>
                 <td class="td-wrapper" title="{{ d.titulo }}" ng-click="detalhesOcorrencia(d)">{{ d.titulo }}</td>
+                <td class="hidden-xs" title="{{ d.tipo }}" ng-click="detalhesOcorrencia(d)">{{ d.tipo }}</td>
                 <td>
-                    <input class="width-center" type="checkbox" ng-model="d.solucionado" ng-change='atualizarSolucionado({{ d.id }})'/>
+                    <input class="width-center pointer" type="checkbox" ng-model="d.solucionado" ng-change='atualizarSolucionado({{ d.id }})'/>
                 </td>
                 <td>
                     <i class="fa fa-pencil-square-o fa-2x width-center" aria-hidden="true"title="Editar Ocorrência" ng-click="editarOcorrencia(d)"></i>

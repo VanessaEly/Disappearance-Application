@@ -24,11 +24,11 @@ app.controller('ListaOcorrenciasController', function($scope, $http, StorageServ
     $scope.detalhesOcorrencia = function(data) {
         event.preventDefault();
         $scope.selected = data
-        $('#detalhesModal').modal('show');
+        $rootScope.toggleId('detalhesModal');
     }
 
     $scope.getUrl = function() {
-        $('#detalhesModal').modal('hide');
+        $rootScope.toggleId('detalhesModal');
         var url = 'ocorrencia/'+ $scope.selected.id;
         $rootScope.goTo(url);
     }

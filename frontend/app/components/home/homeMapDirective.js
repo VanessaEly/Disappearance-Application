@@ -1,6 +1,6 @@
 app.directive('homeMap', function($http, StorageService, $window) {
-    var map, infoWindow, markers = [], pos = {lat: -22.905125, lng: -43.190786}, pin;
-
+    var map, markers = [], pos = {lat: -22.905125, lng: -43.190786}, pin;
+    var infoWindow = new google.maps.InfoWindow({maxWidth: 150});
     var mapOptions = {
         center: pos,
         styles: [{"stylers": [{"saturation": -100}, {"gamma": 1}]},
@@ -46,12 +46,14 @@ app.directive('homeMap', function($http, StorageService, $window) {
             for (var i = 0; i < scope.data.length; i++) {
                 //conteúdo do marker
                 var content  =
-                    '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12">'+
-                    '<p><strong>'+ scope.data[i].titulo + '</strong></p>' +
-                    '<p>'+ scope.data[i].tipo + '</p>' +
-                    '<p>'+ new Date(scope.data[i].dataehora).toLocaleString('pt-BR') + '</p>' +
-                    '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
-                    'Consultar detalhes</a> </p>'+
+                    '<div id="pin-content" class="col-md-12 col-sm-12 col-xs-12 td-wrapper">'+
+                        '<img class="imagem-lista inline-block" src="'+ host + scope.data[i].datafile+'"/>'+
+                        '<p class="inline-block" title="' + scope.data[i].titulo + '">' +
+                            '<strong> '+ scope.data[i].titulo + '</strong></p>' +
+                        '<p>'+ scope.data[i].tipo + '</ptitle>' +
+                        '<p>'+ new Date(scope.data[i].dataehora).toLocaleString('pt-BR') + '</p>' +
+                        '<p><a href=' + $window.location + 'ocorrencia/'+ scope.data[i].id +'>'+
+                            'Consultar detalhes</a> </p>'+
                     '</div>';
 
                 //adicionando marker
@@ -79,15 +81,8 @@ app.directive('homeMap', function($http, StorageService, $window) {
         markers.push(marker); // add marker to array
 
         google.maps.event.addListener(marker, 'click', function () {
-            // close window if not undefined
-            if (infoWindow) {
-                infoWindow.close();
-            }
-            // create new window
-            var infoWindowOptions = {
-                content: content
-            };
-            infoWindow = new google.maps.InfoWindow(infoWindowOptions);
+
+            infoWindow.setContent(content)
             infoWindow.open(map, marker);
         });
     }
