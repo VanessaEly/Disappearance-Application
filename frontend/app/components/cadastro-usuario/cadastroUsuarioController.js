@@ -2,7 +2,6 @@ app.controller('CadastroUsuarioController', function($scope,$rootScope, $http, T
     $scope.usuario = {};
 
     $scope.cadastroUsuarioInit = function() {
-        console.log("cadastro usuario init");
     }
 
     $scope.cadastrar = function() {
@@ -33,16 +32,6 @@ app.controller('CadastroUsuarioController', function($scope,$rootScope, $http, T
                 });
             }
 
-        });
-    }
-
-    $scope.getUsers  = function() {
-        return $http.get('http://localhost:8000/api/users/', {
-            headers: {"Authorization": "Token b08289fa5ca8e60944a4875a8289cabe810adb6e"}
-        }).success(function(response){
-            console.log("get success", response)
-        }).error(function(response){
-            console.log("get error", response)
         });
     }
 });
