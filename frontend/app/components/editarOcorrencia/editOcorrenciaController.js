@@ -3,7 +3,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
 
     $scope.$watch($scope.coordinates, function() {});
     $scope.$watch($('#datepicker'), function() {});
-
+    $("#telefone").mask("(99) 9999?9-9999");
     var imageLoader = document.getElementById('filePhoto');
     imageLoader.addEventListener('change', handleImage, false);
 

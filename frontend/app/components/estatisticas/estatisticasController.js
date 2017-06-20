@@ -69,7 +69,7 @@ app.controller('EstatisticasController', function($scope, $http, StorageService)
     }
 
     $scope.initCharts = function() {
-        Chart.defaults.global.colors = ['#222930','#4EB1BA', '#2EA22B']
+        Chart.defaults.global.colors = ['#4EB1BA', '#2EA22B', '#222930']
     }
 
     $scope.options =  {

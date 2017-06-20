@@ -3,6 +3,7 @@ app.controller('NovaOcorrenciaController', function($scope, $http, $rootScope, $
     $scope.ocorrencia = {}, $scope.pessoa = {}, $scope.animal = {}, $scope.objeto = {}, $scope.pa = {};
     var imageLoader = document.getElementById('filePhoto');
     imageLoader.addEventListener('change', handleImage, false);
+    $("#telefone").mask("(99) 9999?9-9999");
 
     $(document).ready(function () {
         $('#datetimepicker').datetimepicker({

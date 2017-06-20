@@ -38,7 +38,7 @@
                 <div class="form-group col-md-12">
                     <div class="col-md-5">
                         <label class="control-label">*Dê um título para a ocorrência</label>
-                        <input ng-model="data.titulo" ng-required="true" maxlength="100"
+                        <input ng-model="data.titulo" ng-required="true" minlength="5" maxlength="100"
                                type="text" class="form-control" placeholder="Ex: Rapaz desaparecido desde 2016"  />
                     </div>
 
@@ -151,14 +151,14 @@
                 <div class="form-group col-md-12">
                     <div class="col-md-2">
                         <label class="control-label">Telefone</label>
-                        <input ng-model="data.telefone" ng-required="false" minlength="8" maxlength="16"
-                               type="tel" class="form-control" pattern="^\+?1?\d{9,15}"
-                               oninvalid="this.setCustomValidity('Telefone deve possuir o formato +999999999 com até 15 dígitos')" placeholder="+999999999"/>
+                        <input id="telefone" ng-model="data.telefone" ng-required="false"
+                               type="text" class="form-control" placeholder="(__) _____-____"/>
                     </div>
                     <div class="col-md-3" ng-show="data.tipo === 'Desaparecimento'">
                         <label class="control-label">Recompensa</label>
                         <input ng-model="data.recompensa" ng-required="false"
-                               type="number" class="form-control" placeholder="1000,00 reais" step="0.01" min="0"/>
+                               type="number" class="form-control" placeholder="1000,00 reais" step="0.01" min="0" max="999999999"
+                               onchange="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)"/>
                     </div>
                     <div class="col-md-4">
                         <label class="control-label">* Fez Boletim de Ocorrência?</label>
