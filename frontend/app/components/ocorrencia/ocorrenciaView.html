@@ -78,7 +78,7 @@
                                 <td>{{data.objeto.cor_primaria}}{{data.animal.cor_primaria}}</td>
                             </tr>
 
-                            <tr ng-show="data.recompensa">
+                            <tr ng-show="data.tipo === 'Desaparecimento' && data.recompensa">
                                 <td>Recompensa</td>
                                 <td>R${{data.recompensa}}</td>
                             </tr>

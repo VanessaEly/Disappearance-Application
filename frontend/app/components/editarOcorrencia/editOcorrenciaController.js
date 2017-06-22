@@ -98,6 +98,7 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
 
         fileFormData = new FormData();
         if (document.getElementById('filePhoto').files.length > 0) {
+            console.log("fileform",fileFormData)
             fileFormData.append('datafile', document.getElementById('filePhoto').files[0]);
         }
         else
@@ -105,22 +106,27 @@ app.controller('EditOcorrenciaController', function($scope, $http, $rootScope, $
 
         $scope.data.oldfileId = $scope.data.fileId;
         console.log($scope.data);
-        $http.post(StorageService.get("host") + 'api/imagem/', fileFormData, { transformRequest: angular.identity,
-        headers: {"Authorization": "Token " + $cookies.get('token'), "Content-Type":undefined, }}).then(
-        function successCallback(response) {
-            console.log(response.data);
-            $scope.data.fileId = response.data.id;
+        if(fileFormData != undefined) {
+            $http.post(StorageService.get("host") + 'api/imagem/', fileFormData, { transformRequest: angular.identity,
+            headers: {"Authorization": "Token " + $cookies.get('token'), "Content-Type":undefined, }}).then(
+            function successCallback(response) {
+                console.log(response.data);
+                $scope.data.fileId = response.data.id;
+                $scope.salvarOcorrencia();
+            }, function errorCallback(response) {
+                console.log(response);
+                if(response.status == 401 || response.status == -1) {
+                    $rootScope.$broadcast("toast", {
+                        priority: "high",
+                        text: "Necessário efetuar login"
+                    });
+                    $rootScope.toggleId('login-modal');
+                }
+            });
+        } else {
             $scope.salvarOcorrencia();
-        }, function errorCallback(response) {
-            console.log(response);
-            if(response.status == 401 || response.status == -1) {
-                $rootScope.$broadcast("toast", {
-                    priority: "high",
-                    text: "Necessário efetuar login"
-                });
-                $rootScope.toggleId('login-modal');
-            }
-        });
+        }
+
 
     }
 
