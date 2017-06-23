@@ -167,6 +167,7 @@ class OcorrenciaFiltersSerializer(serializers.Serializer):
     animal = AnimalSerializer(required=False)
     objeto = ObjetoSerializer(required=False)
     titulo = serializers.CharField(required=False)
+    datafile = serializers.CharField(required=False)
     tipo = serializers.CharField(required=False)
     pin = serializers.CharField(required=False)
     id = serializers.IntegerField(required=False)
